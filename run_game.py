@@ -1,4 +1,5 @@
-#! /usr/bin/env python
+#! /usr/bin/env python -O
 
-from gamelib import main
-main.main()
+from gamelib import controller        
+c = controller.Controller()    
+c.run()
