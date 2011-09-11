@@ -1,9 +1,10 @@
 import pyglet
 from pyglet.gl import *
 from pyglet.window import key
-# import states.game
 import states.title
+import states.game
 import fixed_resolution
+import constants
 
 if not pyglet.media.have_avbin:
     print 'You need to install AVbin http://code.google.com/p/avbin/ to play this game.'
@@ -12,7 +13,7 @@ class Controller(pyglet.window.Window):
     
     def __init__(self):
         super(Controller, self).__init__(caption="Nanobiotics", fullscreen=True)        
-        self.viewport = fixed_resolution.FixedResolutionViewport(self, 1280, 800, filtered=False)        
+        self.viewport = fixed_resolution.FixedResolutionViewport(self, constants.WIDTH, constants.HEIGHT, filtered=False)        
         self.set_exclusive_mouse(True)
         self.state = None
         self.fps_display = pyglet.clock.ClockDisplay()
@@ -35,7 +36,7 @@ class Controller(pyglet.window.Window):
         elif symbol == key.F and modifiers & key.MOD_CTRL or modifiers & key.MOD_COMMAND:
             self.set_fullscreen(not self.fullscreen)
             if not self.fullscreen:
-                self.width, self.height = 1280, 800            
+                self.width, self.height = constants.WIDTH, constants.HEIGHT            
             self.set_exclusive_mouse(True)
             
     def on_resize(self, width, height):        

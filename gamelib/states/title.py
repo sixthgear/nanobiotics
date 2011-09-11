@@ -23,5 +23,5 @@ class Title(object):
         # pyglet.clock.schedule_once(self.window.play, 0.0)
         
     def on_mouse_press(self, x, y, button, modifiers):
-        pyglet.app.exit()
-        # pyglet.clock.schedule_once(self.window.play, 0.0)
+        # pyglet.app.exit()
+        pyglet.clock.schedule_once(self.window.play, 0.0)
