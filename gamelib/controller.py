@@ -12,9 +12,9 @@ if not pyglet.media.have_avbin:
 class Controller(pyglet.window.Window):
     
     def __init__(self):
-        super(Controller, self).__init__(caption="Nanobiotics", fullscreen=True)        
+        super(Controller, self).__init__(width=constants.WIDTH, height=constants.HEIGHT, caption="Nanobiotics")#, fullscreen=True)        
         self.viewport = fixed_resolution.FixedResolutionViewport(self, constants.WIDTH, constants.HEIGHT, filtered=False)        
-        self.set_exclusive_mouse(True)
+        # self.set_exclusive_mouse(True)
         self.state = None
         self.fps_display = pyglet.clock.ClockDisplay()
                 
@@ -33,7 +33,7 @@ class Controller(pyglet.window.Window):
     def on_key_press(self, symbol, modifiers):
         if symbol == key.ESCAPE:
             pyglet.app.exit()
-        elif symbol == key.F and modifiers & key.MOD_CTRL or modifiers & key.MOD_COMMAND:
+        elif symbol == key.F and (modifiers & key.MOD_CTRL or modifiers & key.MOD_COMMAND):
             self.set_fullscreen(not self.fullscreen)
             if not self.fullscreen:
                 self.width, self.height = constants.WIDTH, constants.HEIGHT            
