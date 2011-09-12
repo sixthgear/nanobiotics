@@ -16,7 +16,8 @@ class Player(pyglet.event.EventDispatcher):
     def __init__(self, x, y):    
         self.alive = True
         self.pos = vector.Vec2d(x,y)
-        self.sprite = pyglet.sprite.Sprite(data.spritesheet[0], self.pos.x, self.pos.y)
+        self.sprite = pyglet.sprite.Sprite(data.spritesheet[random.randrange(4)*8 + random.randrange(5)], self.pos.x, self.pos.y)
+        self.target_velocity = vector.Vec2d(0, 0)
         self.velocity = vector.Vec2d(0, 0)
         self.target = vector.Vec2d(x,y)
         self.keys = pyglet.window.key.KeyStateHandler()
@@ -26,7 +27,7 @@ class Player(pyglet.event.EventDispatcher):
         pass
 
     def on_mouse_press(self, x, y, button, modifiers):
-        pass
+        self.sprite.image = data.spritesheet[random.randrange(4)*8 + random.randrange(5)]
         
     def on_mouse_release(self, x, y, button, modifiers):
         pass
@@ -44,36 +45,38 @@ class Player(pyglet.event.EventDispatcher):
     def update(self):
         if not self.alive: return
         
-        self.velocity.zero()
+        self.target_velocity.zero()
 
         if self.keys[pyglet.window.key.A]:                        
             if self.keys[pyglet.window.key.W]:
-                self.velocity.y += self.__class__.speed_diag
-                self.velocity.x -= self.__class__.speed_diag
+                self.target_velocity.y += self.__class__.speed_diag
+                self.target_velocity.x -= self.__class__.speed_diag
             elif self.keys[pyglet.window.key.S]:
-                self.velocity.y -= self.__class__.speed_diag
-                self.velocity.x -= self.__class__.speed_diag
+                self.target_velocity.y -= self.__class__.speed_diag
+                self.target_velocity.x -= self.__class__.speed_diag
             else:
-                self.velocity.x -= self.__class__.speed            
+                self.target_velocity.x -= self.__class__.speed            
         elif self.keys[pyglet.window.key.D]:            
             if self.keys[pyglet.window.key.W]:
-                self.velocity.y += self.__class__.speed_diag
-                self.velocity.x += self.__class__.speed_diag
+                self.target_velocity.y += self.__class__.speed_diag
+                self.target_velocity.x += self.__class__.speed_diag
             elif self.keys[pyglet.window.key.S]:
-                self.velocity.y -= self.__class__.speed_diag
-                self.velocity.x += self.__class__.speed_diag
+                self.target_velocity.y -= self.__class__.speed_diag
+                self.target_velocity.x += self.__class__.speed_diag
             else:
-                self.velocity.x += self.__class__.speed
+                self.target_velocity.x += self.__class__.speed
         else:                        
             if self.keys[pyglet.window.key.W]:
-                self.velocity.y += self.__class__.speed
+                self.target_velocity.y += self.__class__.speed
             elif self.keys[pyglet.window.key.S]:
-                self.velocity.y -= self.__class__.speed
+                self.target_velocity.y -= self.__class__.speed
             else:
                 pass
         
+        self.velocity += (self.target_velocity - self.velocity ) * 0.4
         self.pos += self.velocity        
         self.sprite.position = self.pos.x, self.pos.y
+        self.sprite.rotation = self.velocity.angle
     
     def hit(self, other):        
         pass
