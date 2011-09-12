@@ -7,7 +7,7 @@ class GameObject(pyglet.sprite.Sprite):
     height = 0.0    
     
     def __init__(self, sprite, x=0.0, y=0.0, vx=0.0, vy=0.0):
-        super(GameObjectPyglet, self).__init__(sprite, x, y)
+        super(GameObject, self).__init__(sprite, x, y)
         self.x, self.y = x,y
         self.pos = vector.Vec2d(x, y)
         self.velocity = vector.Vec2d(vx, vy)

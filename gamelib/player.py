@@ -4,6 +4,7 @@ import random
 import obj
 import vector
 import constants
+import gamepad
   
 class Player(pyglet.event.EventDispatcher):
     """
@@ -16,18 +17,25 @@ class Player(pyglet.event.EventDispatcher):
     def __init__(self, x, y):    
         self.alive = True
         self.pos = vector.Vec2d(x,y)
-        self.sprite = pyglet.sprite.Sprite(data.spritesheet[random.randrange(4)*8 + random.randrange(5)], self.pos.x, self.pos.y)
+        self.sprite = pyglet.sprite.Sprite(data.spritesheet[random.randrange(5)*8 + random.randrange(6)], self.pos.x, self.pos.y)
         self.target_velocity = vector.Vec2d(0, 0)
         self.velocity = vector.Vec2d(0, 0)
         self.target = vector.Vec2d(x,y)
         self.keys = pyglet.window.key.KeyStateHandler()
+        self.gamepad = gamepad.GamepadHandler.connect()
         self.dispatch_event('on_respawn')
 
+    def on_gamepad_connect(self):
+        print 'Gamepad Connect!'
+        
+    def on_gamepad_button(self):
+        print 'Gamepad Button!'    
+        
     def on_key_press(self, symbol, modifiers):
         pass
 
     def on_mouse_press(self, x, y, button, modifiers):
-        self.sprite.image = data.spritesheet[random.randrange(4)*8 + random.randrange(5)]
+        self.sprite.image = data.spritesheet[random.randrange(5)*8 + random.randrange(6)]
         
     def on_mouse_release(self, x, y, button, modifiers):
         pass
@@ -45,7 +53,19 @@ class Player(pyglet.event.EventDispatcher):
     def update(self):
         if not self.alive: return
         
+            
         self.target_velocity.zero()
+        
+        if self.gamepad:
+
+            self.gamepad.update()
+                
+            if abs(self.gamepad.axis[0]) > 0.1 or abs(self.gamepad.axis[1]) > 0.1:
+                self.target_velocity.x = self.gamepad.axis[0]
+                self.target_velocity.y = -self.gamepad.axis[1]
+                if self.target_velocity.magnitude_sq > 1:
+                    self.target_velocity.normalize()            
+                self.target_velocity *= self.__class__.speed
 
         if self.keys[pyglet.window.key.A]:                        
             if self.keys[pyglet.window.key.W]:
