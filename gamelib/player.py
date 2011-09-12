@@ -8,7 +8,7 @@ import constants
 class Player(pyglet.event.EventDispatcher):
     """
     """
-    speed = 5.0
+    speed = 10.0
     speed_diag = speed * 0.7071    
     width = 32
     height = 32    
