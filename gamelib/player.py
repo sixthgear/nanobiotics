@@ -7,7 +7,7 @@ import constants
 import gamepad
 import bullet
 
-from weapons.weapon import Weapon
+from weapons.basicturret import BasicTurret
   
 class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     """
@@ -26,9 +26,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.alive = True        
         self.vel_target = vector.Vec2d(0, 0)
         self.target = vector.Vec2d(x,y)
-        self.cooldown = 2
-        self.firing = False
-        self.weapon = Weapon(None) # we like guns
+        self.weapon = BasicTurret(None) # we like guns
         
         # pyglet events
         self.keys = pyglet.window.key.KeyStateHandler()
@@ -50,11 +48,9 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         
     def on_mouse_press(self, x, y, button, modifiers):
         self.weapon.engage()
-        self.firing = True        
 
     def on_mouse_release(self, x, y, button, modifiers):
         self.weapon.disengage()
-        self.firing = False
             
     def on_mouse_motion(self, x, y, dx, dy): 
         self.target.x = min(max(self.target.x + dx, 0), constants.WIDTH)
@@ -70,7 +66,6 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.weapon.update(dt)
             return
                     
-        self.weapon.update(dt)
 
         self.vel_target.zero()
         
@@ -124,22 +119,8 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         
         obj.CompoundGameObject.update(self, dt)
 
-        if self.firing:
-            self.fire(self.pos, self.target)
+        self.weapon.update(dt, self.pos, self.target)
         
-    def fire(self, source, dest):
-        
-        if self.cooldown > 0:
-            self.cooldown -= 1
-            return
-            
-        self.cooldown = 2
-                
-        bv = (dest - source).normal * 40
-        bp = source # + bv
-        if bv.x != 0 or bv.y != 0:            
-            bullet.pool.fire(bp.x, bp.y, bv.x, bv.y)
-                        
     def hit(self, other):        
         pass
         

@@ -1,7 +1,8 @@
 class Weapon(object):
     
     def __init__(self, xy=None):
-        self.xy = xy
+        self.pos = xy
+        self.target_pos = None
         self.ticks = None
         self.engaged = False
 
@@ -11,7 +12,9 @@ class Weapon(object):
     def disengage(self):
         self.engaged = False
 
-    def update(self, dt):
+    def update(self, dt, xy=None, target_xy=None):
+        self.pos = xy
+        self.target_pos = target_xy
         if self.engaged and not self.ticks: # we started shootin
             self.ticks = dt
         elif not self.engaged and self.ticks: # everything was dead
