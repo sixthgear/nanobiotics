@@ -53,7 +53,7 @@ class Game(object):
         self.announcing = False
 
         self.announcement = pyglet.text.Label(
-            font_name=['REZ', 'Rezland Logotype Font'],
+            font_name=['DYLOVASTUFF', 'DYLOVASTUFF'],
             text='READY', 
             font_size=144, x=WIDTH//2, y=HEIGHT//2,
             anchor_x='center', anchor_y='top',
@@ -69,7 +69,7 @@ class Game(object):
                      
        # lets do this!
         self.rebuild_render_list()
-        # self.next_wave()
+        self.next_wave()
 
     def collect_garbage(self, dt=0.0):
         """

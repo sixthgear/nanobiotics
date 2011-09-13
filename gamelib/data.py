@@ -7,8 +7,8 @@ import pyglet
 pyglet.resource.path = ['data']
 pyglet.resource.reindex()
 
-pyglet.resource.add_font('REZ.ttf')
-pyglet.font.load('REZ')
+pyglet.resource.add_font('DYLOVASTUFF.ttf')
+pyglet.font.load('DYLOVASTUFF')
 
 spritesheet = pyglet.image.ImageGrid(pyglet.resource.image('sprites.png'),8,8).get_texture_sequence()
 for sprite in spritesheet:

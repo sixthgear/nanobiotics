@@ -41,7 +41,7 @@ class CompoundGameObject(GameObject):
 
         #hax for now, first sprite is main sprite that we use for collision dectection
         self.bounding_radius = self.__class__.width // 2
-        self.bounding_radius_squared = self.sprites[0].bounding_radius ** 2
+        self.bounding_radius_squared = self.bounding_radius ** 2
         
     @property
     def x(self): return self.pos.x
