@@ -42,6 +42,8 @@ class BulletPool(object):
         
     def draw(self):
         # BulletPool.batch.draw()
+        pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
+        pyglet.gl.glBlendFunc(pyglet.gl.GL_SRC_ALPHA, pyglet.gl.GL_ONE)
         rabbyt.render_unsorted([b.sprite for b in self.active if b.alive])
         # for b in (b for b in self.active if b.alive):
         #     b.render()
@@ -52,17 +54,18 @@ class Bullet(obj.GameObject):
     height = 4
     
     def __init__(self, x, y, vx, vy, group=0):
-        super(Bullet,self).__init__(data.spritesheet[15], x, y, vx, vy)
+        super(Bullet,self).__init__(data.bullet, x, y, vx, vy)
         self.alive = False
             
     def activate(self, x, y, vx, vy, group=0):
         if group == 0:
-            self.sprite.texture = data.spritesheet[15]
+            self.sprite.texture = data.bullet
         else:
-            self.sprite.texture = data.spritesheet[15]
+            self.sprite.texture = data.bullet
         
         self.pos.x, self.pos.y = x, y
         self.vel.x, self.vel.y = vx, vy
+        self.sprite.rot = -self.vel.angle
         self.group = group
         self.alive = True
             
