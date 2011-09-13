@@ -115,7 +115,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         if self.vel_target.magnitude_sq > 1:
             self.vel_target.normalize()
 
-        self.vel_target *= self.__class__.speed
+        self.vel_target *= self.speed
             
         # smooth velocity changes
         self.vel += (self.vel_target - self.vel ) * self.__class__.vel_smooth

@@ -297,12 +297,6 @@ class Game(object):
         """                
         pass
         
-    def on_transform(self):    
-        """
-        Player just transformed.
-        """                        
-        pass
-                
     def game_over(self):
         """
         Game over man! Game over! -- Sgt. Hicks
