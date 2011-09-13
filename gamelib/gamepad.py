@@ -22,10 +22,16 @@ class GamepadHandler(pyglet.event.EventDispatcher):
         self.hats = {}
         self.axis = {}        
         self.deadzone = 0.1
-        
+                        
         self.j = pygame.joystick.Joystick(id)
         self.j.init()
         
+        for a in range(self.j.get_numaxes()):
+            self.axis[a] = 0.0
+            
+        for b in range(self.j.get_numbuttons()):
+            self.buttons[b] = 0
+            
         self.dispatch_event('on_gamepad_connect')
         
     def update(self):

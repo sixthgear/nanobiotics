@@ -5,11 +5,12 @@ import obj
 import vector
 import constants
 import gamepad
+import bullet
   
 class Player(pyglet.event.EventDispatcher, obj.GameObject):
     """
     """
-    speed = 12.0
+    speed = 640
     speed_diag = speed * 0.7071    
     vel_smooth = 0.4
     width = 64
@@ -22,6 +23,8 @@ class Player(pyglet.event.EventDispatcher, obj.GameObject):
         self.alive = True        
         self.vel_target = vector.Vec2d(0, 0)
         self.target = vector.Vec2d(x,y)
+        self.cooldown = 2
+        self.firing = False
         
         # pyglet events
         self.keys = pyglet.window.key.KeyStateHandler()
@@ -41,10 +44,10 @@ class Player(pyglet.event.EventDispatcher, obj.GameObject):
         pass
         
     def on_mouse_press(self, x, y, button, modifiers):
-        self.sprite.texture = data.spritesheet[random.randrange(5)*8 + random.randrange(6)]
-        
+        self.firing = True        
+
     def on_mouse_release(self, x, y, button, modifiers):
-        pass
+        self.firing = False
             
     def on_mouse_motion(self, x, y, dx, dy): 
         self.target.x = min(max(self.target.x + dx, 0), constants.WIDTH)
@@ -53,7 +56,8 @@ class Player(pyglet.event.EventDispatcher, obj.GameObject):
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers): 
         self.on_mouse_motion(x,y,dx,dy)
                                                     
-    def update(self):
+    def update(self, dt):
+        
         if not self.alive: return
                     
         self.vel_target.zero()
@@ -100,11 +104,28 @@ class Player(pyglet.event.EventDispatcher, obj.GameObject):
         self.vel += (self.vel_target - self.vel ) * self.__class__.vel_smooth
     
         # do regular euler updates
-        super(Player, self).update()
-        
+        self.pos += self.vel * dt
+        self.sprite.xy = self.pos.x, self.pos.y
+                
         # modify rotation
         self.sprite.rot = -self.vel.angle
         
+        if self.firing:
+            self.fire(self.pos, self.target)
+        
+    def fire(self, source, dest):
+        
+        if self.cooldown > 0:
+            self.cooldown -= 1
+            return
+            
+        self.cooldown = 2
+                
+        bv = (dest - source).normal * 40
+        bp = source # + bv
+        if bv.x != 0 or bv.y != 0:            
+            bullet.pool.fire(bp.x, bp.y, bv.x, bv.y)
+                        
     def hit(self, other):        
         pass
         

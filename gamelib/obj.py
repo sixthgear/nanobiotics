@@ -20,8 +20,8 @@ class GameObject(object):
         self.y = self.sprite.attrgetter('y')
         self.render = self.sprite.render
 
-    def update(self):
-        self.pos += self.vel
+    def update(self, dt):
+        self.pos += self.vel * dt
         self.sprite.xy = self.pos.x, self.pos.y
         
 class CompoundGameObject(GameObject):

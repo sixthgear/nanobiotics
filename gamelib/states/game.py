@@ -3,7 +3,8 @@ import random
 
 from gamelib import data
 from gamelib import player
-
+from gamelib import bullet
+from gamelib import collision
 
 from gamelib.constants import *
 
@@ -115,7 +116,7 @@ class Game(object):
             
         # render particles and bullets
         # effects.draw()
-        # bullet.pool.draw()
+        bullet.pool.draw()
         
         # render HUD        
         
@@ -151,9 +152,9 @@ class Game(object):
         Perform physics and collision detection.
         """
         self.tick += 1        
-        self.player.update()
+        self.player.update(dt)
         [r.update() for r in self.robots]
-        # bullet.pool.update()        
+        bullet.pool.update()        
         # effects.update(dt)        
         self.collide()
                     
@@ -214,11 +215,10 @@ class Game(object):
         """
         Heres where we detect us some collisions.
         """        
-        pass
-        # # bullets vs screen
-        # for b in (b for b in bullet.pool.active if b.alive):
-        #     if not collision.AABB_to_AABB(b.pos.x-2, b.pos.y-2, 4, 4, 0, 0, 800, 568):
-        #         b.die()
+        # bullets vs screen
+        for b in (b for b in bullet.pool.active if b.alive):
+            if not collision.AABB_to_AABB(b.pos.x-2, b.pos.y-2, 4, 4, 0, 0, WIDTH, HEIGHT):
+                b.die()
         #     
         # # player vs screen                    
         # self.player.pos.x = min(max(32, self.player.pos.x), 768)
