@@ -7,7 +7,7 @@ import constants
 import gamepad
 import bullet
   
-class Player(pyglet.event.EventDispatcher, obj.GameObject):
+class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     """
     """
     speed = 640
@@ -16,9 +16,10 @@ class Player(pyglet.event.EventDispatcher, obj.GameObject):
     width = 64
     height = 64    
     
-    def __init__(self, x, y):    
+    def __init__(self, x, y):
+        player_sprites = [(data.spritesheet[0],(0,0))] 
                 
-        obj.GameObject.__init__(self, data.spritesheet[0], x, y)
+        obj.CompoundGameObject.__init__(self, player_sprites, x, y)
         
         self.alive = True        
         self.vel_target = vector.Vec2d(0, 0)
@@ -105,11 +106,13 @@ class Player(pyglet.event.EventDispatcher, obj.GameObject):
     
         # do regular euler updates
         self.pos += self.vel * dt
-        self.sprite.xy = self.pos.x, self.pos.y
+        #self.sprite.xy = self.pos.x, self.pos.y
                 
         # modify rotation
-        self.sprite.rot = -self.vel.angle
+        #self.sprite.rot = -self.vel.angle
         
+        obj.CompoundGameObject.update(self, dt)
+
         if self.firing:
             self.fire(self.pos, self.target)
         
