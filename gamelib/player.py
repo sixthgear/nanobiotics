@@ -19,7 +19,8 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     height = 64    
     
     def __init__(self, x, y):
-        player_sprites = [(data.spritesheet[0],(0,0))] 
+        player_sprites = [(data.spritesheet[0],(0,0)), 
+                          (data.spritesheet[1],(0,-42))] 
                 
         obj.CompoundGameObject.__init__(self, player_sprites, x, y)
         
