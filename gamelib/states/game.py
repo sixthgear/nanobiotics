@@ -215,7 +215,7 @@ class Game(object):
         Add some score
         """        
         self.score += score
-        self.score_label.text = '%d' % self.score
+        self.score_label.text = '%08d' % self.score
                 
     def collide(self):
         """
@@ -278,7 +278,7 @@ class Game(object):
         """
         Player killed something.
         """        
-        pass
+        self.add_score(robot.points)
             
     def on_death(self):
         """
