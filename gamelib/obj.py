@@ -1,6 +1,7 @@
 import pyglet
 import rabbyt
 import vector
+import math
 
 class GameObject(object):
     
@@ -72,6 +73,14 @@ class CompoundGameObject(GameObject):
             
     def update(self, dt):
         #self.pos += self.vel * dt
-        for s in self.sprites:
-            s.xy = self.pos.x + s.offset_x, self.pos.y + s.offset_y
+        if len(self.sprites) > 1:
+            angle = math.radians(self.rot)
+            sin_a = math.sin(angle)
+            cos_a = math.cos(angle)
         
+        for i, s in enumerate(self.sprites):
+            if i == 0:
+                s.xy = self.pos.x + s.offset_x, self.pos.y + s.offset_y
+            else:
+                s.x = self.pos.x + (s.offset_x * cos_a) - (s.offset_y * sin_a)
+                s.y = self.pos.y + (s.offset_y * cos_a) + (s.offset_x * sin_a)
