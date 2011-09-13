@@ -1,4 +1,5 @@
 import pyglet
+import rabbyt
 import random
 
 from gamelib import data
@@ -106,13 +107,13 @@ class Game(object):
         data.background.blit(0,0)
                 
         # render characters and pickups
-        # rabbyt.set_default_attribs()
+        rabbyt.set_default_attribs()
         self.render_list.sort(key=lambda x: x.pos.y, reverse=True)
         for r in (r for r in self.render_list if r.alive):
             r.render()
 
         # render foreground
-        # pyglet.gl.glColor4f(1, 1, 1, 1)
+        pyglet.gl.glColor4f(1, 1, 1, 1)
             
         # render particles and bullets
         # effects.draw()
@@ -125,8 +126,7 @@ class Game(object):
         if self.announcing: 
             self.announcement.draw()        
                 
-        # render cursor
-        
+        # render cursor        
         data.cursor.blit(self.player.target.x, self.player.target.y)
         
         self.window.viewport.end()
@@ -221,8 +221,8 @@ class Game(object):
                 b.die()
         #     
         # # player vs screen                    
-        # self.player.pos.x = min(max(32, self.player.pos.x), 768)
-        # self.player.pos.y = min(max(50, self.player.pos.y), 556)
+        self.player.pos.x = min(max(32, self.player.pos.x), WIDTH)
+        self.player.pos.y = min(max(50, self.player.pos.y), HEIGHT)
         # 
         # # robots vs player bullets
         # for r, b in rabbyt.collisions.aabb_collide_groups(self.robots, bullet.pool.active):
@@ -301,7 +301,7 @@ class Game(object):
         """
         Game over man! Game over! -- Sgt. Hicks
         """                        
-        # self.announce("GAME OVER", 4)
+        self.announce("GAME OVER", 4)
         pyglet.clock.schedule_once(self.shutdown, 4.0)
         
     def shutdown(self, dt=0.0):
