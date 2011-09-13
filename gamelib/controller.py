@@ -15,6 +15,7 @@ class Controller(pyglet.window.Window):
         super(Controller, self).__init__(width=constants.WIDTH, height=constants.HEIGHT, caption="Nanobiotics")#, fullscreen=True)        
         self.viewport = fixed_resolution.FixedResolutionViewport(self, constants.WIDTH, constants.HEIGHT, filtered=False)        
         self.set_exclusive_mouse(True)
+        self.set_mouse_visible(False)
         self.state = None
         self.fps_display = pyglet.clock.ClockDisplay()
                 
