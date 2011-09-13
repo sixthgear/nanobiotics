@@ -21,7 +21,7 @@ class GamepadHandler(pyglet.event.EventDispatcher):
         self.buttons = {}
         self.hats = {}
         self.axis = {}        
-        self.deadzone = 0.1
+        self.deadzone = 0.2
                         
         self.j = pygame.joystick.Joystick(id)
         self.j.init()

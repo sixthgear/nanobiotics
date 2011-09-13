@@ -73,6 +73,16 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.gamepad.update()
             self.vel_target.x = self.gamepad.axis[0]
             self.vel_target.y = -self.gamepad.axis[1]
+            
+            if self.gamepad.axis[2] or self.gamepad.axis[3]:
+                if not self.weapon.engaged:
+                    self.weapon.engage()
+                rel_target = vector.Vec2d(self.gamepad.axis[2], -self.gamepad.axis[3]).normal * 200
+                self.target = self.pos + rel_target
+            else:
+                self.weapon.disengage()
+                
+                
 
         if self.keys[pyglet.window.key.A]:                        
             if self.keys[pyglet.window.key.W]:
@@ -117,7 +127,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.rot = -self.vel.angle
         
         obj.CompoundGameObject.update(self, dt)
-
+        
         self.weapon.update(dt, self.pos, self.target)
         
     def hit(self, other):        

@@ -185,7 +185,7 @@ class Game(object):
         self.wave += 1
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
         for i in range(100):
-            self.spawn_robot(base.BaseEnemy, 1, random.randrange(WIDTH), random.randrange(HEIGHT))
+            self.spawn_robot(base.BaseEnemy, 1, random.randrange(WIDTH-20)+10, random.randrange(HEIGHT-20)+10)
         
         
         self.announce('WAVE %d' % self.wave, 3.0)
