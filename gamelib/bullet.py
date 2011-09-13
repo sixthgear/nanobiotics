@@ -52,14 +52,14 @@ class Bullet(obj.GameObject):
     height = 4
     
     def __init__(self, x, y, vx, vy, group=0):
-        super(Bullet,self).__init__(data.spritesheet[0], x, y, vx, vy)
+        super(Bullet,self).__init__(data.spritesheet[15], x, y, vx, vy)
         self.alive = False
             
     def activate(self, x, y, vx, vy, group=0):
         if group == 0:
-            self.sprite.texture = data.spritesheet[0]
+            self.sprite.texture = data.spritesheet[15]
         else:
-            self.sprite.texture = data.spritesheet[0]
+            self.sprite.texture = data.spritesheet[15]
         
         self.pos.x, self.pos.y = x, y
         self.vel.x, self.vel.y = vx, vy

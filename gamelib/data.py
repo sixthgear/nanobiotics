@@ -17,4 +17,4 @@ for sprite in spritesheet:
 
 background = pyglet.resource.image('stage_1_background.png')
 
-cursor = spritesheet[1]
+cursor = spritesheet[7]
