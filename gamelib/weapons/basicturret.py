@@ -14,7 +14,7 @@ class BasicTurret(Weapon):
             self.cooldown -= 1
             return
 
-        self.cooldown = 2
+        self.cooldown = 0
 
         if self.engaged:
             bv = (self.target_pos - self.pos).normal * 40
