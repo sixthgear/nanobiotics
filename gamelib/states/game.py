@@ -56,16 +56,17 @@ class Game(object):
             font_name=['DYLOVASTUFF', 'DYLOVASTUFF'],
             text='READY', 
             font_size=144, x=WIDTH//2, y=HEIGHT//2,
-            anchor_x='center', anchor_y='top',
-            color=(0,0,0,255))
+            anchor_x='center', anchor_y='center',
+            color=(128,128,128,200))
             
         self.announce('READY', 3.0)
         
-        # self.score_label = pyglet.text.Label(
-        #     text='0', 
-        #     font_name=['Unsteady Oversteer', 'UnsteadyOversteer-Regular'], font_size=18, x=680, y=577,
-        #     anchor_x='right', anchor_y='top'
-        # )
+        self.score_label = pyglet.text.Label(
+            text='1234567890', 
+            font_name=['DYLOVASTUFF', 'DYLOVASTUFF'], font_size=18, x=WIDTH-20, y=HEIGHT-20,
+            anchor_x='right', anchor_y='top',
+            color=(128,128,128,200)
+        )
                      
        # lets do this!
         self.rebuild_render_list()
@@ -121,7 +122,7 @@ class Game(object):
         
         # render HUD        
         
-        # self.score_label.draw()
+        self.score_label.draw()
         # self.lives_label.draw()
         if self.announcing: 
             self.announcement.draw()        
