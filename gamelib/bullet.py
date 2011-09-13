@@ -31,9 +31,9 @@ class BulletPool(object):
     def update(self):
         for b in self.active:
             if not b.alive: continue
-            b.pos.x += b.vel.x
-            b.pos.y += b.vel.y
+            b.pos += b.vel
             b.sprite.xy = b.pos.x, b.pos.y
+            b.x, b.y = b.sprite.xy
             
     def clear(self):
         self.active = []
@@ -50,8 +50,8 @@ class BulletPool(object):
             
 class Bullet(obj.GameObject):
     
-    width = 4
-    height = 4
+    width = 32
+    height = 32
     
     def __init__(self, x, y, vx, vy, group=0):
         super(Bullet,self).__init__(data.bullet, x, y, vx, vy)

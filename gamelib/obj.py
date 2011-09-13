@@ -13,16 +13,18 @@ class GameObject(object):
         self.vel = vector.Vec2d(vx, vy)
         self.bounding_radius = self.__class__.width // 2
         self.bounding_radius_squared = self.bounding_radius ** 2
+        self.x, self.y = x,y
                 
         # rabbyt stuff
         self.sprite = rabbyt.Sprite(img, xy=(x,y))
-        self.x = self.sprite.attrgetter('x')
-        self.y = self.sprite.attrgetter('y')
+        # self.x = self.sprite.attrgetter('x')
+        # self.y = self.sprite.attrgetter('y')
         self.render = self.sprite.render
 
     def update(self, dt):
         self.pos += self.vel * dt
         self.sprite.xy = self.pos.x, self.pos.y
+        self.x, self.y = self.sprite.xy
         
 class CompoundGameObject(GameObject):
     # img_col = [(img, (offset_x, offset_y)), ...]

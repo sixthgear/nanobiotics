@@ -6,6 +6,7 @@ from gamelib import data
 from gamelib import player
 from gamelib import bullet
 from gamelib import collision
+from gamelib.enemies import base
 
 from gamelib.constants import *
 
@@ -183,6 +184,10 @@ class Game(object):
         self.collect_garbage()
         self.wave += 1
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
+        for i in range(100):
+            self.spawn_robot(base.BaseEnemy, 1, random.randrange(WIDTH), random.randrange(HEIGHT))
+        
+        
         self.announce('WAVE %d' % self.wave, 3.0)
         
             
@@ -220,19 +225,19 @@ class Game(object):
         for b in (b for b in bullet.pool.active if b.alive):
             if not collision.AABB_to_AABB(b.pos.x-2, b.pos.y-2, 4, 4, 0, 0, WIDTH, HEIGHT):
                 b.die()
-        #     
-        # # player vs screen                    
+     
+        # player vs screen                    
         self.player.pos.x = min(max(32, self.player.pos.x), WIDTH)
         self.player.pos.y = min(max(50, self.player.pos.y), HEIGHT)
-        # 
-        # # robots vs player bullets
-        # for r, b in rabbyt.collisions.aabb_collide_groups(self.robots, bullet.pool.active):
-        #     if not r.alive: continue
-        #     if not b.alive or not b.group==0: continue
-        #     b.die()            
-        #     r.hit(b)
-        #     if not r.alive: self.on_kill(r)
-        #         
+
+        # robots vs player bullets
+        for r, b in rabbyt.collisions.collide_groups(self.robots, bullet.pool.active):
+            if not r.alive: continue
+            if not b.alive or not b.group==0: continue
+            b.die()
+            r.hit(b)
+            if not r.alive: self.on_kill(r)
+                
         # if not self.player.alive: return
         # 
         # # player vs robots

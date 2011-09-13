@@ -4,19 +4,19 @@ import random
 from gamelib import obj
 from gamelib import data
 from gamelib import bullet
-from gamelib import fx
+# from gamelib import fx
 
 class BaseEnemy(obj.GameObject):
     
     speed = 1.0
     speed_diag = speed * 0.7071
-    width = 32
+    width = 64
     height = 64
     points = 100
     life = 1
     
-    def __init__(self, sprite, x=None, y=None, vx=None, vy=None):
-        super(BaseEnemy, self).__init__(sprite, x, y)
+    def __init__(self, x=None, y=None, vx=None, vy=None):
+        super(BaseEnemy, self).__init__(data.spritesheet[random.randrange(5)*8 + random.randrange(6)], x, y)
         self.alive = True        
         self.life = self.__class__.life
                 
