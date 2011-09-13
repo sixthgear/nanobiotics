@@ -42,9 +42,9 @@ class BulletPool(object):
         
     def draw(self):
         # BulletPool.batch.draw()
-        # rabbyt.render_unsorted([b.sprite for b in self.active if b.alive])
-        for b in (b for b in self.active if b.alive):
-            b.render()
+        rabbyt.render_unsorted([b.sprite for b in self.active if b.alive])
+        # for b in (b for b in self.active if b.alive):
+        #     b.render()
             
 class Bullet(obj.GameObject):
     
@@ -60,7 +60,6 @@ class Bullet(obj.GameObject):
             self.sprite.texture = data.spritesheet[0]
         else:
             self.sprite.texture = data.spritesheet[0]
-        print "FIRE"
         
         self.pos.x, self.pos.y = x, y
         self.vel.x, self.vel.y = vx, vy

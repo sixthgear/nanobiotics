@@ -127,7 +127,7 @@ class Game(object):
                 
         # render cursor
         
-        # data.cursor.blit(self.player.proxy.target.x, self.player.proxy.target.y)
+        data.cursor.blit(self.player.target.x, self.player.target.y)
         
         self.window.viewport.end()
                                

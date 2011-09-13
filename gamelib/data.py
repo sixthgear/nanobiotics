@@ -16,3 +16,5 @@ for sprite in spritesheet:
     sprite.anchor_y = sprite.height / 2 
 
 background = pyglet.resource.image('stage_1_background.png')
+
+cursor = spritesheet[1]
