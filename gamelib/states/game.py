@@ -57,7 +57,7 @@ class Game(object):
             text='READY', 
             font_size=144, x=WIDTH//2, y=HEIGHT//2,
             anchor_x='center', anchor_y='center',
-            color=(128,128,128,200))
+            color=(255,255,255,200))
             
         self.announce('READY', 3.0)
         
@@ -65,7 +65,7 @@ class Game(object):
             text='1234567890', 
             font_name=['DYLOVASTUFF', 'DYLOVASTUFF'], font_size=18, x=WIDTH-20, y=HEIGHT-20,
             anchor_x='right', anchor_y='top',
-            color=(128,128,128,200)
+            color=(255,255,255,255)
         )
                      
        # lets do this!
