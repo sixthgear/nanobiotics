@@ -47,6 +47,16 @@ class CompoundGameObject(GameObject):
                                    self.pos.y + offset[1]))
         s.offset_x, s.offset_y = offset
         self.sprites.append(s)
+
+    @property
+    def rot(self):
+        return self.sprites[0].rot
+
+    @rot.setter
+    def rot(self, v):
+        for s in self.sprites:
+            s.rot = v
+        
     
     @property
     def x(self): return self.pos.x

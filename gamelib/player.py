@@ -66,7 +66,6 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.weapon.update(dt)
             return
                     
-
         self.vel_target.zero()
         
         if self.gamepad:
@@ -115,7 +114,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         #self.sprite.xy = self.pos.x, self.pos.y
                 
         # modify rotation
-        self.sprites[0].rot = -self.vel.angle
+        self.rot = -self.vel.angle
         
         obj.CompoundGameObject.update(self, dt)
 
