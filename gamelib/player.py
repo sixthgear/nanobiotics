@@ -6,6 +6,8 @@ import vector
 import constants
 import gamepad
 import bullet
+
+from weapons.weapon import Weapon
   
 class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     """
@@ -26,11 +28,13 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.target = vector.Vec2d(x,y)
         self.cooldown = 2
         self.firing = False
+        self.weapon = Weapon(None) # we like guns
         
         # pyglet events
         self.keys = pyglet.window.key.KeyStateHandler()
         self.gamepad = gamepad.GamepadHandler.connect()
         self.dispatch_event('on_respawn')
+        
 
     def on_gamepad_connect(self):
         print 'Gamepad Connect!'
@@ -45,9 +49,11 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         pass
         
     def on_mouse_press(self, x, y, button, modifiers):
+        self.weapon.engage()
         self.firing = True        
 
     def on_mouse_release(self, x, y, button, modifiers):
+        self.weapon.disengage()
         self.firing = False
             
     def on_mouse_motion(self, x, y, dx, dy): 
@@ -59,8 +65,13 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
                                                     
     def update(self, dt):
         
-        if not self.alive: return
+        if not self.alive:
+            self.weapon.disengage()
+            self.weapon.update(dt)
+            return
                     
+        self.weapon.update(dt)
+
         self.vel_target.zero()
         
         if self.gamepad:

@@ -35,14 +35,19 @@ class CompoundGameObject(GameObject):
         for i in img_col:
             o_x, o_y = i[1]
             s = rabbyt.Sprite(i[0], xy=(x + o_x, y + o_y))
-            s.offset_x = o_x
-            s.offset_y = o_y
+            s.offset_x, s.offset_y = o_x, o_y
             self.sprites.append(s)
 
         #hax for now, first sprite is main sprite that we use for collision dectection
         self.bounding_radius = self.__class__.width // 2
         self.bounding_radius_squared = self.bounding_radius ** 2
-        
+    
+    def add_sprite(self, img, offset):
+        s = rabbyt.Sprite(img, xy=(self.pos.x + offset[0], 
+                                   self.pos.y + offset[1]))
+        s.offset_x, s.offset_y = offset
+        self.sprites.append(s)
+    
     @property
     def x(self): return self.pos.x
         
