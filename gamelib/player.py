@@ -133,7 +133,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.cooldown -= 1
             return
             
-        self.cooldown = 2
+        self.cooldown = 0
                 
         bv = (dest - source).normal * 40
         bp = source # + bv
