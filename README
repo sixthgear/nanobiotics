@@ -1,19 +1,20 @@
-Your Game Title
-===============
+NANOBIOTICS
+===========
 
 Entry in PyWeek #4  <http://www.pyweek.org/4/>
-Team: YOUR TEAM NAME (leave the "Team: bit")
-Members: YOUR TEAM MEMBERS (leave the "Members: bit")
+Team: Spacelab Six
+Members: meenuh, mjard, sixthgear, spacelab
 
 
 DEPENDENCIES:
 
 You might need to install some of these before running the game:
 
-  Python:     http://www.python.org/
-  PyGame:     http://www.pygame.org/
-  PyOpenGL:   http://pyopengl.sf.net/
-
+  Python:     http://www.python.org/  
+  Pyglet:     
+  Rabbyt:     
+  Lepton:     
+  PyGame:     http://www.pygame.org/ (optional for gamepad support)
 
 
 RUNNING THE GAME:
@@ -36,5 +37,5 @@ Press the left mouse button to fire the ducks.
 
 LICENSE:
 
-This game skellington is placed in the Public Domain.
+BSD
 
