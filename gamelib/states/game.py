@@ -32,7 +32,7 @@ class Game(object):
         
         # game objects
         self.worlds = [world.World(svg.SVG("data/stomach.svg"), self)]
-        self.world = self.worlds.pop()
+        self.world = None
         self.player = player.Player(WIDTH//2,HEIGHT//2)
         self.robots = []
         self.pickups = []
@@ -81,6 +81,7 @@ class Game(object):
                      
        # lets do this!
         self.rebuild_render_list()
+        self.next_world()
         #self.next_wave()
 
     def collect_garbage(self, dt=0.0):
@@ -210,13 +211,18 @@ class Game(object):
         Being the next world!
         """
 
+        self.add_score(0)
         self.collect_garbage()
-        self.world = self.worlds.pop()
 
-        # let the player get their bearings
-        self.invuln = 3
+        if self.worlds:
+            self.world = self.worlds.pop()
 
-        self.announce('The %s' % self.world.name, 3.0)
+            # let the player get their bearings
+            self.invuln = 3
+
+            self.announce('The %s' % self.world.name, 3.0)
+        else:
+            pass # player wins
 
     def next_wave(self):      
         """
