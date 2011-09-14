@@ -268,16 +268,7 @@ class Game(object):
             #     b.die()
             if not collision.circle_to_circle(b.pos.x, b.pos.y, 16, WIDTH//2, HEIGHT//2, WIDTH/2 - 50):
                 b.die()                
-     
-        # player vs screen                    
-        # self.player.pos.x = min(max(32, self.player.pos.x), WIDTH * 2)
-        # self.player.pos.y = min(max(50, self.player.pos.y), HEIGHT * 2)
-        if not collision.circle_to_circle(self.player.pos.x, self.player.pos.y, 32, WIDTH//2, HEIGHT//2, WIDTH/2 - 50):
-            center = vector.Vec2d(WIDTH//2, HEIGHT//2)
-            self.player.pos = center + (self.player.pos - center).normal * (WIDTH/2 - 50)
-            # self.player.update(0)
-                
-
+    
         # robots vs player bullets
         for r, b in rabbyt.collisions.collide_groups(self.robots, bullet.pool.active):
             if not r.alive: continue

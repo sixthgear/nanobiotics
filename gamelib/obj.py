@@ -79,7 +79,7 @@ class CompoundGameObject(GameObject):
             sin_a = math.sin(angle)
             cos_a = math.cos(angle)
         
-        for i, s in enumerate(self.sprites):
+        for i, s in enumerate(self.sprites):            
             if i == 0:
                 s.xy = self.pos.x + s.offset_x, self.pos.y + s.offset_y
             else:
