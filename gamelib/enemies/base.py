@@ -4,7 +4,7 @@ import random
 from gamelib import obj
 from gamelib import data
 from gamelib import bullet
-# from gamelib import fx
+from gamelib import fx
 
 class BaseEnemy(obj.GameObject):
     
@@ -44,5 +44,5 @@ class BaseEnemy(obj.GameObject):
             pass
         
     def die(self):
-        # fx.exploder.explode(self.pos.x, self.pos.y)
+        fx.exploder.explode(self.pos.x, self.pos.y)
         self.alive = False

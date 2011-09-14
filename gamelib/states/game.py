@@ -8,6 +8,7 @@ from gamelib import bullet
 from gamelib import collision
 from gamelib import vector
 from gamelib import world
+from gamelib import fx
 from gamelib.enemies import virus
 
 from gamelib.constants import *
@@ -139,7 +140,7 @@ class Game(object):
         pyglet.gl.glColor4f(1, 1, 1, 1)
             
         # render particles and bullets
-        # effects.draw()
+        fx.draw()
         bullet.pool.draw()
         
         # render HUD        
@@ -186,7 +187,7 @@ class Game(object):
         
         [r.update(dt) for r in self.robots]
         bullet.pool.update(dt)        
-        # effects.update(dt)        
+        fx.update(dt)        
         self.collide()
                     
     def ai(self, dt):
@@ -196,7 +197,7 @@ class Game(object):
         make decisions on what to do next
         """                       
         # update current wave
-        # self.current_wave.ai(self)
+        self.world.ai(self)
         
         # update robots
         for r in self.robots:
@@ -220,7 +221,7 @@ class Game(object):
             # let the player get their bearings
             self.invuln = 3
 
-            self.announce('The %s' % self.world.name, 3.0)
+            self.announce('THE %s' % self.world.name, 3.0)
         else:
             pass # player wins
 
@@ -231,7 +232,7 @@ class Game(object):
         self.collect_garbage()
         self.wave += 1
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
-        for i in range(100):
+        for i in range(35):
             self.spawn_robot(virus.Virus, 1, random.randrange(WIDTH-20)+10, random.randrange(HEIGHT-20)+10)
         
         
@@ -276,13 +277,20 @@ class Game(object):
         """
         Heres where we detect us some collisions.
         """        
+        
+        center = vector.Vec2d(WIDTH/2, HEIGHT/2)
+        radius = WIDTH/2 - 60
         # bullets vs screen
         for b in (b for b in bullet.pool.active if b.alive):
-            # if not collision.AABB_to_AABB(b.pos.x-2, b.pos.y-2, 4, 4, 0, 0, WIDTH*2, HEIGHT*2):
-            #     b.die()
-            if not collision.circle_to_circle(b.pos.x, b.pos.y, 16, WIDTH//2, HEIGHT//2, WIDTH/2 - 50):
+            if not collision.circle_to_circle(b.pos, 16, center, radius):
                 b.die()                
     
+        # player vs screen                    
+        if not collision.circle_to_circle(self.player.pos, 32, center, radius):
+            self.player.pos = center + (self.player.pos - center).normal * radius
+            self.player.vel.zero()
+            self.player.vel_target.zero()
+
         # robots vs player bullets
         for r, b in rabbyt.collisions.collide_groups(self.robots, bullet.pool.active):
             if not r.alive: continue
@@ -368,5 +376,5 @@ class Game(object):
         pyglet.clock.unschedule(self.ai)
         pyglet.clock.unschedule(self.collect_garbage)
         bullet.pool.clear()
-        effects.clear()
+        fx.clear()
         pyglet.clock.schedule_once(self.window.title, 0.0)

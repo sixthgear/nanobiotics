@@ -13,7 +13,7 @@ from weapons.basicturret import BasicTurret
 class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     """
     """
-    speed = 640
+    speed = 540
     speed_diag = speed * 0.7071    
     vel_smooth = 0.4
     width = 64
@@ -22,10 +22,10 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     def __init__(self, x, y):
         player_sprites = [
             (data.spritesheet[40],(0,0)), 
-            (data.spritesheet[15],(25,0)),
-            (data.spritesheet[15],(-25,0)),
-            (data.spritesheet[15],(10,20)),
-            (data.spritesheet[15],(-10,20))            
+            # (data.spritesheet[15],(25,0)),
+            # (data.spritesheet[15],(-25,0)),
+            # (data.spritesheet[15],(10,20)),
+            # (data.spritesheet[15],(-10,20))            
         ] 
                 
         obj.CompoundGameObject.__init__(self, player_sprites, x, y)
@@ -122,16 +122,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         # do regular euler updates
         self.pos += self.vel * dt
         #self.sprite.xy = self.pos.x, self.pos.y
-        
-        # player vs screen                    
-        # self.player.pos.x = min(max(32, self.player.pos.x), WIDTH * 2)
-        # self.player.pos.y = min(max(50, self.player.pos.y), HEIGHT * 2)
-        if not collision.circle_to_circle(self.pos.x, self.pos.y, 32, constants.WIDTH//2, constants.HEIGHT//2, constants.WIDTH/2-60):
-            center = vector.Vec2d(constants.WIDTH//2, constants.HEIGHT//2)
-            self.pos = center + (self.pos - center).normal * (constants.WIDTH/2 -60)
-            # self.player.update(0)
-               
-
+                
         # modify rotation
         self.rot = -self.vel.angle
 

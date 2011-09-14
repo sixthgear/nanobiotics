@@ -1,3 +1,4 @@
+import pyglet
 import vector
 
 from gamelib.enemies import base
@@ -7,7 +8,7 @@ class World(object):
     World object contains world geometry and tells game whats up
     """
 
-    def __init__(self, svg, game, name="Unknown"):
+    def __init__(self, svg, game, name="VOID"):
         self.game = game
         self.countdown = 120
         self.name = name
@@ -19,14 +20,14 @@ class World(object):
         valid = False
         return valid
 
-    def update(self, dt):
-
-        if self.countdown > 0:
-            self.countdown -= 1
-            return
-
-        self.countdown = 120
+    def ai(self, game):
 
         if len(filter(lambda r: r.alive, self.game.robots)) == 0:
-            self.game.next_wave()
+            pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
+        
+        
+    def update(self, dt):
+
+        pass
+
 
