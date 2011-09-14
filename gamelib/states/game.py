@@ -30,7 +30,8 @@ class Game(object):
         self.current_wave = None
         
         # game objects
-        self.world = world.World(svg.SVG("data/stomach.svg"), self)
+        self.worlds = [world.World(svg.SVG("data/stomach.svg"), self)]
+        self.world = self.worlds.pop()
         self.player = player.Player(WIDTH//2,HEIGHT//2)
         self.robots = []
         self.pickups = []
@@ -188,6 +189,16 @@ class Game(object):
         for p in self.pickups:
             p.ai(self)
 
+    def next_world(self):
+        """
+        Being the next world!
+        """
+
+        self.collect_garbage()
+        self.world = self.worlds.pop()
+
+        self.announce('The %s' % self.world.name, 3.0)
+
     def next_wave(self):      
         """
         Begin the next wave!
@@ -226,7 +237,11 @@ class Game(object):
         Add some score
         """        
         self.score += score
-        self.score_label.text = '%08d' % self.score
+
+        if self.score < 9999999999:
+            self.score_label.text = '%010d' % self.score
+        else:
+            self.score_label.text = '%d' % self.score
                 
     def collide(self):
         """
