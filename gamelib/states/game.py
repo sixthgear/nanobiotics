@@ -105,9 +105,9 @@ class Game(object):
         """
         self.window.viewport.begin()
         self.window.clear()
-                        
-        # render background
-        self.camera = self.player.pos - vector.Vec2d(WIDTH//2, HEIGHT//2)
+        
+        pyglet.gl.glPushMatrix()
+        # render background        
         pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
         
         # pyglet.gl.glColor4f(1, 1, 1, 1)
@@ -127,7 +127,7 @@ class Game(object):
         bullet.pool.draw()
         
         # render HUD        
-        
+        pyglet.gl.glPopMatrix()
         self.score_label.draw()
         # self.lives_label.draw()
         if self.announcing: 
@@ -160,6 +160,7 @@ class Game(object):
         """
         self.tick += 1        
         self.player.update(dt)
+        self.camera = self.player.pos - vector.Vec2d(WIDTH//2, HEIGHT//2)
         [r.update() for r in self.robots]
         bullet.pool.update()        
         # effects.update(dt)        
