@@ -17,7 +17,7 @@ class BaseEnemy(obj.GameObject):
     target = None
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
-        super(BaseEnemy, self).__init__(data.spritesheet[random.randrange(5)*8 + random.randrange(6)], x, y)
+        super(BaseEnemy, self).__init__(data.spritesheet[random.randrange(4)], x, y)
         self.alive = True        
         self.life = self.__class__.life
 
