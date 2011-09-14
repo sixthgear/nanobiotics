@@ -26,6 +26,7 @@ class Game(object):
         self.tick = 0    
         self.wave = 0
         self.score = 0
+        self.invuln = 0
         self.diffculty = NORMAL
         self.current_wave = None
         
@@ -172,6 +173,10 @@ class Game(object):
         Step through all the important game objects and update their position.
         Perform physics and collision detection.
         """
+
+        if self.invuln > 0:
+            self.invuln -= dt
+
         self.tick += 1        
         self.player.update(dt)
         self.world.update(dt)
@@ -207,6 +212,9 @@ class Game(object):
 
         self.collect_garbage()
         self.world = self.worlds.pop()
+
+        # let the player get their bearings
+        self.invuln = 3
 
         self.announce('The %s' % self.world.name, 3.0)
 
@@ -277,20 +285,18 @@ class Game(object):
             r.hit(b)
             if not r.alive: self.on_kill(r)
                 
-        # if not self.player.alive: return
-        # 
-        # # player vs robots
-        # for r in rabbyt.collisions.collide_single(self.player, self.robots):
-        #     if not r.alive: continue
-        #     if self.player.form == player.MONSTER:
-        #         r.hit(self.player)
-        #         if not r.alive: self.on_kill(r)
-        #     elif not self.player.invincible:
-        #         self.player.hit(r)
-        #     # bail out if the player dies, since we don't need to test any further collisions
-        #     # as they all pertain to the player
-        #     if not self.player.alive: return
-        #                 
+        if not self.player.alive: return
+         
+        # player vs robots
+        for r in rabbyt.collisions.collide_single(self.player, self.robots):
+            if not r.alive: continue
+            
+            if not self.invuln > 0:
+                self.player.hit(r)
+            # bail out if the player dies, since we don't need to test any further collisions
+            # as they all pertain to the player
+            if not self.player.alive: return
+                         
         # # player vs robot bullets
         # for b in rabbyt.collisions.collide_single(self.player, bullet.pool.active):
         #     if not b.alive or not b.group==1: continue

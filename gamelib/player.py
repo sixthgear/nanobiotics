@@ -145,7 +145,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.weapon.update(dt, self.pos, self.target)
         
     def hit(self, other):        
-        pass
+        print "ouch!"
         
     def die(self):
         self.alive = False        
