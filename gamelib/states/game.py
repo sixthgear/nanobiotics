@@ -264,12 +264,12 @@ class Game(object):
         """        
         # bullets vs screen
         for b in (b for b in bullet.pool.active if b.alive):
-            if not collision.AABB_to_AABB(b.pos.x-2, b.pos.y-2, 4, 4, 0, 0, WIDTH, HEIGHT):
+            if not collision.AABB_to_AABB(b.pos.x-2, b.pos.y-2, 4, 4, 0, 0, WIDTH*2, HEIGHT*2):
                 b.die()
      
         # player vs screen                    
-        self.player.pos.x = min(max(32, self.player.pos.x), WIDTH)
-        self.player.pos.y = min(max(50, self.player.pos.y), HEIGHT)
+        self.player.pos.x = min(max(32, self.player.pos.x), WIDTH * 2)
+        self.player.pos.y = min(max(50, self.player.pos.y), HEIGHT * 2)
 
         # robots vs player bullets
         for r, b in rabbyt.collisions.collide_groups(self.robots, bullet.pool.active):

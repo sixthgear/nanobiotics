@@ -5,7 +5,7 @@ from gamelib.enemies import base
 
 class Virus(base.BaseEnemy):
     sprite_image = data.spritesheet[random.randrange(5)*8 + random.randrange(6)]
-    speed = 20.0
+    speed = 100.0
     speed_diag = speed * 0.7071
     
     def ai(self, scene):
