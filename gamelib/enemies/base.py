@@ -29,6 +29,7 @@ class BaseEnemy(obj.GameObject):
 
         self.pos += self.vel * dt
         self.sprite.xy = self.pos.x, self.pos.y
+        self.x, self.y = self.pos.x, self.pos.y
         
     def ai(self, scene):
         if not self.alive: return

@@ -113,7 +113,7 @@ class Game(object):
         
         pyglet.gl.glPushMatrix()
         # render background        
-        pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
+        # pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
         
         # pyglet.gl.glColor4f(1, 1, 1, 1)
         data.background.blit(0,0)
@@ -168,7 +168,7 @@ class Game(object):
         self.world.update(dt)
         self.camera = self.player.pos - vector.Vec2d(WIDTH//2, HEIGHT//2)
         [r.update(dt) for r in self.robots]
-        bullet.pool.update()        
+        bullet.pool.update(dt)        
         # effects.update(dt)        
         self.collide()
                     
