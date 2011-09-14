@@ -21,10 +21,10 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     def __init__(self, x, y):
         player_sprites = [
             (data.spritesheet[40],(0,0)), 
-            (data.spritesheet[41],(25,0)),
-            (data.spritesheet[41],(-25,0)),
-            (data.spritesheet[41],(10,20)),
-            (data.spritesheet[41],(-10,20))            
+            (data.spritesheet[15],(25,0)),
+            (data.spritesheet[15],(-25,0)),
+            (data.spritesheet[15],(10,20)),
+            (data.spritesheet[15],(-10,20))            
         ] 
                 
         obj.CompoundGameObject.__init__(self, player_sprites, x, y)
@@ -62,8 +62,8 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.target.x = min(max(self.target.x + dx, 0), constants.WIDTH)
         self.target.y = min(max(self.target.y + dy, 0), constants.HEIGHT)
         rot = -(self.target - self.pos).angle
-        for s in self.sprites[1:]:
-            s.rot = rot
+        # for s in self.sprites[1:]:
+        #     s.rot = rot
                  
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers): 
         self.on_mouse_motion(x,y,dx,dy)
