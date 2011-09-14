@@ -61,7 +61,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     def on_mouse_motion(self, x, y, dx, dy): 
         self.target.x = min(max(self.target.x + dx, 0), constants.WIDTH)
         self.target.y = min(max(self.target.y + dy, 0), constants.HEIGHT)
-        rot = -(self.target - self.pos).angle
+        # rot = -(self.target - self.pos).angle
         # for s in self.sprites[1:]:
         #     s.rot = rot
                  
