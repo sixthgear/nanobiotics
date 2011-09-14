@@ -166,7 +166,7 @@ class Game(object):
         self.player.update(dt)
         self.world.update(dt)
         self.camera = self.player.pos - vector.Vec2d(WIDTH//2, HEIGHT//2)
-        [r.update() for r in self.robots]
+        [r.update(dt) for r in self.robots]
         bullet.pool.update()        
         # effects.update(dt)        
         self.collide()
