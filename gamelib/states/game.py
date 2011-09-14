@@ -6,6 +6,7 @@ from gamelib import data
 from gamelib import player
 from gamelib import bullet
 from gamelib import collision
+from gamelib import vector
 from gamelib.enemies import base
 
 from gamelib.constants import *
@@ -29,7 +30,8 @@ class Game(object):
         self.player = player.Player(WIDTH//2,HEIGHT//2)
         self.robots = []
         self.pickups = []
-
+        self.camera = vector.Vec2d(100,100)
+        
         # sorted list of objects to render back to front
         self.render_list = []
                             
@@ -105,6 +107,9 @@ class Game(object):
         self.window.clear()
                         
         # render background
+        self.camera = self.player.pos - vector.Vec2d(WIDTH//2, HEIGHT//2)
+        pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
+        
         # pyglet.gl.glColor4f(1, 1, 1, 1)
         data.background.blit(0,0)
                 
