@@ -56,9 +56,10 @@ class CompoundGameObject(GameObject):
         return self.sprites[0].rot
 
     @rot.setter
-    def rot(self, v):
-        for s in self.sprites:
-            s.rot = v
+    def rot(self, r):
+        self.sprites[0].rot = r
+        # for s in self.sprites:
+        #     s.rot = v
         
     
     @property
