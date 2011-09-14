@@ -35,7 +35,9 @@ class Game(object):
         self.player = player.Player(WIDTH//2,HEIGHT//2)
         self.robots = []
         self.pickups = []
-        self.camera = vector.Vec2d(100,100)
+        
+        self.camera = vector.Vec2d(WIDTH//2,HEIGHT//2)
+        self.cursor = vector.Vec2d(WIDTH//2,HEIGHT//2)
         
         # sorted list of objects to render back to front
         self.render_list = []
@@ -102,6 +104,13 @@ class Game(object):
         self.render_list = [r for r in self.robots]
         self.render_list += [p for p in self.pickups]
         self.render_list.append(self.player)        
+        
+    def on_mouse_motion(self, x, y, dx, dy): 
+        self.cursor.x = min(max(self.cursor.x + dx, 0), WIDTH)
+        self.cursor.y = min(max(self.cursor.y + dy, 0), HEIGHT)
+                 
+    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers): 
+        self.on_mouse_motion(x,y,dx,dy)        
 
     def on_draw(self):
         """
@@ -113,7 +122,7 @@ class Game(object):
         
         pyglet.gl.glPushMatrix()
         # render background        
-        # pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
+        pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
         
         # pyglet.gl.glColor4f(1, 1, 1, 1)
         data.background.blit(0,0)
@@ -139,7 +148,7 @@ class Game(object):
             self.announcement.draw()        
                 
         # render cursor        
-        data.cursor.blit(self.player.target.x, self.player.target.y)
+        data.cursor.blit(self.cursor.x, self.cursor.y)
         
         self.window.viewport.end()
                                
@@ -167,6 +176,8 @@ class Game(object):
         self.player.update(dt)
         self.world.update(dt)
         self.camera = self.player.pos - vector.Vec2d(WIDTH//2, HEIGHT//2)
+        self.player.target = self.camera + self.cursor
+        
         [r.update(dt) for r in self.robots]
         bullet.pool.update(dt)        
         # effects.update(dt)        

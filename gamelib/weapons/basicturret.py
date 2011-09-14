@@ -17,7 +17,7 @@ class BasicTurret(Weapon):
         self.cooldown = 0
 
         if self.engaged:
-            bv = (self.target_pos - self.pos).normal * 2400
+            bv = (self.target_pos - self.pos).normal * 1800
             bp = self.pos
             if bv.x != 0 or bv.y != 0:
                 bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 

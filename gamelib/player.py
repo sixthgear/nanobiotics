@@ -57,17 +57,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
 
     def on_mouse_release(self, x, y, button, modifiers):
         self.weapon.disengage()
-            
-    def on_mouse_motion(self, x, y, dx, dy): 
-        self.target.x = min(max(self.target.x + dx, 0), constants.WIDTH)
-        self.target.y = min(max(self.target.y + dy, 0), constants.HEIGHT)
-        # rot = -(self.target - self.pos).angle
-        # for s in self.sprites[1:]:
-        #     s.rot = rot
-                 
-    def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers): 
-        self.on_mouse_motion(x,y,dx,dy)
-                                                    
+                                                                
     def update(self, dt):
         
         if not self.alive:
