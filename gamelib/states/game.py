@@ -7,6 +7,7 @@ from gamelib import player
 from gamelib import bullet
 from gamelib import collision
 from gamelib import vector
+from gamelib import world
 from gamelib.enemies import base
 
 from gamelib.constants import *
@@ -27,6 +28,7 @@ class Game(object):
         self.current_wave = None
         
         # game objects
+        self.world = world.World(None, self)
         self.player = player.Player(WIDTH//2,HEIGHT//2)
         self.robots = []
         self.pickups = []
@@ -73,7 +75,7 @@ class Game(object):
                      
        # lets do this!
         self.rebuild_render_list()
-        self.next_wave()
+        #self.next_wave()
 
     def collect_garbage(self, dt=0.0):
         """
@@ -160,6 +162,7 @@ class Game(object):
         """
         self.tick += 1        
         self.player.update(dt)
+        self.world.update(dt)
         self.camera = self.player.pos - vector.Vec2d(WIDTH//2, HEIGHT//2)
         [r.update() for r in self.robots]
         bullet.pool.update()        
