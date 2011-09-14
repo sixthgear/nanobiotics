@@ -14,7 +14,6 @@ class World(object):
 
         if svg:
             self.borders = [vector.Vec2d(*v) for v in svg.paths[0].path[0]]
-            print self.borders
 
     def valid_location(self, v):
         valid = False

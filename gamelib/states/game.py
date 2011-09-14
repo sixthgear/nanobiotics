@@ -8,7 +8,7 @@ from gamelib import bullet
 from gamelib import collision
 from gamelib import vector
 from gamelib import world
-from gamelib.enemies import base
+from gamelib.enemies import virus
 
 from gamelib.constants import *
 
@@ -207,7 +207,7 @@ class Game(object):
         self.wave += 1
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
         for i in range(100):
-            self.spawn_robot(base.BaseEnemy, 1, random.randrange(WIDTH-20)+10, random.randrange(HEIGHT-20)+10)
+            self.spawn_robot(virus.Virus, 1, random.randrange(WIDTH-20)+10, random.randrange(HEIGHT-20)+10)
         
         
         self.announce('WAVE %d' % self.wave, 3.0)
@@ -220,7 +220,11 @@ class Game(object):
         if not x or not y:
             r = [robot() for r in range(n)]
         else:
-            r = [robot(x,y) for r in range(n)]        
+            r = [robot(x,y) for r in range(n)]
+
+        for roebit in r:
+            roebit.set_target(self.player)            
+
         self.robots += r
         self.render_list += r
                                              
