@@ -134,6 +134,11 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
                 
         # modify rotation
         self.rot = -self.vel.angle
+
+        # update turrets
+        rot = -(self.target - self.pos).angle
+        for s in self.sprites[1:]:
+            s.rot = rot
         
         obj.CompoundGameObject.update(self, dt)
         
