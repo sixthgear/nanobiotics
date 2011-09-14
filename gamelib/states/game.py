@@ -125,7 +125,7 @@ class Game(object):
         pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
         
         # pyglet.gl.glColor4f(1, 1, 1, 1)
-        data.background.blit(0,0)
+        data.background.blit(WIDTH//2,HEIGHT//2)
                 
         # render characters and pickups
         rabbyt.set_default_attribs()
@@ -264,12 +264,19 @@ class Game(object):
         """        
         # bullets vs screen
         for b in (b for b in bullet.pool.active if b.alive):
-            if not collision.AABB_to_AABB(b.pos.x-2, b.pos.y-2, 4, 4, 0, 0, WIDTH*2, HEIGHT*2):
-                b.die()
+            # if not collision.AABB_to_AABB(b.pos.x-2, b.pos.y-2, 4, 4, 0, 0, WIDTH*2, HEIGHT*2):
+            #     b.die()
+            if not collision.circle_to_circle(b.pos.x, b.pos.y, 16, WIDTH//2, HEIGHT//2, WIDTH/2 - 50):
+                b.die()                
      
         # player vs screen                    
-        self.player.pos.x = min(max(32, self.player.pos.x), WIDTH * 2)
-        self.player.pos.y = min(max(50, self.player.pos.y), HEIGHT * 2)
+        # self.player.pos.x = min(max(32, self.player.pos.x), WIDTH * 2)
+        # self.player.pos.y = min(max(50, self.player.pos.y), HEIGHT * 2)
+        if not collision.circle_to_circle(self.player.pos.x, self.player.pos.y, 32, WIDTH//2, HEIGHT//2, WIDTH/2 - 50):
+            center = vector.Vec2d(WIDTH//2, HEIGHT//2)
+            self.player.pos = center + (self.player.pos - center).normal * (WIDTH/2 - 50)
+            # self.player.update(0)
+                
 
         # robots vs player bullets
         for r, b in rabbyt.collisions.collide_groups(self.robots, bullet.pool.active):

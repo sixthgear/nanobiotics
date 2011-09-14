@@ -25,4 +25,4 @@ def AABB_to_AABB(a_x, a_y, a_width, a_height, b_x, b_y, b_width, b_height):
     return True
             
 def circle_to_circle(a_x, a_y, a_radius, b_x, b_y, b_radius):
-    return (a_x - b_x) ** 2, (a_y - b_y) ** 2 < (a_radius + b_radius) ** 2
+    return (a_x - b_x) ** 2 + (a_y - b_y) ** 2 < (a_radius + b_radius) ** 2
