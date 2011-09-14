@@ -12,6 +12,8 @@ from gamelib.enemies import base
 
 from gamelib.constants import *
 
+from libs.squirtle import svg
+
 class Game(object):
     """
     The game object is the BOSS.
@@ -28,7 +30,7 @@ class Game(object):
         self.current_wave = None
         
         # game objects
-        self.world = world.World(None, self)
+        self.world = world.World(svg.SVG("data/stomach.svg"), self)
         self.player = player.Player(WIDTH//2,HEIGHT//2)
         self.robots = []
         self.pickups = []
