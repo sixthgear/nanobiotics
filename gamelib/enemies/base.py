@@ -14,15 +14,20 @@ class BaseEnemy(obj.GameObject):
     height = 64
     points = 100
     life = 1
+    target = None
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(BaseEnemy, self).__init__(data.spritesheet[random.randrange(5)*8 + random.randrange(6)], x, y)
         self.alive = True        
         self.life = self.__class__.life
+
+    def set_target(self, target):
+        self.target = target
                 
-    def update(self):
+    def update(self, dt):
         if not self.alive: return
-        self.pos += self.vel
+
+        self.pos += self.vel * dt
         self.sprite.xy = self.pos.x, self.pos.y
         
     def ai(self, scene):
