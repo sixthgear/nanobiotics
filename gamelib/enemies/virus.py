@@ -16,6 +16,7 @@ class Virus(base.BaseEnemy):
     color = (162.0/255,142.0/255,249.0/255)
     speed = 100.0
     speed_diag = speed * 0.7071
+    vel_smooth = 0.04
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(Virus, self).__init__(x, y, vx, vy)
@@ -23,6 +24,7 @@ class Virus(base.BaseEnemy):
         self.current_animation = self.animation_small
         self.form = 0
         self.speed = self.__class__.speed
+        self.vel_target = vector.Vec2d(0,0)
         
     def ai(self, scene):
         if not self.alive: return
@@ -30,11 +32,15 @@ class Virus(base.BaseEnemy):
         self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
 
         if self.target and self.target.alive:
-            self.vel = (self.target.pos - self.pos).normal * self.speed        
-        else:
-            # player dead, do something cool, like dance!
-            pass
+            self.vel_target = (self.target.pos - self.pos).normal * self.speed            
+        # else:
+        #     # player dead, do something cool, like dance!
+        #     pass
             
+    def update(self, dt):        
+        self.vel += (self.vel_target - self.vel ) * self.__class__.vel_smooth
+        super(Virus, self).update(dt)
+        
     def die(self):
         fx.gibber.explode(self.pos.x, self.pos.y, color=self.color)
         self.alive = False
@@ -82,7 +88,8 @@ class SixthVirus(MutatingVirus):
     animation_small = [3]
     animation_large = [5]
     color = (131.0/255,131.0/255,131.0/255)
-    speed = 225.0
+    speed = 250.0
+    vel_smooth = 0.2
     
     def update(self, dt):
         super(SixthVirus, self).update(dt)
