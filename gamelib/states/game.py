@@ -373,7 +373,7 @@ class Game(object):
         self.render_list = []
         self.window.remove_handlers(self.player.keys)
         self.window.remove_handlers(self.player)
-        self.music.pause()
+        # self.music.pause()
         pyglet.clock.unschedule(self.update)
         pyglet.clock.unschedule(self.ai)
         pyglet.clock.unschedule(self.collect_garbage)

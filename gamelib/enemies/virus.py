@@ -38,7 +38,7 @@ class Virus_A(Virus):
     sprite_image = data.spritesheet[3]
     frames = [data.spritesheet[3], data.spritesheet[11]]
     color = color=(35.0/255,35.0/255,224.0/255)
-    speed = 100.0
+    speed = 200.0
     speed_diag = speed * 0.7071
     
 class Virus_B(Virus):
@@ -46,7 +46,7 @@ class Virus_B(Virus):
     sprite_image = data.spritesheet[5]
     frames = [data.spritesheet[5], data.spritesheet[13]]
     color = color=(162.0/255,142.0/255,249.0/255)
-    speed = 100.0
+    speed = 150.0
     speed_diag = speed * 0.7071
     
     
