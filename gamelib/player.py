@@ -20,6 +20,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     width = 64
     height = 64 
     invuln = 3
+    lives = 3
 
     def __init__(self, x, y):
         player_sprites = [
@@ -150,8 +151,15 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     def die(self):
         fx.exploder.explode(self.pos.x, self.pos.y)
         self.alive = False
+        self.lives -= 1
+        self.dispatch_event('on_death')
 
-        self.dispatch_event('on_death')    
+    def respawn(self, *args):
+        self.pos = vector.Vec2d(0, 0)
+        self.vel_target = vector.Vec2d(0, 0)
+        self.alive = True
+
+        self.dispatch_event("on_respawn")    
                 
 Player.register_event_type('on_hit')
 Player.register_event_type('on_death')

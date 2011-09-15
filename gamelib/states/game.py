@@ -340,13 +340,17 @@ class Game(object):
     def on_death(self):
         """
         Player bites the dust.
-        """                
+        """
         # update lives text
         # self.lives_label.text = "%d" % self.player.lives
                                 
         # check for gameover
-        # if self.player.lives == 0:
-        #     self.game_over()
+        if self.player.lives == 0:
+            self.game_over()
+            return
+        
+        pyglet.clock.schedule_once(self.player.respawn, 3.0)
+             
         
     def on_respawn(self):
         """
