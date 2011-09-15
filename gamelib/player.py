@@ -142,6 +142,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         
     def hit(self, other):        
         if self.invuln > 0:
+            pass
             # imagine shields sounds
         else:
             self.die() # bummer 
