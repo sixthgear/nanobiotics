@@ -1,6 +1,7 @@
 import pyglet
 import rabbyt
 import random
+import math
 
 from gamelib import camera
 from gamelib import data
@@ -82,7 +83,7 @@ class Game(object):
             color=(255,255,255,255)
         )
                      
-       # lets do this!
+        # lets do this!
         self.rebuild_render_list()
         self.next_world()
         self.player.pos = self.world.center.copy()
@@ -238,7 +239,11 @@ class Game(object):
         self.wave += 1
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
         for i in range(35):
-            self.spawn_robot(virus.Virus, 1, random.randrange(WIDTH-20)+10, random.randrange(HEIGHT-20)+10)
+            angle = random.random() * math.pi * 2
+            mag = random.randrange(200, self.world.radius - 60)
+            x = self.world.center.x + math.cos(angle)*mag
+            y = self.world.center.y + math.sin(angle)*mag
+            self.spawn_robot(virus.Virus, 1, x, y)
         
         
         self.announce('WAVE %d' % self.wave, 3.0)
