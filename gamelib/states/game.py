@@ -34,11 +34,12 @@ class Game(object):
         # game objects
         self.worlds = [world.World(svg.SVG("data/stomach.svg"), self)]
         self.world = None
-        self.player = player.Player(WIDTH//2,HEIGHT//2)
+                        
+        self.player = player.Player(0,0)
         self.robots = []
         self.pickups = []
         
-        self.camera = vector.Vec2d(WIDTH//2,HEIGHT//2)
+        self.camera = vector.Vec2d()
         self.cursor = vector.Vec2d(WIDTH//2,HEIGHT//2)
         
         # sorted list of objects to render back to front
@@ -83,7 +84,8 @@ class Game(object):
        # lets do this!
         self.rebuild_render_list()
         self.next_world()
-        #self.next_wave()
+        self.player.pos = self.world.center.copy()
+        self.camera = self.world.center.copy()
 
     def collect_garbage(self, dt=0.0):
         """
@@ -128,7 +130,7 @@ class Game(object):
         pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
         
         # pyglet.gl.glColor4f(1, 1, 1, 1)
-        data.background.blit(WIDTH//2,HEIGHT//2)
+        data.background.blit(self.world.center.x, self.world.center.y)
                 
         # render characters and pickups
         rabbyt.set_default_attribs()
@@ -182,7 +184,17 @@ class Game(object):
         self.tick += 1        
         self.player.update(dt)
         self.world.update(dt)
-        self.camera = self.player.pos - vector.Vec2d(WIDTH//2, HEIGHT//2)
+                
+        camera_bounds_x = self.world.width - WIDTH
+        camera_bounds_y = self.world.height - HEIGHT
+        player_norm = vector.Vec2d(self.player.pos.x / self.world.width, self.player.pos.y / self.world.height)        
+        # if self.tick % 30 == 0: print player_norm, self.player.pos
+        
+        self.camera.x = max(0, min(camera_bounds_x * player_norm.x, camera_bounds_y))
+        self.camera.y = max(0, min(camera_bounds_y * player_norm.y, camera_bounds_y))
+        # self.camera.x = 0
+        # self.camera.y = 0
+
         self.player.target = self.camera + self.cursor
         
         [r.update(dt) for r in self.robots]
@@ -277,17 +289,15 @@ class Game(object):
         """
         Heres where we detect us some collisions.
         """        
-        
-        center = vector.Vec2d(WIDTH/2, HEIGHT/2)
-        radius = 600
+                
         # bullets vs screen
         for b in (b for b in bullet.pool.active if b.alive):
-            if not collision.circle_to_circle(b.pos, 16, center, radius):
+            if not collision.circle_to_circle(b.pos, 16, self.world.center, self.world.radius):
                 b.die()                
     
         # player vs screen                    
-        if not collision.circle_to_circle(self.player.pos, 32, center, radius):
-            self.player.pos = center + (self.player.pos - center).normal * radius
+        if not collision.circle_to_circle(self.player.pos, 32, self.world.center, self.world.radius):
+            self.player.pos = self.world.center + (self.player.pos - self.world.center).normal * self.world.radius
             self.player.vel.zero()
             self.player.vel_target.zero()
 

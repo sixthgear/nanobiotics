@@ -54,5 +54,8 @@ class Vec2d(object):
         self.x = math.sin(angle) * l
         self.y = math.cos(angle) * l
     
+    def copy(self):
+        return Vec2d(self.x, self.y)
+    
     def __repr__(self):
         return 'Vec2d(%.2f, %.2f)' % (self.x, self.y)

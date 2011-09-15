@@ -13,6 +13,11 @@ class World(object):
         self.countdown = 120
         self.name = name
 
+        self.width = 1600
+        self.height = 1600
+        self.center = vector.Vec2d(self.width/2, self.height/2)
+        self.radius = 600
+        
         if svg:
             self.borders = [vector.Vec2d(*v) for v in svg.paths[0].path[0]]
 
