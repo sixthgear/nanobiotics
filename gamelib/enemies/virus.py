@@ -4,6 +4,7 @@ import math
 
 from gamelib import data
 from gamelib import fx
+from gamelib import vector
 from gamelib.enemies import base
 
 class Virus(base.BaseEnemy):
@@ -21,6 +22,7 @@ class Virus(base.BaseEnemy):
         self.current_frame = 0
         self.current_animation = self.animation_small
         self.form = 0
+        self.speed = self.__class__.speed
         
     def ai(self, scene):
         if not self.alive: return
@@ -47,7 +49,8 @@ class MutatingVirus(Virus):
                 self.die()
             else:
                 self.form += 1
-                self.life = 10
+                self.life = 8
+                self.speed *= 1.5
                 self.current_animation = self.animation_large
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
                 
@@ -57,25 +60,29 @@ class MutatingVirus(Virus):
         
 class PurpleVirus(Virus):    
     spritesheet = data.load_virus('purple')
+    sprite_image = spritesheet[3]
     color = (162.0/255,142.0/255,249.0/255)
     speed = 100.0
     
 class BlueVirus(MutatingVirus):    
     spritesheet = data.load_virus('blue')
+    sprite_image = spritesheet[3]
     color = (35.0/255,35.0/255,224.0/255)
     speed = 100.0
     
 class GreenVirus(MutatingVirus):
     spritesheet = data.load_virus('green')
+    sprite_image = spritesheet[3]
     color = (116.0/255,193.0/255,109.0/255)
     speed = 175.0
     
-class SixthVirus(Virus):
+class SixthVirus(MutatingVirus):
     spritesheet = data.load_virus('sixth')
     sprite_image = spritesheet[3]
     animation_small = [3]
+    animation_large = [5]
     color = (131.0/255,131.0/255,131.0/255)
-    speed = 175.0
+    speed = 225.0
     
     def update(self, dt):
         super(SixthVirus, self).update(dt)
@@ -83,14 +90,26 @@ class SixthVirus(Virus):
         
 class CheezeVirus(MutatingVirus):
     spritesheet = data.load_virus('cheeze')
+    sprite_image = spritesheet[3]
     color = (237.0/255,238.0/255,74.0/255)
-    speed = 175.0
+    speed = 30.0
+    
+    def ai(self, scene):
+        if not self.alive: return
+        self.current_frame = (self.current_frame + 1) % len(self.current_animation)
+        self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
+
+        target = vector.Vec2d()
+        target.x += random.randrange(-10,10)
+        target.y += random.randrange(-10,10)
+        self.vel = (target).normal * self.speed
         
 class WormVirus(Virus):
     spritesheet = data.load_virus('worm')
+    sprite_image = spritesheet[3]
     animation_small = [3,2,1,2]
     color = (104.0/255,217.0/255,198.0/255)
-    speed = 175.0
+    speed = 50.0
     
     def update(self, dt):
         super(WormVirus, self).update(dt)

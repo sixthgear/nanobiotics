@@ -260,7 +260,7 @@ class Game(object):
             r = [robot(x,y) for r in range(n)]
 
         for roebit in r:
-            roebit.set_target(self.player)            
+            roebit.set_target(self.player)
 
         self.robots += r
         self.render_list += r
