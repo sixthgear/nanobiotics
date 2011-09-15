@@ -27,9 +27,9 @@ class Gibber(object):
         self.blood = ParticleGroup(
           controllers=[
               # Gravity((0,-240,0)),
-              Lifetime(0.3),
-              Movement(damping=0.8),
-              Fader(fade_out_start=0.2, fade_out_end=0.3),
+              Lifetime(0.5),
+              Movement(damping=0.85),
+              Fader(fade_out_start=0.25, fade_out_end=0.5),
           ],
           renderer=BillboardRenderer(SpriteTexturizer(blood_tex.id)))
         
@@ -39,7 +39,7 @@ class Gibber(object):
               color=(1,1,1)),
           deviation=Particle(
               position=(1,1,0), 
-              velocity=(400,400,0), 
+              velocity=(600,600,0), 
               age=1.5),
           size=[(12,12,0), (8,8,0), (4,4,0)])
                        
@@ -54,11 +54,11 @@ class Gibber(object):
         self.blood.update(dt)
         
     def draw(self):        
-        glPushAttrib(GL_ALL_ATTRIB_BITS)
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+        # glPushAttrib(GL_ALL_ATTRIB_BITS)
+        # glEnable(GL_BLEND)
+        # glBlendFunc(GL_SRC_ALPHA, GL_ONE)
         self.blood.draw()
         # self.fire.draw()        
-        glPopAttrib()
+        # glPopAttrib()
         
 

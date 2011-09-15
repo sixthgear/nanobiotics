@@ -2,6 +2,7 @@ import pyglet
 import random
 
 from gamelib import data
+from gamelib import fx
 from gamelib.enemies import base
 
 class Virus(base.BaseEnemy):
@@ -26,3 +27,7 @@ class Virus(base.BaseEnemy):
         else:
             # player dead, do something cool, like dance!
             pass
+            
+    def die(self):
+        fx.gibber.explode(self.pos.x, self.pos.y, color=(162.0/255,142.0/255,249.0/255))
+        self.alive = False
