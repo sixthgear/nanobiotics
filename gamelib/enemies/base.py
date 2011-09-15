@@ -44,5 +44,5 @@ class BaseEnemy(obj.GameObject):
             pass
         
     def die(self):
-        fx.exploder.explode(self.pos.x, self.pos.y)
+        fx.gibber.explode(self.pos.x, self.pos.y)
         self.alive = False

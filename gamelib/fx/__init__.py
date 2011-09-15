@@ -1,14 +1,17 @@
 import explosion
+import gibs
 # import score 
 # import fire
 # import beast
 
 exploder = explosion.Exploder()
+gibber = gibs.Gibber()
 # pointer = score.Pointer()
 # firer = fire.Firer()
 # globber = beast.Beast()
 effects = [
     exploder,
+    gibber,
     # pointer,
     # firer,
     # globber
@@ -21,11 +24,13 @@ def clear():
     # del globber    
     effects = []
     exploder = explosion.Exploder()
+    gibber = gibs.Gibber()
     # pointer = score.Pointer()
     # firer = fire.Firer()
     # globber = beast.Beast()
     effects = [
         exploder,
+        gibber
         # pointer,
         # firer,
         # globber
