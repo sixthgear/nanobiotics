@@ -231,7 +231,7 @@ class Game(object):
         self.collect_garbage()
         self.wave += 1
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
-        for i in range(35):
+        for i in range(14 + (5 * self.wave)):
             angle = random.random() * math.pi * 2
             mag = random.randrange(self.world.radius-160, self.world.radius - 60)
             x = self.world.center.x + math.cos(angle)*mag

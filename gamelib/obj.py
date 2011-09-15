@@ -27,6 +27,17 @@ class GameObject(object):
         self.sprite.xy = self.pos.x, self.pos.y
         self.x, self.y = self.sprite.xy
         
+    def flash(self, duration, rgba=(0,0,0,0), time=None, on=False):
+        if time == None: time = duration
+        if on:
+            self.sprite.rgba = 1,1,1,1
+        else:
+            self.sprite.rgba = rgba
+        if time >= 0:            
+            pyglet.clock.schedule_once(self.flash, 0.125, rgba, time-0.125, not on)
+        else:
+            self.sprite.rgba = 1,1,1,1        
+        
 class CompoundGameObject(GameObject):
     # img_col = [(img, (offset_x, offset_y)), ...]
     def __init__(self, img_col, x=0.0, y=0.0, vx=0.0, vy=0.0):

@@ -32,7 +32,7 @@ def load_virus(name):
     seq = []
     seq += pyglet.image.ImageGrid(img.get_region(0,0,64,256), 4, 1).get_texture_sequence()
     # tgrid = pyglet.image.TextureGrid(igrid)    
-    seq += pyglet.image.ImageGrid(img.get_region(64,0,96,192), 2, 1).get_texture_sequence()
+    seq += pyglet.image.ImageGrid(img.get_region(64,64,96,192), 2, 1).get_texture_sequence()
     return seq
 
 

@@ -40,13 +40,13 @@ class Gibber(object):
           deviation=Particle(
               position=(1,1,0), 
               velocity=(600,600,0), 
-              age=1.5),
+              age=0.25),
           size=[(12,12,0), (8,8,0), (4,4,0)])
                        
     def explode(self, x, y, size=16.0, color=(1,1,1)):
         self.blooder.template.position = (x,y,0)
         self.blooder.template.color = color
-        self.blooder.emit(100, self.blood)
+        self.blooder.emit(50, self.blood)
         # self.__class__.sound.play()
         
     def update(self, dt):
