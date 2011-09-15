@@ -8,17 +8,17 @@ from gamelib.enemies import base
 class Virus(base.BaseEnemy):
     
     sprite_image = data.spritesheet[5]
+    frames = [data.spritesheet[5], data.spritesheet[13]]
+    color = color=(162.0/255,142.0/255,249.0/255)
     speed = 100.0
     speed_diag = speed * 0.7071
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(Virus, self).__init__(x, y, vx, vy)
-        self.frames = [data.spritesheet[5], data.spritesheet[13]]
         self.current_frame = 0
         
     def ai(self, scene):
         if not self.alive: return
-
         self.current_frame = (self.current_frame + 1) % len(self.frames)
         self.sprite.texture = self.frames[self.current_frame]
 
@@ -29,5 +29,24 @@ class Virus(base.BaseEnemy):
             pass
             
     def die(self):
-        fx.gibber.explode(self.pos.x, self.pos.y, color=(162.0/255,142.0/255,249.0/255))
+        fx.gibber.explode(self.pos.x, self.pos.y, color=self.color)
         self.alive = False
+        
+        
+class Virus_A(Virus):
+    
+    sprite_image = data.spritesheet[3]
+    frames = [data.spritesheet[3], data.spritesheet[11]]
+    color = color=(35.0/255,35.0/255,224.0/255)
+    speed = 100.0
+    speed_diag = speed * 0.7071
+    
+class Virus_B(Virus):
+    
+    sprite_image = data.spritesheet[5]
+    frames = [data.spritesheet[5], data.spritesheet[13]]
+    color = color=(162.0/255,142.0/255,249.0/255)
+    speed = 100.0
+    speed_diag = speed * 0.7071
+    
+    
