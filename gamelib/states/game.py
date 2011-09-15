@@ -2,6 +2,7 @@ import pyglet
 import rabbyt
 import random
 
+from gamelib import camera
 from gamelib import data
 from gamelib import player
 from gamelib import bullet
@@ -34,7 +35,7 @@ class Game(object):
         # game objects
         self.worlds = [world.World(svg.SVG("data/stomach.svg"), self)]
         self.world = None
-                        
+          
         self.player = player.Player(0,0)
         self.robots = []
         self.pickups = []
@@ -85,7 +86,8 @@ class Game(object):
         self.rebuild_render_list()
         self.next_world()
         self.player.pos = self.world.center.copy()
-        self.camera = self.world.center.copy()
+        self.camera = camera.Camera(self.world, 0, 0)
+        self.camera.update(self.player.pos)
 
     def collect_garbage(self, dt=0.0):
         """
@@ -184,17 +186,8 @@ class Game(object):
         self.tick += 1        
         self.player.update(dt)
         self.world.update(dt)
-                
-        camera_bounds_x = self.world.width - WIDTH
-        camera_bounds_y = self.world.height - HEIGHT
-        player_norm = vector.Vec2d(self.player.pos.x / self.world.width, self.player.pos.y / self.world.height)        
-        # if self.tick % 30 == 0: print player_norm, self.player.pos
+        self.camera.update(self.player.pos, 0)
         
-        self.camera.x = max(0, min(camera_bounds_x * player_norm.x, camera_bounds_y))
-        self.camera.y = max(0, min(camera_bounds_y * player_norm.y, camera_bounds_y))
-        # self.camera.x = 0
-        # self.camera.y = 0
-
         self.player.target = self.camera + self.cursor
         
         [r.update(dt) for r in self.robots]
