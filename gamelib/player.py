@@ -15,7 +15,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     """
     speed = 540
     speed_diag = speed * 0.7071    
-    vel_smooth = 0.4
+    vel_smooth = 0.25
     width = 64
     height = 64    
     

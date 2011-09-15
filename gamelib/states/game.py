@@ -279,7 +279,7 @@ class Game(object):
         """        
         
         center = vector.Vec2d(WIDTH/2, HEIGHT/2)
-        radius = WIDTH/2 - 60
+        radius = 600
         # bullets vs screen
         for b in (b for b in bullet.pool.active if b.alive):
             if not collision.circle_to_circle(b.pos, 16, center, radius):
