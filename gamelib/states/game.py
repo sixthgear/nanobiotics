@@ -235,7 +235,15 @@ class Game(object):
             mag = random.randrange(self.world.radius-160, self.world.radius - 60)
             x = self.world.center.x + math.cos(angle)*mag
             y = self.world.center.y + math.sin(angle)*mag
-            self.spawn_robot(random.choice((virus.Virus_A, virus.Virus_B)), 1, x, y)
+            self.spawn_robot(random.choice((
+                virus.GreenVirus, 
+                virus.BlueVirus, 
+                virus.PurpleVirus, 
+                virus.SixthVirus, 
+                virus.CheezeVirus,
+                virus.WormVirus
+                )
+            ), 1, x, y)
         
         
         self.announce('WAVE %d' % self.wave, 3.0)
