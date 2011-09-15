@@ -32,8 +32,10 @@ class Game(object):
         self.current_wave = None
         
         # game objects
-        self.worlds = [world.World("stomach", self)]
         self.world = None
+        self.worlds = [ world.World("stomach", self, "Stomach"),
+                        world.World("stomach", self, "Heart"),
+                        world.World("stomach", self, "Brain") ]
           
         self.player = player.Player(0,0)
         self.robots = []
