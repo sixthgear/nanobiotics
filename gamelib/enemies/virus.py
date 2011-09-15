@@ -48,6 +48,13 @@ class Virus(base.BaseEnemy):
         
 class MutatingVirus(Virus):
     
+    
+    def update(self, dt):        
+        self.vel += (self.vel_target - self.vel ) * self.__class__.vel_smooth
+        super(MutatingVirus, self).update(dt)
+        if self.form > 0 and self.sprite.scale < 1:
+            self.sprite.scale = min(1, self.sprite.scale * 1.05)
+    
     def hit(self, other):
         self.life -= 1
         if self.life <= 0:
@@ -59,9 +66,11 @@ class MutatingVirus(Virus):
                 self.speed *= 1.5
                 self.current_animation = self.animation_large
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
+                self.sprite.scale = 0.67
                 
         else:
             self.flash(0.125, (1.0,0.4,0.4,1.0))
+        
 
         
 class PurpleVirus(Virus):    
