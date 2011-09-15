@@ -23,6 +23,17 @@ bullet.anchor_y = bullet.height // 2
 background = pyglet.resource.image('stage_1_background.png')
 background.anchor_x = background.width // 2
 background.anchor_y = background.height // 2
+    
+def load_virus(name):
+    """
+    Get a list of virus textures.
+    """
+    img = pyglet.resource.image('v_%s.png' % name)
+    seq = []
+    seq += pyglet.image.ImageGrid(img.get_region(0,0,64,256), 4, 1).get_texture_sequence()
+    # tgrid = pyglet.image.TextureGrid(igrid)    
+    seq += pyglet.image.ImageGrid(img.get_region(64,0,96,192), 2, 1).get_texture_sequence()
+    return seq
 
 
 cursor = spritesheet[7]
