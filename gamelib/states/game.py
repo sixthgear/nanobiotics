@@ -29,7 +29,6 @@ class Game(object):
         self.tick = 0    
         self.wave = 0
         self.score = 0
-        self.invuln = 0
         self.diffculty = NORMAL
         self.current_wave = None
         
@@ -181,9 +180,6 @@ class Game(object):
         Perform physics and collision detection.
         """
 
-        if self.invuln > 0:
-            self.invuln -= dt
-
         self.tick += 1        
         self.player.update(dt)
         self.world.update(dt)
@@ -223,10 +219,6 @@ class Game(object):
 
         if self.worlds:
             self.world = self.worlds.pop()
-
-            # let the player get their bearings
-            self.invuln = 3
-
             self.announce('THE %s' % self.world.name, 3.0)
         else:
             pass # player wins
@@ -312,9 +304,7 @@ class Game(object):
         # player vs robots
         for r in rabbyt.collisions.collide_single(self.player, self.robots):
             if not r.alive: continue
-            
-            if not self.invuln > 0:
-                self.player.hit(r)
+            self.player.hit(r)
             # bail out if the player dies, since we don't need to test any further collisions
             # as they all pertain to the player
             if not self.player.alive: return
@@ -340,7 +330,7 @@ class Game(object):
         Player got hit.
         """
         pass
-
+        
     def on_kill(self, robot):
         """
         Player killed something.

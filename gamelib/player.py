@@ -7,6 +7,7 @@ import constants
 import gamepad
 import bullet
 import collision
+import fx
 
 from weapons.basicturret import BasicTurret
   
@@ -17,8 +18,9 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     speed_diag = speed * 0.7071    
     vel_smooth = 0.25
     width = 64
-    height = 64    
-    
+    height = 64 
+    invuln = 3
+
     def __init__(self, x, y):
         player_sprites = [
             (data.spritesheet[40],(0,0)), 
@@ -65,6 +67,9 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.weapon.disengage()
             self.weapon.update(dt)
             return
+
+        if self.invuln > 0:
+            self.invuln -= dt
                     
         self.vel_target.zero()
         
@@ -136,10 +141,15 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.weapon.update(dt, self.pos, self.target)
         
     def hit(self, other):        
-        print "ouch!"
+        if self.invuln > 0:
+            # imagine shields sounds
+        else:
+            self.die() # bummer 
         
     def die(self):
-        self.alive = False        
+        fx.exploder.explode(self.pos.x, self.pos.y)
+        self.alive = False
+
         self.dispatch_event('on_death')    
                 
 Player.register_event_type('on_hit')
