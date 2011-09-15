@@ -154,9 +154,10 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.lives -= 1
         self.dispatch_event('on_death')
 
-    def respawn(self, *args):
-        self.pos = vector.Vec2d(0, 0)
+    def respawn(self, dt, loc):
+        self.pos = loc
         self.vel_target = vector.Vec2d(0, 0)
+        self.invuln = 3
         self.alive = True
 
         self.dispatch_event("on_respawn")    

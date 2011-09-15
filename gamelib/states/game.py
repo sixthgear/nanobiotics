@@ -349,7 +349,7 @@ class Game(object):
             self.game_over()
             return
         
-        pyglet.clock.schedule_once(self.player.respawn, 3.0)
+        pyglet.clock.schedule_once(self.player.respawn, 3.0, self.world.center)
              
         
     def on_respawn(self):
