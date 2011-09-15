@@ -232,7 +232,7 @@ class Game(object):
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
         for i in range(35):
             angle = random.random() * math.pi * 2
-            mag = random.randrange(200, self.world.radius - 60)
+            mag = random.randrange(self.world.radius-160, self.world.radius - 60)
             x = self.world.center.x + math.cos(angle)*mag
             y = self.world.center.y + math.sin(angle)*mag
             self.spawn_robot(random.choice((virus.Virus_A, virus.Virus_B)), 1, x, y)
