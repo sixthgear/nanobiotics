@@ -3,14 +3,15 @@ import rabbyt
 import random
 import math
 
-from gamelib import camera
-from gamelib import data
-from gamelib import player
 from gamelib import bullet
+from gamelib import camera
 from gamelib import collision
+from gamelib import data
+from gamelib import fixedsteploop
+from gamelib import fx
+from gamelib import player
 from gamelib import vector
 from gamelib import world
-from gamelib import fx
 from gamelib.enemies import virus
 
 from gamelib.constants import *
@@ -21,7 +22,7 @@ class Game(object):
     The game object is the BOSS.
     """
     def __init__(self, window):
-        
+                        
         # keep a window context so we can exit back to the title screen on gameover
         self.window = window
 
@@ -53,8 +54,9 @@ class Game(object):
         self.window.push_handlers(self.player.gamepad)
         self.player.push_handlers(self)
 
-        # timers       
-        pyglet.clock.schedule_interval(self.update, 1.0/60)
+        # timers
+        self.timer = fixedsteploop.FixedStepLoop(self.update, TIME_STEP, MAX_CYCLES_PER_FRAME)
+        # pyglet.clock.schedule_interval(self.update, 1.0/60)
         pyglet.clock.schedule_interval(self.ai, 1.0/2)
         pyglet.clock.schedule_interval_soft(self.collect_garbage, 10.0)
         
@@ -74,7 +76,7 @@ class Game(object):
             anchor_x='center', anchor_y='center',
             color=(255,255,255,255))
             
-        self.announce('READY', 3.0)
+        # self.announce('READY', 3.0)
         
         self.score_label = pyglet.text.Label(
             text='1234567890', 
@@ -89,6 +91,9 @@ class Game(object):
         self.player.pos = self.world.center.copy()
         self.camera = camera.Camera(self.world, 0, 0)
         self.camera.update(self.player.pos)
+        
+        rabbyt.set_time(0)
+        self.timer.play()
 
     def collect_garbage(self, dt=0.0):
         """
@@ -136,7 +141,7 @@ class Game(object):
         data.background.blit(self.world.center.x, self.world.center.y)
                 
         # render characters and pickups
-        rabbyt.set_default_attribs()
+
         self.render_list.sort(key=lambda x: x.pos.y, reverse=True)
         for r in (r for r in self.render_list if r.alive):
             r.render()
@@ -180,7 +185,9 @@ class Game(object):
         Step through all the important game objects and update their position.
         Perform physics and collision detection.
         """
-
+        
+        rabbyt.add_time(dt)
+        
         self.tick += 1        
         self.player.update(dt)
         self.world.update(dt)
@@ -192,6 +199,8 @@ class Game(object):
         bullet.pool.update(dt)        
         fx.update(dt)        
         self.collide()
+        
+        
                     
     def ai(self, dt):
         """
