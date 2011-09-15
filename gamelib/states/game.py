@@ -15,7 +15,6 @@ from gamelib.enemies import virus
 
 from gamelib.constants import *
 
-from libs.squirtle import svg
 
 class Game(object):
     """
@@ -33,7 +32,7 @@ class Game(object):
         self.current_wave = None
         
         # game objects
-        self.worlds = [world.World(svg.SVG("data/stomach.svg"), self)]
+        self.worlds = [world.World("stomach", self)]
         self.world = None
           
         self.player = player.Player(0,0)

@@ -1,5 +1,6 @@
 import pyglet
 import vector
+import data
 
 from gamelib.enemies import base
 
@@ -8,7 +9,7 @@ class World(object):
     World object contains world geometry and tells game whats up
     """
 
-    def __init__(self, svg, game, name="VOID"):
+    def __init__(self, border_name, game, name="VOID"):
         self.game = game
         self.countdown = 120
         self.name = name
@@ -18,8 +19,8 @@ class World(object):
         self.center = vector.Vec2d(self.width/2, self.height/2)
         self.radius = 600
         
-        if svg:
-            self.borders = [vector.Vec2d(*v) for v in svg.paths[0].path[0]]
+        self.borders = [vector.Vec2d(*v) for v in 
+                            data.worlds[border_name].paths[0].path[0]]
 
     def valid_location(self, v):
         valid = False

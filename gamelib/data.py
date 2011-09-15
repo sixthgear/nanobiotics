@@ -3,6 +3,7 @@ Please forgive me.
 """
 
 import pyglet
+from libs.squirtle import svg
 
 pyglet.resource.path = ['data']
 pyglet.resource.reindex()
@@ -25,3 +26,6 @@ background.anchor_y = background.height // 2
 
 
 cursor = spritesheet[7]
+
+worlds = {"stomach": svg.SVG("data/stomach.svg")}
+
