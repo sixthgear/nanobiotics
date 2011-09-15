@@ -87,7 +87,9 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
                 self.target = self.pos + rel_target
             else:
                 self.weapon.disengage()
-                        
+                
+                
+
         if self.keys[pyglet.window.key.A]:                        
             if self.keys[pyglet.window.key.W]:
                 self.vel_target.y += 0.7071

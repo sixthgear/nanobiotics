@@ -1,5 +1,4 @@
 import pyglet
-import rabbyt
 import random
 import math
 
@@ -53,6 +52,8 @@ class MutatingVirus(Virus):
     def update(self, dt):        
         self.vel += (self.vel_target - self.vel ) * self.__class__.vel_smooth
         super(MutatingVirus, self).update(dt)
+        if self.form > 0 and self.sprite.scale < 1:
+            self.sprite.scale = min(1, self.sprite.scale * 1.05)
     
     def hit(self, other):
         self.life -= 1
@@ -65,15 +66,7 @@ class MutatingVirus(Virus):
                 self.speed *= 1.5
                 self.current_animation = self.animation_large
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
-                self.sprite.scale_x = rabbyt.anims.chain(
-                    rabbyt.anims.ease_in(0.67, 2.0, dt=0.15),
-                    rabbyt.anims.ease_out(2.0, 1.0, dt=0.1)
-                )
-                self.sprite.scale_y = rabbyt.anims.chain(
-                    rabbyt.anims.ease_out(0.67, 1.5, dt=0.15),
-                    rabbyt.anims.ease_in(1.5, 1.0, dt=0.1)
-                )
-                
+                self.sprite.scale = 0.67
                 
         else:
             self.flash(0.125, (1.0,0.4,0.4,1.0))
