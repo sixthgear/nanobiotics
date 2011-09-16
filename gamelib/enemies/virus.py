@@ -26,6 +26,19 @@ class Virus(base.BaseEnemy):
         self.form = 0
         self.speed = self.__class__.speed
         self.vel_target = vector.Vec2d(0,0)
+        self.snap_in()
+
+    
+    def snap_in(self, start=0.01):
+        self.sprite.scale_x = rabbyt.anims.chain(
+            rabbyt.anims.ease_in(start, 2.0, dt=0.15),
+            rabbyt.anims.ease_out(2.0, 1.0, dt=0.2)
+        )
+        self.sprite.scale_y = rabbyt.anims.chain(
+            rabbyt.anims.ease_out(start, 1.5, dt=0.15),
+            rabbyt.anims.ease_in(1.5, 1.0, dt=0.2)
+        )
+        
         
     def ai(self, scene):
         if not self.alive: return
@@ -61,18 +74,11 @@ class MutatingVirus(Virus):
                 self.die()
             else:
                 self.form += 1
-                self.life = 8
+                self.life = 5
                 self.speed *= 1.5
                 self.current_animation = self.animation_large
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
-                self.sprite.scale_x = rabbyt.anims.chain(
-                    rabbyt.anims.ease_in(0.67, 2.0, dt=0.15),
-                    rabbyt.anims.ease_out(2.0, 1.0, dt=0.2)
-                )
-                self.sprite.scale_y = rabbyt.anims.chain(
-                    rabbyt.anims.ease_out(0.67, 1.5, dt=0.15),
-                    rabbyt.anims.ease_in(1.5, 1.0, dt=0.2)
-                )                
+                self.snap_in(0.67)
                 
         else:
             self.flash(0.125, (1.0,0.4,0.4,1.0))

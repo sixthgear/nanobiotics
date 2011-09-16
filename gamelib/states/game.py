@@ -12,7 +12,6 @@ from gamelib import fx
 from gamelib import player
 from gamelib import vector
 from gamelib import world
-from gamelib.enemies import virus
 
 from gamelib.constants import *
 
@@ -55,8 +54,9 @@ class Game(object):
         self.player.push_handlers(self)
 
         # timers
-        self.timer = fixedsteploop.FixedStepLoop(self.update, TIME_STEP, MAX_CYCLES_PER_FRAME)
-        # pyglet.clock.schedule_interval(self.update, 1.0/60)
+        # self.timer = fixedsteploop.FixedStepLoop(self.update, TIME_STEP, MAX_CYCLES_PER_FRAME)
+        # self.timer.play()
+        pyglet.clock.schedule_interval(self.update, 1.0/60)
         pyglet.clock.schedule_interval(self.ai, 1.0/2)
         pyglet.clock.schedule_interval_soft(self.collect_garbage, 10.0)
         
@@ -93,7 +93,6 @@ class Game(object):
         self.camera.update(self.player.pos)
         
         # rabbyt.set_time(0)
-        self.timer.play()
 
     def collect_garbage(self, dt=0.0):
         """
@@ -228,7 +227,7 @@ class Game(object):
         self.collect_garbage()
 
         if self.worlds:
-            self.world = self.worlds.pop()
+            self.world = self.worlds.pop(0)
             self.announce('THE %s' % self.world.name, 3.0)
         else:
             pass # player wins
@@ -239,23 +238,7 @@ class Game(object):
         """
         self.collect_garbage()
         self.wave += 1
-        # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
-        for i in range(14 + (5 * self.wave)):
-            angle = random.random() * math.pi * 2
-            mag = random.randrange(self.world.radius-160, self.world.radius - 60)
-            x = self.world.center.x + math.cos(angle)*mag
-            y = self.world.center.y + math.sin(angle)*mag
-            self.spawn_robot(random.choice((
-                virus.GreenVirus, 
-                virus.BlueVirus, 
-                virus.PurpleVirus, 
-                virus.SixthVirus, 
-                virus.CheezeVirus,
-                virus.WormVirus
-                )
-            ), 1, x, y)
-        
-        
+                
         self.announce('WAVE %d' % self.wave, 3.0)
         
             
