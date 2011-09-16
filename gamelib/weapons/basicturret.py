@@ -5,7 +5,7 @@ from weapon import Weapon
 class BasicTurret(Weapon):
     def __init__(self, *args):
         Weapon.__init__(self,*args)
-        self.cooldown = 7
+        self.cooldown = 5
 
     def update(self, *args):
         Weapon.update(self, *args)
@@ -14,10 +14,10 @@ class BasicTurret(Weapon):
             self.cooldown -= 1
             return
 
-        self.cooldown = 7
+        self.cooldown = 5
 
         if self.engaged:
-            bv = (self.target_pos - self.pos).normal * 1000
+            bv = (self.target_pos - self.pos).normal * 1400
             bp = self.pos
             if bv.x != 0 or bv.y != 0:
                 bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 

@@ -24,6 +24,10 @@ class World(object):
         
         self.borders = [vector.Vec2d(*v) for v in 
                             data.worlds[border_name].paths[0].path[0]]
+                
+        self.build_up = True
+        self.max_build_up = 20
+        
         
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
         
@@ -35,10 +39,15 @@ class World(object):
 
         num = len(filter(lambda r: r.alive, self.game.robots))
         
-        if num > 20: return
+        if num >= self.max_build_up: 
+            self.build_up = False
+            return
+            
+        if not self.build_up and num < 2: 
+            self.build_up = True
         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
-        if random.random() < 0.3:        
+        if self.build_up and random.random() < 0.4:        
             for i in range(random.choice([1,1,1,1,1,1,1,5,5,5,10])):
                 angle = random.random() * math.pi * 2
                 mag = random.randrange(game.world.radius-160, game.world.radius - 60)
