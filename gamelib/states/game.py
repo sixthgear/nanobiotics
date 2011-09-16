@@ -63,10 +63,10 @@ class Game(object):
         pyglet.clock.schedule_interval_soft(self.collect_garbage, 10.0)
         
         # music
-        # self.music = pyglet.media.Player()
-        # self.music.queue(pyglet.resource.media('unmute.mp3'))
-        # self.music.play()
-        # self.music.eos_action = pyglet.media.Player.EOS_LOOP
+        self.music = pyglet.media.Player()
+        self.music.queue(pyglet.resource.media('stomach.mp3'))
+        self.music.play()
+        self.music.eos_action = pyglet.media.Player.EOS_LOOP
         
         # HUD stuff        
         self.announcing = False
@@ -381,7 +381,7 @@ class Game(object):
         self.render_list = []
         self.window.remove_handlers(self.player.keys)
         self.window.remove_handlers(self.player)
-        # self.music.pause()
+        self.music.pause()
         pyglet.clock.unschedule(self.update)
         pyglet.clock.unschedule(self.ai)
         pyglet.clock.unschedule(self.collect_garbage)

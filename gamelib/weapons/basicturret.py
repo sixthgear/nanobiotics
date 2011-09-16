@@ -6,7 +6,7 @@ from weapon import Weapon
 class BasicTurret(Weapon):
     
     fire_sound = pyglet.resource.media('fire.wav', streaming=False)
-    
+
     def __init__(self, *args):
         Weapon.__init__(self,*args)
         self.cooldown = 5

@@ -21,6 +21,7 @@ class Virus(base.BaseEnemy):
     speed_diag = speed * 0.7071
     vel_smooth = 0.01
     mutate_sound = pyglet.resource.media('inflate.wav', streaming=False)
+    death_sound = pyglet.resource.media('pop.wav', streaming=False)
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(Virus, self).__init__(x, y, vx, vy)
@@ -59,6 +60,7 @@ class Virus(base.BaseEnemy):
         super(Virus, self).update(dt)
         
     def die(self):
+        self.death_sound.play()
         fx.gibber.explode(self.pos.x, self.pos.y, color=[c/255 for c in self.color])
         self.alive = False
         
