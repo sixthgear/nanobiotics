@@ -47,7 +47,7 @@ class World(object):
             self.build_up = True
         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
-        if self.build_up and random.random() < 0.4:        
+        if self.build_up and random.random() < 0.3:        
             for i in range(random.choice([1,1,1,1,1,1,1,5,5,5,10])):
                 angle = random.random() * math.pi * 2
                 mag = random.randrange(game.world.radius-160, game.world.radius - 60)

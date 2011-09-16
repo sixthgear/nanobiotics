@@ -170,6 +170,11 @@ class Game(object):
         """
         self.announcing = True        
         self.announcement.text = text
+        if len(text) < 10:
+            self.announcement.font_size = 144
+        else:
+            self.announcement.font_size = 108
+            
         pyglet.clock.schedule_once(self.clear_announcement, duration)
         
     def clear_announcement(self, dt):
