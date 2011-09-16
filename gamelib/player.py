@@ -24,7 +24,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
 
     def __init__(self, x, y):
         player_sprites = [
-            (data.spritesheet[40],(0,0)), 
+            (data.spritesheet[0],(0,0)), 
             # (data.spritesheet[15],(25,0)),
             # (data.spritesheet[15],(-25,0)),
             # (data.spritesheet[15],(10,20)),

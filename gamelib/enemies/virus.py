@@ -20,6 +20,7 @@ class Virus(base.BaseEnemy):
     speed = 100.0
     speed_diag = speed * 0.7071
     vel_smooth = 0.01
+    mutate_sound = pyglet.resource.media('inflate.wav', streaming=False)
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(Virus, self).__init__(x, y, vx, vy)
@@ -81,6 +82,7 @@ class MutatingVirus(Virus):
                 self.current_animation = self.animation_large
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
                 self.snap_in(0.67)
+                self.mutate_sound.play()
                 
         else:
             self.flash(0.125, (1.0,0.4,0.4,1.0))
