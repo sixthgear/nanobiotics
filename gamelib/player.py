@@ -55,7 +55,14 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         """
         Perform oneoff key press actions.
         """
-        pass
+        if symbol == pyglet.window.key.SPACE:
+            # I came to drop bombs
+            if self.bombs > 0:
+                # TODO SOUNDS
+                self.bombs -= 1
+                self.dispatch_event('on_bomb')
+            else:
+                pass # CLICK CLICK, EMPTY!
         
     def on_mouse_press(self, x, y, button, modifiers):
         self.weapon[-1].engage()
@@ -114,15 +121,6 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
                 self.vel_target.y -= 1.0
             else:
                 pass
-
-        if self.keys[pyglet.window.key.SPACE]:
-            # I came to drop bombs
-            if self.bombs > 0:
-                # TODO SOUNDS
-                self.bombs -= 1
-                self.dispatch_event('on_bomb')
-            else:
-                pass # CLICK CLICK, EMPTY!
         
         # normalize target velocity to length 1
         if self.vel_target.magnitude_sq > 1:
