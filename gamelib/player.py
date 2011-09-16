@@ -118,8 +118,11 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         if self.keys[pyglet.window.key.SPACE]:
             # I came to drop bombs
             if self.bombs > 0:
+                # TODO SOUNDS
                 self.bombs -= 1
                 self.dispatch_event('on_bomb')
+            else:
+                pass # CLICK CLICK, EMPTY!
         
         # normalize target velocity to length 1
         if self.vel_target.magnitude_sq > 1:
