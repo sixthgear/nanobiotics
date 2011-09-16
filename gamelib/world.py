@@ -28,7 +28,7 @@ class World(object):
                             data.worlds[border_name].paths[0].path[0]]
                 
         self.build_up = True
-        self.max_build_up = 20
+        self.max_build_up = 35
         
         fx.effects.insert(0, fx.bubbles.Bubbler())
         
@@ -75,7 +75,7 @@ class World(object):
         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
         if self.build_up and random.random() < 0.3:        
-            for i in range(random.choice([1,1,1,1,1,1,1,5,5,5,10])):
+            for i in range(random.choice([3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,10,10,10,30])):
                 
                 x, y = self.valid_location()
                 

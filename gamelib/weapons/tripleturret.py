@@ -22,8 +22,8 @@ class TripleTurret(Weapon):
 
         if self.engaged:
             bv = (self.target_pos - self.pos).normal * 1400            
-            bv2 = bv.rotated(5)
-            bv3 = bv.rotated(-5)
+            bv2 = bv.rotated(8)
+            bv3 = bv.rotated(-8)
             bp = self.pos
             if bv.x != 0 or bv.y != 0:
                 self.fire_sound.play()
