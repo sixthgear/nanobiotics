@@ -92,7 +92,7 @@ class Game(object):
         self.camera = camera.Camera(self.world, 0, 0)
         self.camera.update(self.player.pos)
         
-        rabbyt.set_time(0)
+        # rabbyt.set_time(0)
         self.timer.play()
 
     def collect_garbage(self, dt=0.0):

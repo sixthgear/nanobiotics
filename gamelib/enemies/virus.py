@@ -67,13 +67,12 @@ class MutatingVirus(Virus):
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
                 self.sprite.scale_x = rabbyt.anims.chain(
                     rabbyt.anims.ease_in(0.67, 2.0, dt=0.15),
-                    rabbyt.anims.ease_out(2.0, 1.0, dt=0.1)
+                    rabbyt.anims.ease_out(2.0, 1.0, dt=0.2)
                 )
                 self.sprite.scale_y = rabbyt.anims.chain(
                     rabbyt.anims.ease_out(0.67, 1.5, dt=0.15),
-                    rabbyt.anims.ease_in(1.5, 1.0, dt=0.1)
-                )
-                
+                    rabbyt.anims.ease_in(1.5, 1.0, dt=0.2)
+                )                
                 
         else:
             self.flash(0.125, (1.0,0.4,0.4,1.0))
@@ -134,9 +133,8 @@ class WormVirus(Virus):
     color = (104.0/255,217.0/255,198.0/255)
     speed = 50.0
     
-    def update(self, dt):
-        super(WormVirus, self).update(dt)
-        d = self.target.pos - self.pos
-        self.sprite.rot = -math.degrees(math.atan2(d.x,d.y)) - 45
-    
-        
+    # def update(self, dt):
+    #     super(WormVirus, self).update(dt)
+    #     d = self.target.pos - self.pos
+    #     self.sprite.rot = -math.degrees(math.atan2(d.x,d.y)) - 45
+    #     #     

@@ -14,8 +14,7 @@ class Controller(pyglet.window.Window):
     
     def __init__(self):
         super(Controller, self).__init__(width=constants.WIDTH, height=constants.HEIGHT, caption="Nanobiotics")#, fullscreen=True)        
-        self.viewport = fixed_resolution.FixedResolutionViewport(self, constants.WIDTH, constants.HEIGHT, filtered=False)
-        
+        self.viewport = fixed_resolution.FixedResolutionViewport(self, constants.WIDTH, constants.HEIGHT, filtered=False)        
         rabbyt.set_viewport((constants.WIDTH, constants.HEIGHT))
         rabbyt.set_default_attribs()        
         
