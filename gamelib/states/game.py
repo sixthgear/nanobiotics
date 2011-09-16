@@ -13,7 +13,7 @@ from gamelib import player
 from gamelib import vector
 from gamelib import world
 
-from gamelib.pickups import base 
+from gamelib.pickups import bomb 
 
 from gamelib.constants import *
 
@@ -219,7 +219,7 @@ class Game(object):
         make decisions on what to do next
         """                       
         # update current wave
-        self.world.ai(self)
+        self.world.ai()
         
         # update robots
         for r in self.robots:
@@ -272,7 +272,7 @@ class Game(object):
         """
         Create a helpful thing.
         """        
-        p = base.Pickup(x,y,type)
+        p = bomb.Bomb(x,y,type)
         self.pickups.append(p)
         self.render_list.append(p)            
         

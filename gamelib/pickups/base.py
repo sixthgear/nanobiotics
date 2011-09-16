@@ -9,7 +9,7 @@ class Pickup(obj.GameObject):
     
     life = 20
     sprite = data.spritesheet[40]
-    # sound = pyglet.resource.media('powerup.wav', streaming=False)
+    sound = pyglet.resource.media('powerup.wav', streaming=False)
     
     def __init__(self, x=None, y=None, type=None):
         if x == None or y == None:
@@ -31,9 +31,9 @@ class Pickup(obj.GameObject):
         if self.life == 6: self.flash(3.0)
         if self.life <= 0: self.die()
         
-    def activate(self, player):
-        #self.__class__.sound.play()
-        pass
+    def activate(self, game, player):
+        self.__class__.sound.play()
+    
         
     def die(self):
         self.alive = False

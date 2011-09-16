@@ -32,16 +32,37 @@ class World(object):
         
         fx.effects.insert(0, fx.bubbles.Bubbler())
         
-        
+        self.pickup_rate = 30
+        self.pickup_accumulator = 0
+            
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
         
-    def valid_location(self, v):
-        valid = False
-        return valid
+    def valid_location(self):
+        
+        found = False
+        while not found:
+            angle = random.random() * math.pi * 2
+            mag = random.randrange(0, self.radius - 60)
+            x = self.center.x + math.cos(angle) * mag
+            y = self.center.y + math.sin(angle) * mag
+        
+            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
+                continue
+            
+            found = True
+            
+        return x, y
 
-    def ai(self, game):
-        if not game.player.alive:
+    def ai(self):
+        
+        if not self.game.player.alive:
             return
+            
+        self.pickup_accumulator -= 0.5
+        if self.pickup_accumulator <= 0:
+            self.pickup_accumulator = self.pickup_rate
+            x, y = self.valid_location()
+            self.game.spawn_pickup(x, y, 1)        
             
         num = len(filter(lambda r: r.alive, self.game.robots))
         
@@ -55,15 +76,10 @@ class World(object):
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
         if self.build_up and random.random() < 0.3:        
             for i in range(random.choice([1,1,1,1,1,1,1,5,5,5,10])):
-                angle = random.random() * math.pi * 2
-                mag = random.randrange(game.world.radius-160, game.world.radius - 60)
-                x = game.world.center.x + math.cos(angle) * mag
-                y = game.world.center.y + math.sin(angle) * mag
                 
-                if collision.circle_to_circle(vector.Vec2d(x,y),1, game.player.pos, 320):
-                    continue
+                x, y = self.valid_location()
                 
-                game.spawn_robot(random.choice((
+                self.game.spawn_robot(random.choice((
                     virus.GreenVirus, 
                     virus.BlueVirus, 
                     virus.PurpleVirus, 
