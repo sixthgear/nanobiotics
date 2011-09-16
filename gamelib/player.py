@@ -21,7 +21,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     height = 64 
     invuln = 3
     lives = 3
-    bombs = 0
+    bombs = 1
 
     def __init__(self, x, y):
         player_sprites = [
@@ -158,7 +158,6 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.alive = False
         self.lives -= 1
         self.weapon = [BasicTurret(None)]
-        self.bombs = self.__class__.bombs
         self.dispatch_event('on_death')
 
     def respawn(self, dt, loc):
