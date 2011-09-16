@@ -3,6 +3,7 @@ import math
 import pyglet
 import vector
 import data
+import collision
 
 from gamelib.enemies import base
 from gamelib.enemies import virus
@@ -53,8 +54,12 @@ class World(object):
             for i in range(random.choice([1,1,1,1,1,1,1,5,5,5,10])):
                 angle = random.random() * math.pi * 2
                 mag = random.randrange(game.world.radius-160, game.world.radius - 60)
-                x = game.world.center.x + math.cos(angle)*mag
-                y = game.world.center.y + math.sin(angle)*mag
+                x = game.world.center.x + math.cos(angle) * mag
+                y = game.world.center.y + math.sin(angle) * mag
+                
+                if collision.circle_to_circle(vector.Vec2d(x,y),1, game.player.pos, 320):
+                    continue
+                
                 game.spawn_robot(random.choice((
                     virus.GreenVirus, 
                     virus.BlueVirus, 

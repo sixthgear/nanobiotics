@@ -255,7 +255,7 @@ class Game(object):
             
     def spawn_robot(self, robot, n=1, x=None, y=None):
         """
-        Create a mechanical horror.
+        Create a mechanical (biological?) horror.
         """
         if not x or not y:
             r = [robot() for r in range(n)]
