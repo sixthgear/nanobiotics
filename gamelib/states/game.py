@@ -351,6 +351,8 @@ class Game(object):
         """
         # update lives text
         # self.lives_label.text = "%d" % self.player.lives
+        for r in self.robots:
+            if r.alive: r.die()
                                 
         # check for gameover
         if self.player.lives == 0:

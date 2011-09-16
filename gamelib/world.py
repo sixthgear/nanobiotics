@@ -36,7 +36,9 @@ class World(object):
         return valid
 
     def ai(self, game):
-
+        if not game.player.alive:
+            return
+            
         num = len(filter(lambda r: r.alive, self.game.robots))
         
         if num >= self.max_build_up: 
