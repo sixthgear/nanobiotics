@@ -10,7 +10,7 @@ import collision
 import fx
 
 from weapons.basicturret import BasicTurret
-from weapons.twinturret import TwinTurret
+from weapons.twinturret import TwinTurret, FireHose
 from weapons.tripleturret import TripleTurret
   
 class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
@@ -76,6 +76,10 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.weapon[-1] = w
         elif symbol == pyglet.window.key._3:
             w = TripleTurret(None)
+            w.engaged = self.weapon[-1].engaged
+            self.weapon[-1] = w
+        elif symbol == pyglet.window.key._4:
+            w = FireHose(None)
             w.engaged = self.weapon[-1].engaged
             self.weapon[-1] = w
             
@@ -147,6 +151,9 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         # smooth velocity changes
         self.vel += (self.vel_target - self.vel ) * self.__class__.vel_smooth
     
+        if self.weapon[-1].__class__ == FireHose and self.weapon[-1].engaged:
+            self.vel -= (self.target-self.pos).normal * 100
+    
         # do regular euler updates
         self.pos += self.vel * dt
         #self.sprite.xy = self.pos.x, self.pos.y
@@ -160,8 +167,8 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         #     s.rot = rot
         
         obj.CompoundGameObject.update(self, dt)
+        self.weapon[-1].update(dt, self.pos, self.target)        
         
-        self.weapon[-1].update(dt, self.pos, self.target)
         
     def hit(self, other):        
         if self.invuln > 0:
