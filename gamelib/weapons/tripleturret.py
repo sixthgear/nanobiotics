@@ -21,8 +21,12 @@ class TripleTurret(Weapon):
         self.cooldown = 5
 
         if self.engaged:
-            bv = (self.target_pos - self.pos).normal * 1400
+            bv = (self.target_pos - self.pos).normal * 1400            
+            bv2 = bv.rotated(5)
+            bv3 = bv.rotated(-5)
             bp = self.pos
             if bv.x != 0 or bv.y != 0:
                 self.fire_sound.play()
                 bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 
+                bullet.pool.fire(bp.x, bp.y, bv2.x, bv2.y) 
+                bullet.pool.fire(bp.x, bp.y, bv3.x, bv3.y) 

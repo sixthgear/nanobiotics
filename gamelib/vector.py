@@ -59,6 +59,15 @@ class Vec2d(object):
         l = self.magnitude
         self.x = math.sin(angle) * l
         self.y = math.cos(angle) * l
+        
+    def rotated(self, angle):
+        angle = math.radians(angle)
+        sin_a = math.sin(angle)
+        cos_a = math.cos(angle)
+        s = Vec2d()
+        s.x = (self.x * cos_a) - (self.y * sin_a)
+        s.y = (self.y * cos_a) + (self.x * sin_a)
+        return s
     
     def copy(self):
         return Vec2d(self.x, self.y)

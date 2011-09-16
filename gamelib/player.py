@@ -10,6 +10,8 @@ import collision
 import fx
 
 from weapons.basicturret import BasicTurret
+from weapons.twinturret import TwinTurret
+from weapons.tripleturret import TripleTurret
   
 class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     """
@@ -63,6 +65,20 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
                 self.dispatch_event('on_bomb')
             else:
                 pass # CLICK CLICK, EMPTY!
+                
+        elif symbol == pyglet.window.key._1:
+            w = BasicTurret(None)
+            w.engaged = self.weapon[-1].engaged
+            self.weapon[-1] = w
+        elif symbol == pyglet.window.key._2:
+            w = TwinTurret(None)
+            w.engaged = self.weapon[-1].engaged
+            self.weapon[-1] = w
+        elif symbol == pyglet.window.key._3:
+            w = TripleTurret(None)
+            w.engaged = self.weapon[-1].engaged
+            self.weapon[-1] = w
+            
         
     def on_mouse_press(self, x, y, button, modifiers):
         self.weapon[-1].engage()
