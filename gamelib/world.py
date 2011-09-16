@@ -5,6 +5,7 @@ import vector
 import data
 import collision
 
+from gamelib import fx
 from gamelib.enemies import base
 from gamelib.enemies import virus
 
@@ -28,6 +29,8 @@ class World(object):
                 
         self.build_up = True
         self.max_build_up = 20
+        
+        fx.effects.append(fx.bubbles.Bubbler())
         
         
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
