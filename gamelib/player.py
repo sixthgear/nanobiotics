@@ -21,6 +21,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     height = 64 
     invuln = 3
     lives = 3
+    bombs = 0
 
     def __init__(self, x, y):
         player_sprites = [
@@ -113,6 +114,12 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
                 self.vel_target.y -= 1.0
             else:
                 pass
+
+        if self.keys[pyglet.window.key.SPACE]:
+            # I came to drop bombs
+            if self.bombs > 0:
+                self.bombs -= 1
+                self.dispatch_event('on_bomb')
         
         # normalize target velocity to length 1
         if self.vel_target.magnitude_sq > 1:
@@ -151,6 +158,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.alive = False
         self.lives -= 1
         self.weapon = [BasicTurret(None)]
+        self.bombs = self.__class__.bombs
         self.dispatch_event('on_death')
 
     def respawn(self, dt, loc):
@@ -161,6 +169,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
 
         self.dispatch_event("on_respawn")    
                 
+Player.register_event_type('on_bomb')
 Player.register_event_type('on_hit')
 Player.register_event_type('on_death')
 Player.register_event_type('on_respawn')

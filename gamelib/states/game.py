@@ -340,6 +340,18 @@ class Game(object):
             p.activate(self, self.player)
             p.die()
     
+    def on_bomb(self):
+        """
+        Player killed all the things
+        """
+        p = 0
+        for r in self.robots:
+            if r.alive:
+                r.die()
+                p += r.points 
+
+        self.add_score(p)
+
     def on_hit(self, a, b):
         """
         Player got hit.
