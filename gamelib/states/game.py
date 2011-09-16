@@ -326,12 +326,12 @@ class Game(object):
         #     # bail out if the player dies, since we don't need to test any further collisions
         #     # as they all pertain to the player            
         #     if not self.player.alive: return
-        #             
-        # # player vs pickups
-        # for p in rabbyt.collisions.collide_single(self.player, self.pickups):
-        #     if not p.alive: continue
-        #     p.activate(self)
-        #     p.die()
+                    
+        # player vs pickups
+        for p in rabbyt.collisions.collide_single(self.player, self.pickups):
+            if not p.alive: continue
+            p.activate(self, self.player)
+            p.die()
     
     def on_hit(self, a, b):
         """
