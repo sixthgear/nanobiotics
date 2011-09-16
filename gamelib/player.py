@@ -36,7 +36,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.alive = True        
         self.vel_target = vector.Vec2d(0, 0)
         self.target = vector.Vec2d(x,y)
-        self.weapon = BasicTurret(None) # we like guns
+        self.weapon = [BasicTurret(None)] # we like guns
         
         # pyglet events
         self.keys = pyglet.window.key.KeyStateHandler()
@@ -57,16 +57,16 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         pass
         
     def on_mouse_press(self, x, y, button, modifiers):
-        self.weapon.engage()
+        self.weapon[-1].engage()
 
     def on_mouse_release(self, x, y, button, modifiers):
-        self.weapon.disengage()
+        self.weapon[-1].disengage()
                                                                 
     def update(self, dt):
         
         if not self.alive:
-            self.weapon.disengage()
-            self.weapon.update(dt)
+            self.weapon[-1].disengage()
+            self.weapon[-1].update(dt)
             return
 
         if self.invuln > 0:
@@ -81,12 +81,12 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.vel_target.y = -self.gamepad.axis[1]
             
             if self.gamepad.axis[2] or self.gamepad.axis[3]:
-                if not self.weapon.engaged:
-                    self.weapon.engage()
+                if not self.weapon[-1].engaged:
+                    self.weapon[-1].engage()
                 rel_target = vector.Vec2d(self.gamepad.axis[2], -self.gamepad.axis[3]).normal * 200
                 self.target = self.pos + rel_target
             else:
-                self.weapon.disengage()
+                self.weapon[-1].disengage()
                         
         if self.keys[pyglet.window.key.A]:                        
             if self.keys[pyglet.window.key.W]:
@@ -137,7 +137,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         
         obj.CompoundGameObject.update(self, dt)
         
-        self.weapon.update(dt, self.pos, self.target)
+        self.weapon[-1].update(dt, self.pos, self.target)
         
     def hit(self, other):        
         if self.invuln > 0:
@@ -150,6 +150,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         fx.exploder.explode(self.pos.x, self.pos.y)
         self.alive = False
         self.lives -= 1
+        self.weapon = [BasicTurret(None)]
         self.dispatch_event('on_death')
 
     def respawn(self, dt, loc):
