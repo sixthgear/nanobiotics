@@ -13,5 +13,10 @@ class Camera(vector.Vec2d):
         player_norm = vector.Vec2d(target.x / self.world.width, target.y / self.world.height)
         target_x = max(0, min(self.bounds_x * player_norm.x, self.bounds_x))
         target_y = max(0, min(self.bounds_y * player_norm.y, self.bounds_y))
-        self.x += (target_x - self.x) * 0.1
-        self.y += (target_y - self.y) * 0.1
+        
+        if (target_x - self.x) ** 2 + (target_y - self.y) ** 2 > 144:
+            self.x += (target_x - self.x) * 0.1
+            self.y += (target_y - self.y) * 0.1
+        else:
+            self.x = target_x
+            self.y = target_y
