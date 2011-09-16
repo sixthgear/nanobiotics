@@ -64,9 +64,13 @@ class Game(object):
         
         # music
         self.music = pyglet.media.Player()
-        self.music.queue(pyglet.resource.media('stomach.mp3'))
-        self.music.play()
-        self.music.eos_action = pyglet.media.Player.EOS_LOOP
+
+        if pyglet.media.have_avbin:
+            self.music.queue(pyglet.resource.media('stomach.mp3'))
+            self.music.play()
+            self.music.eos_action = pyglet.media.Player.EOS_LOOP
+        else:
+            print "Avbin not found, you're going to be missing some awesome music :("
         
         # HUD stuff        
         self.announcing = False
