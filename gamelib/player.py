@@ -152,14 +152,18 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.vel += (self.vel_target - self.vel ) * self.__class__.vel_smooth
     
         if self.weapon[-1].__class__ == FireHose and self.weapon[-1].engaged:
-            self.vel -= (self.target-self.pos).normal * 100
-    
+            norm = (self.target-self.pos).normal
+            self.vel -= norm * 100
+            self.rot = -norm.angle
+        else:
+            # modify rotation
+            self.rot = -self.vel.angle
+            
+            
         # do regular euler updates
         self.pos += self.vel * dt
         #self.sprite.xy = self.pos.x, self.pos.y
                 
-        # modify rotation
-        self.rot = -self.vel.angle
 
         # # update turrets
         # rot = -(self.target - self.pos).angle
