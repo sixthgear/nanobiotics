@@ -30,7 +30,7 @@ class World(object):
         self.build_up = True
         self.max_build_up = 20
         
-        fx.effects.append(fx.bubbles.Bubbler())
+        fx.effects.insert(0, fx.bubbles.Bubbler())
         
         
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)

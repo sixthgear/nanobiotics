@@ -8,8 +8,8 @@ gibber = gibs.Gibber()
 # bubbler = bubbles.Bubbler()
 
 effects = [
+    gibber,
     exploder,
-    gibber
 ]
  
 def clear():
@@ -17,8 +17,8 @@ def clear():
     exploder = explosion.Exploder()
     gibber = gibs.Gibber()
     effects = [
+        gibber,
         exploder,
-        gibber
     ]
     
 
