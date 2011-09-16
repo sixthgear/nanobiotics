@@ -19,6 +19,12 @@ class Vec2d(object):
     
     def __div__(self, scalar):
         return Vec2d(self.x/scalar, self.y/scalar)
+    
+    def __rmul__(self, scalar):
+        return Vec2d(self.x*scalar, self.y*scalar)
+        
+    def __rdiv__(self, scalar):
+        return Vec2d(self.x/scalar, self.y/scalar)
         
     @property
     def magnitude(self):

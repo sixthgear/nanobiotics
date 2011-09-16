@@ -298,10 +298,13 @@ class Game(object):
                 b.die()                
     
         # player vs screen                    
-        if not collision.circle_to_circle(self.player.pos, 32, self.world.center, self.world.radius):
-            self.player.pos = self.world.center + (self.player.pos - self.world.center).normal * self.world.radius
-            self.player.vel.zero()
-            self.player.vel_target.zero()
+        if not collision.circle_to_circle(self.player.pos, 16, self.world.center, self.world.radius):
+            
+            p_distance = (self.player.pos - self.world.center).magnitude - (16 + self.world.radius)
+            p_normal = (self.player.pos - self.world.center).normal
+            p_vector = p_distance * p_normal
+            self.player.pos -= p_vector
+            self.player.sprites[0].xy = self.player.pos.x, self.player.pos.y
 
         # robots vs player bullets
         for r, b in rabbyt.collisions.collide_groups(self.robots, bullet.pool.active):
