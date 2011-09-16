@@ -26,10 +26,10 @@ class Gibber(object):
                 
         self.blood = ParticleGroup(
           controllers=[
-              # Gravity((0,-240,0)),
-              Lifetime(0.5),
-              Movement(damping=0.85),
-              Fader(fade_out_start=0.25, fade_out_end=0.5),
+              Gravity((0,-400,0)),
+              Lifetime(0.75),
+              Movement(damping=0.90),
+              Fader(fade_out_start=0.5, fade_out_end=0.75),
           ],
           renderer=BillboardRenderer(SpriteTexturizer(blood_tex.id)))
         
@@ -46,7 +46,7 @@ class Gibber(object):
     def explode(self, x, y, size=16.0, color=(1,1,1)):
         self.blooder.template.position = (x,y,0)
         self.blooder.template.color = color
-        self.blooder.emit(50, self.blood)
+        self.blooder.emit(96, self.blood)
         # self.__class__.sound.play()
         
     def update(self, dt):

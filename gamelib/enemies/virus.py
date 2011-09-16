@@ -33,8 +33,8 @@ class Virus(base.BaseEnemy):
     
     def snap_in(self, start=0.01):
         self.sprite.scale_x = rabbyt.anims.chain(
-            rabbyt.anims.ease_in(start, 2.0, dt=0.15),
-            rabbyt.anims.ease_out(2.0, 1.0, dt=0.2)
+            rabbyt.anims.ease_in(start, 2.5, dt=0.15),
+            rabbyt.anims.ease_out(2.5, 1.0, dt=0.2)
         )
         self.sprite.scale_y = rabbyt.anims.chain(
             rabbyt.anims.ease_out(start, 1.5, dt=0.15),
@@ -103,7 +103,19 @@ class GreenVirus(MutatingVirus):
     spritesheet = data.load_virus('green')
     sprite_image = spritesheet[3]
     color = (116,193,109)
-    speed = 175
+    speed = 300
+    
+    def ai(self, scene):
+        if not self.alive: return
+        self.current_frame = (self.current_frame + 1) % len(self.current_animation)
+        self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
+
+        if self.target and self.target.alive:
+            self.vel_target = (self.target.pos - self.pos).normal * self.speed
+            if self.current_frame == 1: 
+                self.vel_target.zero()
+                self.vel *= 0.5
+    
     
 class SixthVirus(MutatingVirus):
     spritesheet = data.load_virus('sixth')
