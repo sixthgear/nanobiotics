@@ -1,3 +1,5 @@
+from __future__ import division
+
 import pyglet
 import rabbyt
 import random
@@ -14,10 +16,10 @@ class Virus(base.BaseEnemy):
     sprite_image = spritesheet[3]
     animation_small = [3,2]
     animation_large = [5,4]
-    color = (162.0/255,142.0/255,249.0/255)
+    color = (162,142,249)
     speed = 100.0
     speed_diag = speed * 0.7071
-    vel_smooth = 0.04
+    vel_smooth = 0.01
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(Virus, self).__init__(x, y, vx, vy)
@@ -56,7 +58,7 @@ class Virus(base.BaseEnemy):
         super(Virus, self).update(dt)
         
     def die(self):
-        fx.gibber.explode(self.pos.x, self.pos.y, color=self.color)
+        fx.gibber.explode(self.pos.x, self.pos.y, color=[c/255 for c in self.color])
         self.alive = False
         
         
@@ -74,7 +76,7 @@ class MutatingVirus(Virus):
                 self.die()
             else:
                 self.form += 1
-                self.life = 5
+                self.life = 3
                 self.speed *= 1.5
                 self.current_animation = self.animation_large
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
@@ -88,28 +90,28 @@ class MutatingVirus(Virus):
 class PurpleVirus(Virus):    
     spritesheet = data.load_virus('purple')
     sprite_image = spritesheet[3]
-    color = (162.0/255,142.0/255,249.0/255)
-    speed = 100.0
+    color = (162,142,249)
+    speed = 100
     
 class BlueVirus(MutatingVirus):    
     spritesheet = data.load_virus('blue')
     sprite_image = spritesheet[3]
-    color = (35.0/255,35.0/255,224.0/255)
-    speed = 100.0
+    color = (35,35,224)
+    speed = 100
     
 class GreenVirus(MutatingVirus):
     spritesheet = data.load_virus('green')
     sprite_image = spritesheet[3]
-    color = (116.0/255,193.0/255,109.0/255)
-    speed = 175.0
+    color = (116,193,109)
+    speed = 175
     
 class SixthVirus(MutatingVirus):
     spritesheet = data.load_virus('sixth')
     sprite_image = spritesheet[3]
     animation_small = [3]
     animation_large = [5]
-    color = (131.0/255,131.0/255,131.0/255)
-    speed = 250.0
+    color = (131,131,131)
+    speed = 250
     vel_smooth = 0.2
     
     def update(self, dt):
@@ -119,8 +121,8 @@ class SixthVirus(MutatingVirus):
 class CheezeVirus(MutatingVirus):
     spritesheet = data.load_virus('cheeze')
     sprite_image = spritesheet[3]
-    color = (237.0/255,238.0/255,74.0/255)
-    speed = 30.0
+    color = (237,238,74)
+    speed = 30
     
     def ai(self, scene):
         if not self.alive: return
@@ -136,7 +138,7 @@ class WormVirus(Virus):
     spritesheet = data.load_virus('worm')
     sprite_image = spritesheet[3]
     animation_small = [3,2,1,2]
-    color = (104.0/255,217.0/255,198.0/255)
+    color = (104.0,217.0,198.0)
     speed = 50.0
     
     # def update(self, dt):
