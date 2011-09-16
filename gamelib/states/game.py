@@ -13,6 +13,8 @@ from gamelib import player
 from gamelib import vector
 from gamelib import world
 
+from gamelib.pickups import base 
+
 from gamelib.constants import *
 
 
@@ -233,7 +235,7 @@ class Game(object):
 
         if self.worlds:
             self.world = self.worlds.pop(0)
-            self.announce('THE %s' % self.world.name, 3.0)
+            self.announce('The %s' % self.world.name, 3.0)
         else:
             pass # player wins
 
@@ -266,7 +268,7 @@ class Game(object):
         """
         Create a helpful thing.
         """        
-        p = pickup.Pickup(x,y,type)
+        p = base.Pickup(x,y,type)
         self.pickups.append(p)
         self.render_list.append(p)            
         

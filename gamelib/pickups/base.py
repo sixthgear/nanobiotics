@@ -1,17 +1,15 @@
 import pyglet
 import random
 
-import data
-import obj
-import weapon
+from gamelib import data
+from gamelib import obj
+#import weapon
 
 sprites_idx = [15,23,22,14,31,30]
 SPREAD, MACHINE, SUPERMACHINE, SUPERSPREAD, RAGE, ONEUP = range(6)
 
 class Pickup(obj.GameObject):
     
-    width = 24
-    height = 24
     life = 20
     # sound = pyglet.resource.media('powerup.wav', streaming=False)
     
@@ -27,7 +25,7 @@ class Pickup(obj.GameObject):
         
         self.life = self.__class__.life    
         self.type = type    
-        super(Pickup,self).__init__(data.spritesheet[sprites_idx[self.type]], x, y)
+        super(Pickup,self).__init__(data.spritesheet[40], x, y)
         self.alive = True
     
     def ai(self, scene):
@@ -36,6 +34,7 @@ class Pickup(obj.GameObject):
         if self.life <= 0: self.die()
         
     def activate(self, scene):
+        """
         self.__class__.sound.play()
         if self.type == SPREAD:
             scene.player.set_weapon(weapon.Spread)
@@ -50,6 +49,7 @@ class Pickup(obj.GameObject):
         elif self.type == ONEUP:
             scene.player.lives += 1
             scene.lives_label.text = "%d" % scene.player.lives
+        """
         
     def die(self):
         self.alive = False
