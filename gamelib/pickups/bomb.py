@@ -3,7 +3,7 @@ from gamelib import obj
 from gamelib import data
 
 class Bomb(base.Pickup):
-    sprite = data.spritesheet[0]
+    sprite = data.spritesheet[8]
 
     def activate(self, game, player):        
         player.bombs += 1
