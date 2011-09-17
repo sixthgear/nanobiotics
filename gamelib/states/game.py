@@ -64,17 +64,7 @@ class Game(object):
         pyglet.clock.schedule_interval(self.update, 1.0/60)
         pyglet.clock.schedule_interval(self.ai, 1.0/2)
         pyglet.clock.schedule_interval_soft(self.collect_garbage, 10.0)
-        
-        # music
-        self.music = pyglet.media.Player()
-
-        if pyglet.media.have_avbin:
-            # self.music.queue()
-            # self.music.play()
-            self.music.eos_action = pyglet.media.Player.EOS_LOOP
-        else:
-            print "Avbin not found, you're going to be missing some awesome music :("
-        
+                
         # HUD stuff        
         self.announcing = False
 
@@ -262,19 +252,12 @@ class Game(object):
 
 
     def switch_world(self, world):
-        
-
         self.collect_garbage()
-        
+        if self.world:
+            self.world.music_player.pause()
+            self.world.music_player = None
+        # self.world = None
         self.world = world(self)
-        self.music.queue(self.world.music)
-        
-        if self.music.playing:
-            self.music.next()
-
-        self.music.seek(self.world.music_start)    
-        self.music.play()
-        
         self.announce('The %s' % self.world.name, 3.0)
         
     def next_world(self):
