@@ -47,7 +47,7 @@ class StomachBoss(Boss):
     sprite_image = spritesheet[0]
     animation = [0,1,2,3]
     color = (0, 160, 0)
-    cooldown = 10
+    cooldown = 30
     width = 400
     height = 400
 
@@ -58,8 +58,9 @@ class StomachBoss(Boss):
         super(StomachBoss, self).ai(scene)
 
     def update(self, dt):
+        if not self.alive: return 
         super(StomachBoss, self).update(dt)
-     
+         
         if self.target and self.cooldown == 0:
             self.shoot(self.target.pos)
 
@@ -69,7 +70,7 @@ class HeartBoss(Boss):
     sprite_image = spritesheet[0]
     animation = [0,1,2,3]
     color = (0, 160, 0)
-    cooldown = 10
+    cooldown = 30
     width = 400
     height = 400
 
@@ -90,7 +91,7 @@ class BrainBoss(Boss):
     sprite_image = spritesheet[0]
     animation = [0]
     color = (0, 160, 0)
-    cooldown = 10
+    cooldown = 30
     width = 400
     height = 400
 
@@ -102,7 +103,6 @@ class BrainBoss(Boss):
 
     def update(self, dt):
         super(BrainBoss, self).update(dt)
-     
         if self.target and self.cooldown == 0:
             self.shoot(self.target.pos)
 

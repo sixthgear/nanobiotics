@@ -303,6 +303,7 @@ class Game(object):
         
     def spawn_boss(self, boss):
         self.boss = boss()
+        self.boss.set_target(self.player)
         self.robots.append(self.boss)
         self.render_list.append(self.boss)        
         self.boss.push_handlers(self)
