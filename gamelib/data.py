@@ -48,9 +48,9 @@ def load_boss(name, rows, columns):
     """
 
     img = pyglet.resource.image('b_%s.png' % name)
-    seq = pyglet.image.ImageGrid(img.get_region(0,0,rows*512,columns*512), 
-                                 rows, columns).get_texture_sequence()
-
+    seq = []
+    seq += pyglet.image.ImageGrid(img.get_region(0,0,rows*512,columns*512), 
+                                  rows, columns).get_texture_sequence()
     return seq    
 
 

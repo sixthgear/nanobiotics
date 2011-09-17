@@ -9,6 +9,7 @@ import collision
 from gamelib import fx
 from gamelib.enemies import base
 from gamelib.enemies import virus
+from gamelib.enemies import boss
 
 Bound = collections.namedtuple('Bound', 'center radius')
 
@@ -20,9 +21,11 @@ class BaseWorld(object):
     width = 1600
     height = 1600
     name = "Void"
+    world_boss = None
             
     def __init__(self, game):        
         self.game = game
+        self.boss = self.__class__.world_boss
         self.countdown = 120
 
         self.bounds = []
@@ -31,9 +34,14 @@ class BaseWorld(object):
         self.max_build_up = 15
         self.pickup_rate = 30
         self.pickup_accumulator = 0
-
-        self.effects = []
         
+        self.effects = []
+  
+    def spawn_boss(self):
+        if self.boss:
+            return self.boss(0,0,0,0)
+ 
+      
     def within_bounds(self, pos, radius):
         for b in self.bounds:
             if not collision.inv_circle_to_circle(pos, radius, b.center, b.radius):
@@ -53,11 +61,11 @@ class BaseWorld(object):
                 continue
         
             return x, y        
-        
+            
     def update(self, dt):
         for e in self.effects:
             e.update(dt)
-            
+    
     def draw(self):
         self.background.blit(0,0)
         for e in self.effects:
@@ -114,6 +122,7 @@ class Stomach(BaseWorld):
     width = 1600
     height = 1600
     name = 'Stomach'
+    world_boss = boss.StomachBoss
     
     def __init__(self, game):
         super(Stomach, self).__init__(game)

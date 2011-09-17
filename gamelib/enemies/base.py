@@ -15,7 +15,6 @@ class BaseEnemy(obj.GameObject):
     height = 64
     points = 100
     life = 1
-    target = None
     cooldown = 100
     bullet_velocity = 250
 
