@@ -1,4 +1,5 @@
 import pyglet
+import rabbyt
 import data
 import random
 import obj
@@ -24,6 +25,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     invuln = 3
     lives = 3
     bombs = 1
+    trail_tex = data.spritesheet[1]
 
     def __init__(self, x, y):
         player_sprites = [
@@ -42,6 +44,11 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.gamepad = gamepad.GamepadHandler.connect()
         self.dispatch_event('on_respawn')
         
+        self.trail = []
+        for t in range(20):
+            self.trail.append(rabbyt.Sprite(self.trail_tex, x=x, y=y))
+        self.trail_counter = 0
+        self.trail_acc = 0.0
 
     def on_gamepad_connect(self):
         print 'Gamepad Connect!'
@@ -79,7 +86,13 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             w.engaged = self.weapon[-1].engaged
             self.weapon[-1] = w
             
+    def render(self):
+        pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
+        pyglet.gl.glBlendFunc(pyglet.gl.GL_SRC_ALPHA, pyglet.gl.GL_ONE)        
+        rabbyt.render_unsorted(self.trail)
         
+        super(Player, self).render()
+            
     def on_mouse_press(self, x, y, button, modifiers):
         self.weapon[-1].engage()
 
@@ -167,7 +180,15 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         #     s.rot = rot
         
         obj.CompoundGameObject.update(self, dt)
-        self.weapon[-1].update(dt, self.pos, self.target)        
+        self.weapon[-1].update(dt, self.pos, self.target)
+        
+        self.trail_acc -= dt
+        if self.trail_acc <= 0:
+            self.trail_acc = 0.05
+            self.trail_counter = (self.trail_counter + 1) % len(self.trail) 
+            self.trail[self.trail_counter].xy = self.sprites[0].xy        
+            self.trail[self.trail_counter].alpha = rabbyt.lerp(0.3,0, dt=0.8)
+            
         
         
     def hit(self, other):        
