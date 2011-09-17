@@ -106,7 +106,10 @@ class Game(object):
         self.camera.update(self.player.pos)
         
         # rabbyt.set_time(0)
-
+        
+    def on_gamepad_button(self):
+        print 'Gamepad Button!'    
+        
     def collect_garbage(self, dt=0.0):
         """
         This function will remove all of the dead objects in the robots and 
@@ -150,7 +153,7 @@ class Game(object):
         pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
         
         # pyglet.gl.glColor4f(1, 1, 1, 1)
-        data.background.blit(self.world.center.x, self.world.center.y)
+        self.world.background.blit(0,0)
                 
         # render characters and pickups
 

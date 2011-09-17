@@ -24,6 +24,7 @@ class World(object):
         self.center = vector.Vec2d(self.width/2, self.height/2)
         self.radius = 600
         
+        self.background = pyglet.resource.image('stage_1_background.png')
         self.borders = [vector.Vec2d(*v) for v in 
                             data.worlds[border_name].paths[0].path[0]]
                 
@@ -74,7 +75,7 @@ class World(object):
             self.build_up = True
         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
-        if self.build_up and random.random() < 0.3:        
+        if self.build_up and random.random() < 0.2:        
             for i in range(random.choice([3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,10,10,10,30])):
                 
                 x, y = self.valid_location()
@@ -85,7 +86,8 @@ class World(object):
                     virus.PurpleVirus, 
                     virus.SixthVirus, 
                     virus.CheezeVirus,
-                    # virus.WormVirus
+                    virus.WormVirus,
+                    virus.RedVirus
                     )
                 ), 1, x, y)
         

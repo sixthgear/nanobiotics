@@ -21,7 +21,7 @@ class GamepadHandler(pyglet.event.EventDispatcher):
         self.buttons = {}
         self.hats = {}
         self.axis = {}        
-        self.deadzone = 0.1
+        self.deadzone = 0.2
                         
         self.j = pygame.joystick.Joystick(id)
         self.j.init()
@@ -41,7 +41,14 @@ class GamepadHandler(pyglet.event.EventDispatcher):
         
         for a in range(self.j.get_numaxes()):
             self.axis[a] = self.j.get_axis(a)
-            if abs(self.axis[a]) < self.deadzone: self.axis[a] = 0.0
+        
+        # if abs(self.axis[a]) < self.deadzone: self.axis[a] = 0.0    
+        if abs(self.axis[0]) < self.deadzone and abs(self.axis[1]) < self.deadzone:
+            self.axis[0] = self.axis[1] = 0.0    
+            
+        if abs(self.axis[2]) < self.deadzone and abs(self.axis[3]) < self.deadzone:
+            self.axis[2] = self.axis[3] = 0.0
+        
             
         for b in range(self.j.get_numbuttons()):
             old_b_state = self.buttons[b]

@@ -20,9 +20,9 @@ bullet = pyglet.resource.image('bullet.png')
 bullet.anchor_x = bullet.width // 2
 bullet.anchor_y = bullet.height // 2
 
-background = pyglet.resource.image('stage_1_background.png')
-background.anchor_x = background.width // 2
-background.anchor_y = background.height // 2
+# background = pyglet.resource.image('stage_1_background.png')
+# background.anchor_x = background.width // 2
+# background.anchor_y = background.height // 2
     
 def load_virus(name):
     """

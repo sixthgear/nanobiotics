@@ -91,11 +91,18 @@ class MutatingVirus(Virus):
         
 
         
-class PurpleVirus(Virus):    
+class PurpleVirus(MutatingVirus):    
     spritesheet = data.load_virus('purple')
     sprite_image = spritesheet[3]
     color = (162,142,249)
     speed = 100
+    
+class RedVirus(MutatingVirus):    
+    spritesheet = data.load_virus('red')
+    sprite_image = spritesheet[3]
+    color = (235,76,105)
+    speed = 100
+    
     
 class BlueVirus(MutatingVirus):    
     spritesheet = data.load_virus('blue')
@@ -150,7 +157,7 @@ class CheezeVirus(MutatingVirus):
         target.y += random.randrange(-10,10)
         self.vel = (target).normal * self.speed
         
-class WormVirus(Virus):
+class WormVirus(MutatingVirus):
     spritesheet = data.load_virus('worm')
     sprite_image = spritesheet[3]
     animation_small = [3,2,1,2]
