@@ -35,9 +35,7 @@ class Game(object):
         
         # game objects
         self.world = None
-        self.worlds = [ world.World("stomach", self, "Stomach"),
-                        world.World("stomach", self, "Heart"),
-                        world.World("stomach", self, "Brain") ]
+        self.worlds = [ world.Stomach, world.Heart, world.Brain ]
           
         self.player = player.Player(0,0)
         self.robots = []
@@ -248,7 +246,7 @@ class Game(object):
         self.collect_garbage()
 
         if self.worlds:
-            self.world = self.worlds.pop(0)
+            self.world = self.worlds.pop(0)(self)
             self.announce('The %s' % self.world.name, 3.0)
         else:
             pass # player wins

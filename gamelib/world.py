@@ -9,51 +9,34 @@ from gamelib import fx
 from gamelib.enemies import base
 from gamelib.enemies import virus
 
-class World(object):
-    """
-    World object contains world geometry and tells game whats up
-    """
-
-    def __init__(self, border_name, game, name="VOID"):
+class BaseWorld(object):
+    
+    background = pyglet.resource.image('stage_1_background.png')
+    width = 1600
+    height = 1600
+    name = "Void"
+        
+    def __init__(self, game):        
         self.game = game
         self.countdown = 120
-        self.name = name
 
-        self.width = 1600
-        self.height = 1600
         self.center = vector.Vec2d(self.width/2, self.height/2)
         self.radius = 600
-        
-        self.background = pyglet.resource.image('stage_1_background.png')
-        self.borders = [vector.Vec2d(*v) for v in 
-                            data.worlds[border_name].paths[0].path[0]]
-                
+                        
         self.build_up = True
-        self.max_build_up = 35
-        
-        fx.effects.insert(0, fx.bubbles.Bubbler())
-        
+        self.max_build_up = 15
         self.pickup_rate = 30
         self.pickup_accumulator = 0
-            
-        # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
+        
+        self.effects = []
         
     def valid_location(self):
+        abstract
         
-        found = False
-        while not found:
-            angle = random.random() * math.pi * 2
-            mag = random.randrange(0, self.radius - 60)
-            x = self.center.x + math.cos(angle) * mag
-            y = self.center.y + math.sin(angle) * mag
+    def update(self, dt):
+        for e in self.effects:
+            e.update(dt)
         
-            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
-                continue
-            
-            found = True
-            
-        return x, y
-
     def ai(self):
         
         if not self.game.player.alive:
@@ -72,15 +55,14 @@ class World(object):
             return
             
         if not self.build_up and num < 2: 
+            self.game.next_world()
             self.build_up = True
         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
         if self.build_up and random.random() < 0.2:        
-            for i in range(random.choice([3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,10,10,10,30])):
-                
+            for i in range(random.choice([3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,10,10,10,30])):                
                 x, y = self.valid_location()
-                
-                self.game.spawn_robot(random.choice((
+                v = random.choice((
                     virus.GreenVirus, 
                     virus.BlueVirus, 
                     virus.PurpleVirus, 
@@ -88,11 +70,93 @@ class World(object):
                     virus.CheezeVirus,
                     virus.WormVirus,
                     virus.RedVirus
-                    )
-                ), 1, x, y)
+                ))
+                self.game.spawn_robot(v, 1, x, y)
         
-    def update(self, dt):
+        
+    
 
-        pass
+class Stomach(BaseWorld):
+    """
+    ACID BURN
+    """
 
+    background = pyglet.resource.image('stage_1_background.png')
+    width = 1600
+    height = 1600
+    name = 'Stomach'
+    
+    def __init__(self, game):
+        super(Stomach, self).__init__(game)
+        self.effects.append(fx.bubbles.Bubbler())
+        # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
+        
+    def valid_location(self):
+        
+        while True:
+            angle = random.random() * math.pi * 2
+            mag = random.randrange(0, self.radius - 60)
+            x = self.center.x + math.cos(angle) * mag
+            y = self.center.y + math.sin(angle) * mag
+        
+            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
+                continue
+            
+            return x, y
+            
+class Heart(BaseWorld):
+    """
+    ACID BURN
+    """
 
+    background = pyglet.resource.image('stage_2_background.png')
+    width = 1600
+    height = 1600
+    name = 'Heart'
+        
+    def __init__(self, game):
+        super(Heart, self).__init__(game)
+        # fx.effects.insert(0, fx.bubbles.Bubbler())            
+        # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
+        
+    def valid_location(self):
+        
+        while True:
+            angle = random.random() * math.pi * 2
+            mag = random.randrange(0, self.radius - 60)
+            x = self.center.x + math.cos(angle) * mag
+            y = self.center.y + math.sin(angle) * mag
+        
+            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
+                continue
+            
+            return x, y
+            
+class Brain(BaseWorld):
+    """
+    BRAAAAIIIIIN
+    """
+
+    background = pyglet.resource.image('stage_2_background.png')
+    width = 1600
+    height = 1600
+    name = 'Brain'
+    
+    def __init__(self, game):
+        super(Brain, self).__init__(game)
+        # fx.effects.insert(0, fx.bubbles.Bubbler())            
+        # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
+        
+    def valid_location(self):
+        
+        while True:
+            angle = random.random() * math.pi * 2
+            mag = random.randrange(0, self.radius - 60)
+            x = self.center.x + math.cos(angle) * mag
+            y = self.center.y + math.sin(angle) * mag
+        
+            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
+                continue
+            
+            return x, y
+            
