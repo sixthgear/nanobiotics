@@ -85,31 +85,17 @@ class MutatingVirus(Virus):
                 self.current_frame = 0
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
                 self.snap_in(0.67)
-                self.mutate_sound.play()
+                # self.mutate_sound.play()
                 
         else:
             self.flash(0.125, (1.0,0.4,0.4,1.0))
-        
-
-        
+                
 class PurpleVirus(MutatingVirus):    
     spritesheet = data.load_virus('purple')
     sprite_image = spritesheet[3]
     color = (162,142,249)
     speed = 100
-    
-class RedVirus(MutatingVirus):    
-    spritesheet = data.load_virus('red')
-    sprite_image = spritesheet[3]
-    color = (235,76,105)
-    speed = 100
-        
-class BlueVirus(MutatingVirus):    
-    spritesheet = data.load_virus('blue')
-    sprite_image = spritesheet[3]
-    color = (35,35,224)
-    speed = 100
-    
+
 class GreenVirus(MutatingVirus):
     spritesheet = data.load_virus('green')
     sprite_image = spritesheet[3]
@@ -126,7 +112,21 @@ class GreenVirus(MutatingVirus):
             if self.current_frame == 1: 
                 self.vel_target.zero()
                 self.vel *= 0.5
+        
+class RedVirus(GreenVirus):    
+    spritesheet = data.load_virus('red')
+    sprite_image = spritesheet[3]
+    color = (235,76,105)
+    speed = 300
+    animation_small = [2,3]
+        
+class BlueVirus(MutatingVirus):    
+    spritesheet = data.load_virus('blue')
+    sprite_image = spritesheet[3]
+    color = (35,35,224)
+    speed = 100
     
+
     
 class SixthVirus(MutatingVirus):
     spritesheet = data.load_virus('sixth')

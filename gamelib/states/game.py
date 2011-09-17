@@ -228,6 +228,7 @@ class Game(object):
         
         [r.update(dt) for r in self.robots]
         bullet.pool.update(dt)        
+        # fx.gibber.target.x, fx.gibber.target.y = self.player.pos.x, self.player.pos.y
         fx.update(dt)        
         self.collide()
         

@@ -7,6 +7,7 @@ import lepton.controller
 import lepton.emitter
 import lepton.renderer
 import lepton.texturizer
+import lepton.domain
 
 blood_tex = pyglet.resource.texture('blood.png')
 
@@ -15,14 +16,17 @@ class Gibber(object):
         
     def __init__(self):
         
+        # self.target = lepton.domain.Point((800,800,0))
+        
         self.particles = lepton.ParticleGroup(
         	controllers=[
-                lepton.controller.Gravity((0,-400,0)),
-                lepton.controller.Lifetime(0.75),
-                lepton.controller.Movement(damping=0.90),
+                # lepton.controller.Gravity((0,-400,0)),
+                # lepton.controller.Magnet(self.target, 15000.0),
+                lepton.controller.Lifetime(3),
+                lepton.controller.Movement(damping=0.94),
                 lepton.controller.Fader(
                     fade_out_start=0.5, 
-                    fade_out_end=0.75
+                    fade_out_end=3
                 ),
         	],
         	renderer=lepton.renderer.BillboardRenderer(
@@ -47,7 +51,7 @@ class Gibber(object):
     def explode(self, x, y, size=16.0, color=(1,1,1)):
         self.emitter.template.position = (x,y,0)
         self.emitter.template.color = color
-        self.emitter.emit(96, self.particles)
+        self.emitter.emit(48, self.particles)
         
     def update(self, dt):        
         self.particles.update(dt)
