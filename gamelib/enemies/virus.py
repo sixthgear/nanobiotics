@@ -139,7 +139,7 @@ class SixthVirus(MutatingVirus):
     
     def update(self, dt):
         super(SixthVirus, self).update(dt)
-        self.sprite.rot = (self.sprite.rot + 5) % 360
+        self.sprite.rot = (self.sprite.rot + 7) % 360
         
 class CheezeVirus(MutatingVirus):
     spritesheet = data.load_virus('cheeze')

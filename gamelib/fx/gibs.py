@@ -21,6 +21,7 @@ class Gibber(object):
         self.particles = lepton.ParticleGroup(
         	controllers=[
                 lepton.controller.Gravity((0,-50,0)),
+                lepton.controller.Growth(-1),
                 # lepton.controller.Magnet(self.target, 15000.0),
                 lepton.controller.Lifetime(3),
                 lepton.controller.Movement(damping=0.94),
@@ -36,11 +37,14 @@ class Gibber(object):
         self.emitter = lepton.emitter.StaticEmitter(
             template=lepton.Particle(
                 position=(0,0,0), 
-                color=(1,1,1)),
+                color=(1,1,1),                
+            ),
+            # velocity=lepton.domain.Disc((0,0,0), (0,0,1), 400, 400),
+                
             deviation=lepton.Particle(
                 position=(1,1,0), 
-                velocity=(600,600,0), 
-                age=0.25),
+                velocity=(400,400,0), 
+                age=2),
             size=[
                 (12,12,0), 
                 (8,8,0), 
@@ -51,7 +55,7 @@ class Gibber(object):
     def explode(self, x, y, size=16.0, color=(1,1,1)):
         self.emitter.template.position = (x,y,0)
         self.emitter.template.color = color
-        self.emitter.emit(48, self.particles)
+        self.emitter.emit(108, self.particles)
         
     def update(self, dt):        
         self.particles.update(dt)
