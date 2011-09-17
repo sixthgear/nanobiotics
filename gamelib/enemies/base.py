@@ -18,6 +18,7 @@ class BaseEnemy(obj.GameObject):
     target = None
     cooldown = 100
     bullet_velocity = 250
+
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(BaseEnemy, self).__init__(self.sprite_image, x, y)
@@ -32,11 +33,11 @@ class BaseEnemy(obj.GameObject):
     def update(self, dt):
         if not self.alive: return
 
-        if self.cooldown > 0:
-            self.cooldown -= 1
-
-        if self.cooldown == 0:
-            self.shoot(self.target.pos)
+        # if self.cooldown > 0:
+        #     self.cooldown -= 1
+        # 
+        # if self.cooldown == 0:
+        #     self.shoot(self.target.pos)
 
         self.pos += self.vel * dt
         self.sprite.xy = self.pos.x, self.pos.y

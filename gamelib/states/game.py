@@ -319,14 +319,23 @@ class Game(object):
                 
         # bullets vs world
         for b in (b for b in bullet.pool.active if b.alive):
-            if not collision.circle_to_circle(b.pos, 16, self.world.center, self.world.radius):
+            if not self.world.within_bounds(b.pos, 8):
                 b.die()                
     
         # player vs world                    
-        if not collision.circle_to_circle(self.player.pos, 16, self.world.center, self.world.radius):
+        if not self.world.within_bounds(self.player.pos, 16): 
+               
+            nb = None
+            npd = 10000
             
-            p_distance = (self.player.pos - self.world.center).magnitude - (16 + self.world.radius)
-            p_normal = (self.player.pos - self.world.center).normal
+            for b in self.world.bounds:
+                p_distance = (self.player.pos - b.center).magnitude - (16 + b.radius)
+                if p_distance < npd:
+                    npd = p_distance
+                    nb = b
+                    
+            p_distance = npd
+            p_normal = (self.player.pos - nb.center).normal
             p_vector = p_distance * p_normal
             self.player.pos -= p_vector
             self.player.sprites[0].xy = self.player.pos.x, self.player.pos.y

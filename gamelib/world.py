@@ -1,5 +1,6 @@
 import random
 import math
+import collections
 import pyglet
 import vector
 import data
@@ -9,29 +10,47 @@ from gamelib import fx
 from gamelib.enemies import base
 from gamelib.enemies import virus
 
+Bound = collections.namedtuple('Bound', 'center radius')
+
 class BaseWorld(object):
     
     background = pyglet.resource.image('stage_1_background.png')
     width = 1600
     height = 1600
     name = "Void"
-        
+            
     def __init__(self, game):        
         self.game = game
         self.countdown = 120
 
+        self.bounds = []
         self.center = vector.Vec2d(self.width/2, self.height/2)
-        self.radius = 600
-                        
         self.build_up = True
         self.max_build_up = 15
         self.pickup_rate = 30
         self.pickup_accumulator = 0
-        
+
         self.effects = []
         
+    def within_bounds(self, pos, radius):
+        for b in self.bounds:
+            if collision.circle_to_circle(pos, radius, b.center, b.radius):
+                return True
+        return False
+        
     def valid_location(self):
-        abstract
+    
+        while True:
+            b = random.choice(self.bounds)
+            angle = random.random() * math.pi * 2
+            mag = random.randrange(0, b.radius - 60)
+            x = b.center.x + math.cos(angle) * mag
+            y = b.center.y + math.sin(angle) * mag
+    
+            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
+                continue
+        
+            return x, y        
         
     def update(self, dt):
         for e in self.effects:
@@ -96,20 +115,10 @@ class Stomach(BaseWorld):
         super(Stomach, self).__init__(game)
         self.effects.append(fx.bubbles.Bubbler())
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
-        
-    def valid_location(self):
-        
-        while True:
-            angle = random.random() * math.pi * 2
-            mag = random.randrange(0, self.radius - 60)
-            x = self.center.x + math.cos(angle) * mag
-            y = self.center.y + math.sin(angle) * mag
-        
-            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
-                continue
-            
-            return x, y
-            
+        self.bounds = [
+            Bound(vector.Vec2d(800,800), 600)
+        ]
+                  
 class Heart(BaseWorld):
     """
     ACID BURN
@@ -122,21 +131,14 @@ class Heart(BaseWorld):
         
     def __init__(self, game):
         super(Heart, self).__init__(game)
+        self.bounds = [
+            Bound(vector.Vec2d(744,796), 532-32),
+            Bound(vector.Vec2d(864,664), 532-32),
+            Bound(vector.Vec2d(1106,426), 356-32),            
+        ]
         # fx.effects.insert(0, fx.bubbles.Bubbler())            
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
         
-    def valid_location(self):
-        
-        while True:
-            angle = random.random() * math.pi * 2
-            mag = random.randrange(0, self.radius - 60)
-            x = self.center.x + math.cos(angle) * mag
-            y = self.center.y + math.sin(angle) * mag
-        
-            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
-                continue
-            
-            return x, y
             
 class Brain(BaseWorld):
     """
