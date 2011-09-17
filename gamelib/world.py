@@ -35,9 +35,9 @@ class BaseWorld(object):
         
         self.boss_mode = False
         self.build_up = True
-        self.crescendos = [4, 8, 16, 32]
+        self.crescendos = [4, 8, 16, 16, 8, 32, 32, 16, 48]
         
-        self.pickup_rate = 10
+        self.pickup_rate = 35
         self.pickup_accumulator = 0
         self.effects = []
   

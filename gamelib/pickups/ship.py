@@ -8,4 +8,4 @@ class Ship(base.Pickup):
     def activate(self, game, player):
         player.lives += 1
         self.alive = False
-
+        self.__class__.sound.play()

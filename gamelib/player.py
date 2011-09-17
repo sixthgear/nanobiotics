@@ -51,6 +51,7 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.trail_acc = 0.0
         
         self.mouse_engaged = False
+        self.weapon_timer = 0.0
 
     def on_gamepad_connect(self):
         print 'Gamepad Connect!'
@@ -90,12 +91,16 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
     def swap_weapon(self, n):
         if n == 0:
             w = BasicTurret(None)
+            self.weapon_timer = 0.0
         elif n == 1:
             w = TwinTurret(None)
+            self.weapon_timer = 12.0
         elif n == 2:
             w = TripleTurret(None)
+            self.weapon_timer = 12.0
         elif n == 3:
             w = FireHose(None)
+            self.weapon_timer = 3.0
         else:
             return
                         
@@ -115,15 +120,31 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         super(Player, self).render()
             
     def on_mouse_press(self, x, y, button, modifiers):
-        self.weapon[-1].engage()
-        self.mouse_engaged = True
+        if button == 1:
+            self.weapon[-1].engage()
+            self.mouse_engaged = True
+        elif button == 4:
+            # I came to drop bombs
+            if self.bombs > 0:
+                # TODO SOUNDS
+                self.bombs -= 1
+                self.dispatch_event('on_bomb')
+            else:
+                pass # CLICK CLICK, EMPTY!
+            
 
     def on_mouse_release(self, x, y, button, modifiers):
-        self.weapon[-1].disengage()
-        self.mouse_engaged = False
+        if button == 1:
+            self.weapon[-1].disengage()
+            self.mouse_engaged = False
                                                                 
     def update(self, dt):
-        
+                
+        if self.weapon[-1].__class__ != BasicTurret:
+            self.weapon_timer -= dt
+            if self.weapon_timer <= 0.0:
+                self.swap_weapon(0)
+            
         if not self.alive:
             self.weapon[-1].disengage()
             self.weapon[-1].update(dt)

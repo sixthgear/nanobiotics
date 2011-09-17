@@ -10,7 +10,7 @@ class TwinTurret(Weapon):
 
     def __init__(self, *args):
         Weapon.__init__(self,*args)
-        self.cooldown = 0
+        self.cooldown = 1
 
     def update(self, *args):
         Weapon.update(self, *args)
@@ -19,7 +19,7 @@ class TwinTurret(Weapon):
         #     self.cooldown -= 1
         #     return
 
-        self.cooldown = 0
+        self.cooldown = 1
 
         if self.engaged:
             bv = (self.target_pos - self.pos).normal * 2000
