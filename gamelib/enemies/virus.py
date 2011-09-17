@@ -31,18 +31,6 @@ class Virus(base.BaseEnemy):
         self.speed = self.__class__.speed
         self.vel_target = vector.Vec2d(0,0)
         self.snap_in()
-
-    
-    def snap_in(self, start=0.01):
-        self.sprite.scale_x = rabbyt.anims.chain(
-            rabbyt.anims.ease_in(start, 2.5, dt=0.15),
-            rabbyt.anims.ease_out(2.5, 1.0, dt=0.2)
-        )
-        self.sprite.scale_y = rabbyt.anims.chain(
-            rabbyt.anims.ease_out(start, 1.5, dt=0.15),
-            rabbyt.anims.ease_in(1.5, 1.0, dt=0.2)
-        )
-        
         
     def ai(self, scene):
         if not self.alive: return

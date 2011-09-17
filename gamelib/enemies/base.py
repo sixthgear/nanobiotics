@@ -1,4 +1,5 @@
 import pyglet
+import rabbyt
 import random
 
 from gamelib import obj
@@ -43,6 +44,28 @@ class BaseEnemy(obj.GameObject):
         self.sprite.xy = self.pos.x, self.pos.y
         self.x, self.y = self.pos.x, self.pos.y
         
+        
+    def snap_in(self, start=0.01):
+        self.sprite.scale_x = rabbyt.anims.chain(
+            rabbyt.anims.ease_in(start, 2.5, dt=0.15),
+            rabbyt.anims.ease_out(2.5, 1.0, dt=0.2)
+        )
+        self.sprite.scale_y = rabbyt.anims.chain(
+            rabbyt.anims.ease_out(start, 1.5, dt=0.15),
+            rabbyt.anims.ease_in(1.5, 1.0, dt=0.2)
+        )
+        
+    def snap_out(self, start=0.01):
+        self.sprite.scale_x = rabbyt.anims.chain(
+            rabbyt.anims.ease_in(1.0, 2.5, dt=0.2),
+            rabbyt.anims.ease_out(2.5, start, dt=0.15),            
+        )
+        self.sprite.scale_y = rabbyt.anims.chain(
+            rabbyt.anims.ease_out(1.0, 1.5, dt=0.2),
+            rabbyt.anims.ease_in(1.5, start, dt=0.15),
+
+        )     
+                        
     def ai(self, scene):
         if not self.alive: return
         return
@@ -52,8 +75,7 @@ class BaseEnemy(obj.GameObject):
         if self.life <= 0:
             self.die()
         else:
-            # self.flash(0.125, (1.0,0.7,0.7,1.0))
-            pass
+            self.flash(0.125, (1.0,0.7,0.7,1.0))
         
     def die(self):
         fx.gibber.explode(self.pos.x, self.pos.y)

@@ -45,17 +45,13 @@ class Gibber(object):
                 position=(1,1,0), 
                 velocity=(400,400,0), 
                 age=2),
-            size=[
-                (12,12,0), 
-                (8,8,0), 
-                (4,4,0)
-            ]
+            size=[(12,12,0), (8,8,0), (4,4,0)]
         )
         
-    def explode(self, x, y, size=16.0, color=(1,1,1)):
+    def explode(self, x, y, n=108, size=1.0, color=(1,1,1)):
         self.emitter.template.position = (x,y,0)
         self.emitter.template.color = color
-        self.emitter.emit(108, self.particles)
+        self.emitter.emit(n, self.particles)
         
     def update(self, dt):        
         self.particles.update(dt)

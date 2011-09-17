@@ -1,3 +1,5 @@
+from __future__ import division
+
 import pyglet
 import base
 
@@ -9,7 +11,7 @@ class Boss(base.BaseEnemy):
     spritesheet = data.bosses["stomach"]
     sprite_image = spritesheet[0]
     animation = [0,1]
-    color = (0,0,0)
+    color = (116,193,109)
     health = 100
     death_sound = pyglet.resource.media('pop.wav', streaming=False)
 
@@ -33,7 +35,8 @@ class Boss(base.BaseEnemy):
 
     def die(self):
         self.death_sound.play()
-        fx.gibber.explode(self.pos.x, self.pos.y, color=[c/255 for c in self.color])
+        fx.gibber.explode(self.pos.x, self.pos.y, n=2000, size=3.0, color=[c/255 for c in self.color])
+        self.snap_out()
         self.alive = False
 
 class StomachBoss(Boss):
