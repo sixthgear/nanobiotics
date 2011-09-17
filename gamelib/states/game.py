@@ -349,15 +349,14 @@ class Game(object):
             # as they all pertain to the player
             if not self.player.alive: return
                          
-        # # player vs robot bullets
-        # for b in rabbyt.collisions.collide_single(self.player, bullet.pool.active):
-        #     if not b.alive or not b.group==1: continue
-        #     # if b.group == 0 or not b.alive: continue
-        #     b.die()
-        #     self.player.hit(b)
-        #     # bail out if the player dies, since we don't need to test any further collisions
-        #     # as they all pertain to the player            
-        #     if not self.player.alive: return
+        # player vs robot bullets
+        for b in rabbyt.collisions.collide_single(self.player, bullet.pool.active):
+            if not b.alive or not b.group==1: continue
+            b.die()
+            self.player.hit(b)
+            # bail out if the player dies, since we don't need to test any further collisions
+            # as they all pertain to the player            
+            if not self.player.alive: return
                     
         # player vs pickups
         for p in rabbyt.collisions.collide_single(self.player, self.pickups):

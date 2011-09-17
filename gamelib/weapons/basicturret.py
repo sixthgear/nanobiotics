@@ -21,8 +21,8 @@ class BasicTurret(Weapon):
         self.cooldown = 5
 
         if self.engaged:
-            bv = (self.target_pos - self.pos).normal * 1400
             bp = self.pos
+            bv = (self.target_pos - bp).normal * 1400
             if bv.x != 0 or bv.y != 0:
                 self.fire_sound.play()
                 bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 
