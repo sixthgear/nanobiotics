@@ -20,9 +20,16 @@ bullet = pyglet.resource.image('bullet.png')
 bullet.anchor_x = bullet.width // 2
 bullet.anchor_y = bullet.height // 2
 
-# background = pyglet.resource.image('stage_1_background.png')
-# background.anchor_x = background.width // 2
-# background.anchor_y = background.height // 2
+#background = pyglet.resource.image('stage_1_background.png')
+#background.anchor_x = background.width // 2
+#background.anchor_y = background.height // 2
+
+boss_hud = []
+boss_hud.append(pyglet.resource.image('boss-trim.png'))
+boss_hud.append(pyglet.resource.image('boss-health.png'))
+#for sprite in boss_hud:
+boss_hud[0].anchor_x = boss_hud[0].width // 2 
+boss_hud[0].anchor_y = boss_hud[0].height // 2 
     
 def load_virus(name):
     """

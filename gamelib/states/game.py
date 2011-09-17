@@ -40,6 +40,7 @@ class Game(object):
         self.player = player.Player(0,0)
         self.robots = []
         self.pickups = []
+        self.boss = None
         
         self.camera = vector.Vec2d()
         self.cursor = vector.Vec2d(WIDTH//2,HEIGHT//2)
@@ -171,7 +172,15 @@ class Game(object):
         self.player_inventory.draw()
         self.score_label.draw()
         if self.announcing: 
-            self.announcement.draw()        
+            self.announcement.draw()
+        
+        if self.boss:
+            hw = WIDTH // 2
+            bh = min(500, int(500.0 * (self.boss.health /
+                                       float(self.boss.__class__.health))))
+            hp = hw - data.boss_hud[1].width // 2
+            data.boss_hud[0].blit(hw, HEIGHT - 60)
+            data.boss_hud[1].get_region(0,0,bh,10).blit(hp, HEIGHT - 65)
                 
         # render cursor        
         data.cursor.blit(self.cursor.x, self.cursor.y)
