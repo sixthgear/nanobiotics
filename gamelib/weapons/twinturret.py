@@ -23,11 +23,12 @@ class TwinTurret(Weapon):
 
         if self.engaged:
             bv = (self.target_pos - self.pos).normal * 2000
-            bv.x += random.randrange(-100,100)
-            bv.y += random.randrange(-100,100)
             bp = self.pos
             if bv.x != 0 or bv.y != 0:
                 self.fire_sound.play()
+                # jitter
+                bv.x += random.randrange(-100,100)
+                bv.y += random.randrange(-100,100)    
                 bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 
 
                 
@@ -51,18 +52,12 @@ class FireHose(Weapon):
 
         if self.engaged:
             bv = (self.target_pos - self.pos).normal * 2000
-            bv.x += random.randrange(-100,100)
-            bv.y += random.randrange(-100,100)
             bp = self.pos
             if bv.x != 0 or bv.y != 0:
+                
                 self.fire_sound.play()
-                bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 
-                bv.x += random.randrange(-100,100)
-                bv.y += random.randrange(-100,100)
-                bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 
-                bv.x += random.randrange(-100,100)
-                bv.y += random.randrange(-100,100)
-                bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 
-                bv.x += random.randrange(-100,100)
-                bv.y += random.randrange(-100,100)
-                bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 
+                for i in range(4):
+                    # jitter
+                    bv.x += random.randrange(-100,100)
+                    bv.y += random.randrange(-100,100)                
+                    bullet.pool.fire(bp.x, bp.y, bv.x, bv.y) 
