@@ -22,7 +22,8 @@ class BaseWorld(object):
     height = 1600
     name = "Void"
     world_boss = None
-            
+    virus_types = None
+    
     def __init__(self, game):        
         
         self.game = game
@@ -37,27 +38,33 @@ class BaseWorld(object):
         self.pickup_accumulator = 0
         self.effects = []
   
-        self.music_player = pyglet.media.Player()
-        self.music_player.queue(self.music)
-        self.music_player.seek(self.music_start)    
-        self.music_player.play()
-
         if pyglet.media.have_avbin:
-            # self.music.queue()
-            # self.music.play()
+            self.music_player = pyglet.media.Player()
+            self.music_player.queue(self.music)
+            self.music_player.seek(self.music_start)    
+            self.music_player.play()
             self.music_player.eos_action = pyglet.media.Player.EOS_LOOP
         else:
             print "Avbin not found, you're going to be missing some awesome music :("
             
        
     def within_bounds(self, pos, radius):
+        """
+        Checks if a given circle defined by point pos and radius is within the bounds
+        of the world.
+        """
         for b in self.bounds:
             if not collision.inv_circle_to_circle(pos, radius, b.center, b.radius):
                 return True
         return False
         
     def valid_location(self):
-    
+        """
+        Trys to locate a valid spawn location that is: 
+        A. within the level bounds
+        B. not on within 320 of the player
+        TODO C. not on a boss.
+        """
         while True:
             b = random.choice(self.bounds)
             angle = random.random() * math.pi * 2
@@ -84,7 +91,7 @@ class BaseWorld(object):
         
         if not self.game.player.alive:
             return
-            
+
         self.pickup_accumulator -= 0.5
         if self.pickup_accumulator <= 0:
             self.pickup_accumulator = self.pickup_rate
@@ -105,15 +112,7 @@ class BaseWorld(object):
         if self.build_up and random.random() < 0.2:
             for i in range(random.choice([1,1,1,1,1,1,3,5])):                
                 x, y = self.valid_location()
-                v = random.choice((
-                    virus.GreenVirus, 
-                    virus.BlueVirus, 
-                    virus.PurpleVirus, 
-                    virus.SixthVirus, 
-                    virus.CheezeVirus,
-                    virus.WormVirus,
-                    virus.RedVirus
-                ))
+                v = random.choice(self.virus_types)
                 self.game.spawn_robot(v, 1, x, y)
 
     def spawn_boss(self):
@@ -136,6 +135,12 @@ class Stomach(BaseWorld):
     height = 1600
     name = 'Stomach'
     world_boss = boss.StomachBoss
+    virus_types = (
+        virus.GreenVirus, 
+        virus.BlueVirus, 
+        virus.PurpleVirus, 
+        virus.SixthVirus, 
+    )
     
     def __init__(self, game):
         super(Stomach, self).__init__(game)
@@ -156,6 +161,13 @@ class Heart(BaseWorld):
     width = 1600
     height = 1600
     name = 'Heart'
+    virus_types = ( 
+        virus.SixthVirus, 
+        virus.CheezeVirus,
+        virus.WormVirus,
+        virus.RedVirus
+    )
+    
         
     def __init__(self, game):
         super(Heart, self).__init__(game)
@@ -178,6 +190,13 @@ class Brain(BaseWorld):
     width = 1600
     height = 1600
     name = 'Brain'
+    virus_types = (
+        virus.BlueVirus, 
+        virus.PurpleVirus, 
+        virus.SixthVirus, 
+        virus.RedVirus
+    )
+    
     
     def __init__(self, game):
         super(Brain, self).__init__(game)
