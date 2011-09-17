@@ -30,9 +30,11 @@ class Controller(pyglet.window.Window):
         self.push_handlers(self.state)
         
     def title(self, dt):
+        self.state.music.pause()
         self.switch(states.title.Title)
 
     def play(self, dt):
+        self.state.music.pause()
         self.switch(states.game.Game)
         
     def on_key_press(self, symbol, modifiers):

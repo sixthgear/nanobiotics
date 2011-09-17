@@ -145,7 +145,7 @@ class Brain(BaseWorld):
     BRAAAAIIIIIN
     """
 
-    background = pyglet.resource.image('stage_2_background.png')
+    background = pyglet.resource.image('stage_3_background.png')
     width = 1600
     height = 1600
     name = 'Brain'
@@ -154,17 +154,10 @@ class Brain(BaseWorld):
         super(Brain, self).__init__(game)
         # fx.effects.insert(0, fx.bubbles.Bubbler())            
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
+        self.bounds = [
+            Bound(vector.Vec2d(806,941), 609),
+            Bound(vector.Vec2d(812,708), 570),
+            Bound(vector.Vec2d(625,325), 262),
+            Bound(vector.Vec2d(995,325), 262),
+        ]
         
-    def valid_location(self):
-        
-        while True:
-            angle = random.random() * math.pi * 2
-            mag = random.randrange(0, self.radius - 60)
-            x = self.center.x + math.cos(angle) * mag
-            y = self.center.y + math.sin(angle) * mag
-        
-            if collision.circle_to_circle(vector.Vec2d(x,y),1, self.game.player.pos, 320):
-                continue
-            
-            return x, y
-            

@@ -36,7 +36,7 @@ class Game(object):
         # game objects
         self.world = None
         self.worlds = [ 
-            # world.Stomach, 
+            world.Stomach, 
             world.Heart, 
             world.Brain 
         ]
@@ -69,8 +69,8 @@ class Game(object):
         self.music = pyglet.media.Player()
 
         if pyglet.media.have_avbin:
-            self.music.queue(pyglet.resource.media('stomach.mp3'))
-            # self.music.play()
+            self.music.queue(pyglet.resource.media('Theme1_Spacelab.mp3'))
+            self.music.play()
             self.music.eos_action = pyglet.media.Player.EOS_LOOP
         else:
             print "Avbin not found, you're going to be missing some awesome music :("
@@ -110,8 +110,17 @@ class Game(object):
         
         # rabbyt.set_time(0)
         
-    def on_gamepad_button(self):
-        print 'Gamepad Button!'    
+    def on_key_press(self, symbol, modifiers):
+        """
+        Perform oneoff key press actions.
+        """
+
+        if symbol == pyglet.window.key.Z:
+            self.world = self.worlds[0](self)
+        elif symbol == pyglet.window.key.X:
+            self.world = self.worlds[1](self)
+        elif symbol == pyglet.window.key.C:
+            self.world = self.worlds[2](self)
         
     def collect_garbage(self, dt=0.0):
         """
@@ -260,7 +269,8 @@ class Game(object):
         self.collect_garbage()
 
         if self.worlds:
-            self.world = self.worlds.pop(0)(self)
+            # self.world = self.worlds.pop(0)(self)
+            self.world = self.worlds[0](self)
             self.announce('The %s' % self.world.name, 3.0)
         else:
             pass # player wins
