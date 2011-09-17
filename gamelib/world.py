@@ -36,6 +36,12 @@ class BaseWorld(object):
     def update(self, dt):
         for e in self.effects:
             e.update(dt)
+            
+    def draw(self):
+        self.background.blit(0,0)
+        for e in self.effects:
+            e.draw()
+
         
     def ai(self):
         

@@ -35,7 +35,11 @@ class Game(object):
         
         # game objects
         self.world = None
-        self.worlds = [ world.Stomach, world.Heart, world.Brain ]
+        self.worlds = [ 
+            # world.Stomach, 
+            world.Heart, 
+            world.Brain 
+        ]
           
         self.player = player.Player(0,0)
         self.robots = []
@@ -152,7 +156,7 @@ class Game(object):
         pyglet.gl.glTranslatef(-self.camera.x, -self.camera.y, 0)
         
         # pyglet.gl.glColor4f(1, 1, 1, 1)
-        self.world.background.blit(0,0)
+        self.world.draw()
                 
         # render characters and pickups
 

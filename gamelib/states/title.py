@@ -8,6 +8,17 @@ class Title(object):
     def __init__(self, window):
         self.window = window
         self.timer = pyglet.clock.schedule_interval(self.update, 1.0/60)
+        
+        self.music = pyglet.media.Player()
+
+        if pyglet.media.have_avbin:
+            self.music.queue(pyglet.resource.media('Theme1_Spacelab.mp3'))
+            self.music.play()
+            self.music.eos_action = pyglet.media.Player.EOS_LOOP
+        else:
+            print "Avbin not found, you're going to be missing some awesome music :("
+        
+        
             
     def update(self, dt):
         pass
