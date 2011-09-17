@@ -112,7 +112,7 @@ class BaseWorld(object):
             if self.crescendos:
                 self.build_up = True
             else:
-                self.game.announce("RAWR!!", 1.0)
+                self.boss_mode = True
                 self.game.spawn_boss(self.world_boss)
                         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
