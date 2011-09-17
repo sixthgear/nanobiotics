@@ -38,9 +38,11 @@ class Title(object):
         
     def on_mouse_press(self, x, y, button, modifiers):
         # pyglet.app.exit()
-        # self.gamepad.pop_handlers()
+        if self.gamepad:
+            self.gamepad.pop_handlers()
         pyglet.clock.schedule_once(self.window.play, 0.0)
         
     def on_gamepad_button(self, button):
-        # self.gamepad.pop_handlers()
+        if self.gamepad:
+            self.gamepad.pop_handlers() 
         pyglet.clock.schedule_once(self.window.play, 0.0)

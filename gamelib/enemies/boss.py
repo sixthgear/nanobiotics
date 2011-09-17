@@ -44,6 +44,7 @@ class Boss(base.BaseEnemy, pyglet.event.EventDispatcher):
 
 class StomachBoss(Boss):
     spritesheet = data.bosses["stomach"]
+    sprite_image = spritesheet[0]
     animation = [0,1,2,3]
     color = (0, 160, 0)
     cooldown = 10
@@ -65,6 +66,7 @@ class StomachBoss(Boss):
 
 class HeartBoss(Boss):
     spritesheet = data.bosses["heart"]
+    sprite_image = spritesheet[0]
     animation = [0,1,2,3]
     color = (0, 160, 0)
     cooldown = 10

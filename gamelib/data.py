@@ -59,7 +59,7 @@ cursor = spritesheet[7]
 
 bosses = {
             "stomach": load_boss("slug", 2, 2),
-            "heart":   load_boss("heart", 2, 3),
+            "heart":   load_boss("heart", 2, 2),
             "brain":   load_boss("worm",2, 2)
 }
 
