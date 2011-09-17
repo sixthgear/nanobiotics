@@ -79,22 +79,30 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
                 pass # CLICK CLICK, EMPTY!
                 
         elif symbol == pyglet.window.key._1:
-            w = BasicTurret(None)
-            w.engaged = self.weapon[-1].engaged
-            self.weapon[-1] = w
+            self.swap_weapon(0)
         elif symbol == pyglet.window.key._2:
-            w = TwinTurret(None)
-            w.engaged = self.weapon[-1].engaged
-            self.weapon[-1] = w
+            self.swap_weapon(1)
         elif symbol == pyglet.window.key._3:
-            w = TripleTurret(None)
-            w.engaged = self.weapon[-1].engaged
-            self.weapon[-1] = w
+            self.swap_weapon(2)
         elif symbol == pyglet.window.key._4:
+            self.swap_weapon(3)
+    
+    def swap_weapon(self, n):
+        if n == 0:
+            w = BasicTurret(None)
+        elif n == 1:
+            w = TwinTurret(None)
+        elif n == 2:
+            w = TripleTurret(None)
+        elif n == 3:
             w = FireHose(None)
-            w.engaged = self.weapon[-1].engaged
-            self.weapon[-1] = w
-            
+        else:
+            return
+                        
+        w.engaged = self.weapon[-1].engaged
+        self.weapon[-1] = w
+        
+         
     def render(self):
         # pyglet.gl.glPushAttrib(pyglet.gl.GL_ALL_ATTRIB_BITS)
         # pyglet.gl.glEnable(pyglet.gl.GL_BLEND)

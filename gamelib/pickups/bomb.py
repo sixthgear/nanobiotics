@@ -9,4 +9,3 @@ class Bomb(base.Pickup):
         player.bombs += 1
         self.alive = False
         self.__class__.sound.play()
-

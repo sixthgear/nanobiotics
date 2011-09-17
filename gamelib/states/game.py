@@ -13,7 +13,7 @@ from gamelib import player
 from gamelib import vector
 from gamelib import world
 
-from gamelib.pickups import bomb 
+from gamelib.pickups import base, ship, bomb
 
 from gamelib.constants import *
 
@@ -318,7 +318,13 @@ class Game(object):
         """
         Create a helpful thing.
         """        
-        p = bomb.Bomb(x,y,type)
+        p_class = random.choice((
+            base.MachineGunPickup,
+            base.SpreadGunPickup,
+            base.FireHosePickup,
+            ship.Ship,
+            bomb.Bomb))
+        p = p_class(x,y,type)                
         self.pickups.append(p)
         self.render_list.append(p)            
         

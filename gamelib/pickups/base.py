@@ -11,15 +11,10 @@ class Pickup(obj.GameObject):
     sprite = data.spritesheet[40]
     sound = pyglet.resource.media('powerup.wav', streaming=False)
     
-    def __init__(self, x=None, y=None, type=None):
-        if x == None or y == None:
-            x = random.randrange(768) + 32
-            y = random.randrange(540) + 50            
-        if type == None:
-            type = random.randrange(4)
+    def __init__(self, x, y, type=None):
             
-        x = min(max(32, x), 768)
-        y = min(max(50, y), 540)
+        # x = min(max(32, x), 768)
+        # y = min(max(50, y), 540)
         
         self.life = self.__class__.life    
         self.type = type    
@@ -33,7 +28,31 @@ class Pickup(obj.GameObject):
         
     def activate(self, game, player):
         self.__class__.sound.play()
-    
-        
+            
     def die(self):
         self.alive = False
+
+
+class MachineGunPickup(Pickup):    
+    sprite = data.spritesheet[9]
+    def activate(self, game, player):        
+        player.swap_weapon(1)
+        self.alive = False
+        self.__class__.sound.play()
+    
+class SpreadGunPickup(Pickup):    
+    sprite = data.spritesheet[10]
+    def activate(self, game, player):        
+        player.swap_weapon(2)
+        self.alive = False
+        self.__class__.sound.play()
+
+class FireHosePickup(Pickup):    
+    sprite = data.spritesheet[11]
+    def activate(self, game, player):        
+        player.swap_weapon(3)
+        self.alive = False
+        self.__class__.sound.play()
+    
+    
+    

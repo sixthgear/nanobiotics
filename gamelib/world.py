@@ -37,7 +37,7 @@ class BaseWorld(object):
         self.build_up = True
         self.crescendos = [4, 8, 16, 32]
         
-        self.pickup_rate = 30
+        self.pickup_rate = 10
         self.pickup_accumulator = 0
         self.effects = []
   
