@@ -24,6 +24,7 @@ class BaseWorld(object):
     world_boss = None
             
     def __init__(self, game):        
+        
         self.game = game
         self.boss = self.__class__.world_boss
         self.countdown = 120
@@ -97,7 +98,7 @@ class BaseWorld(object):
             return
             
         if not self.build_up and num < 2: 
-            self.game.next_world()
+            # self.game.next_world()
             self.build_up = True
         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
