@@ -83,6 +83,13 @@ class Game(object):
             color=(255,255,255,255))
             
         # self.announce('READY', 3.0)
+ 
+        self.player_inventory = pyglet.text.Label(
+            text='Lives: 00   Bombs: 00', 
+            font_name=['DYLOVASTUFF', 'DYLOVASTUFF'], font_size=18, x=WIDTH-20, y=10,
+            anchor_x='right', anchor_y='bottom',
+            color=(255,255,255,255)
+        )
         
         self.score_label = pyglet.text.Label(
             text='1234567890', 
@@ -90,7 +97,7 @@ class Game(object):
             anchor_x='right', anchor_y='top',
             color=(255,255,255,255)
         )
-                     
+
         # lets do this!
         self.rebuild_render_list()
         self.next_world()
@@ -160,8 +167,8 @@ class Game(object):
         
         # render HUD        
         pyglet.gl.glPopMatrix()
+        self.player_inventory.draw()
         self.score_label.draw()
-        # self.lives_label.draw()
         if self.announcing: 
             self.announcement.draw()        
                 
@@ -286,6 +293,9 @@ class Game(object):
             self.score_label.text = '%010d' % self.score
         else:
             self.score_label.text = '%d' % self.score
+
+        self.player_inventory.text = 'Lives: %02d   Bombs: %02d' % (self.player.lives, 
+                                                                    self.player.bombs) 
                 
     def collide(self):
         """
@@ -339,6 +349,7 @@ class Game(object):
             if not p.alive: continue
             p.activate(self, self.player)
             p.die()
+            self.add_score(0) # update hud
     
     def on_bomb(self):
         """
@@ -372,6 +383,8 @@ class Game(object):
         # self.lives_label.text = "%d" % self.player.lives
         for r in self.robots:
             if r.alive: r.die()
+
+        self.add_score(0) # update hud
                                 
         # check for gameover
         if self.player.lives == 0:
