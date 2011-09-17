@@ -55,7 +55,9 @@ class Game(object):
         # event handlers
         self.window.push_handlers(self.player)
         self.window.push_handlers(self.player.keys)
-        self.window.push_handlers(self.player.gamepad)
+        # self.player.gamepad.push_handlers(self)
+        if self.player.gamepad:
+            self.player.gamepad.push_handlers(self.player)        
         self.player.push_handlers(self)
 
         # timers

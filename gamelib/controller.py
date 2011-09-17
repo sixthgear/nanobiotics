@@ -22,6 +22,7 @@ class Controller(pyglet.window.Window):
         self.set_mouse_visible(False)
         self.state = None
         self.fps_display = pyglet.clock.ClockDisplay()
+
                 
     def switch(self, state):
         if self.state:

@@ -49,12 +49,21 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.trail.append(rabbyt.Sprite(self.trail_tex, x=x, y=y))
         self.trail_counter = 0
         self.trail_acc = 0.0
+        
+        self.mouse_engaged = False
 
     def on_gamepad_connect(self):
         print 'Gamepad Connect!'
         
-    def on_gamepad_button(self):
-        print 'Gamepad Button!'    
+    def on_gamepad_button(self, button):
+        # I came to drop bombs
+        if self.bombs > 0:
+            # TODO SOUNDS
+            self.bombs -= 1
+            self.dispatch_event('on_bomb')
+        else:
+            pass # CLICK CLICK, EMPTY!
+        
         
     def on_key_press(self, symbol, modifiers):
         """
@@ -99,9 +108,11 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             
     def on_mouse_press(self, x, y, button, modifiers):
         self.weapon[-1].engage()
+        self.mouse_engaged = True
 
     def on_mouse_release(self, x, y, button, modifiers):
         self.weapon[-1].disengage()
+        self.mouse_engaged = False
                                                                 
     def update(self, dt):
         
@@ -121,37 +132,38 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.vel_target.x = self.gamepad.axis[0]
             self.vel_target.y = -self.gamepad.axis[1]
             
-            if self.gamepad.axis[2] or self.gamepad.axis[3]:
-                if not self.weapon[-1].engaged:
-                    self.weapon[-1].engage()
-                rel_target = vector.Vec2d(self.gamepad.axis[2], -self.gamepad.axis[3]).normal * 200
-                self.target = self.pos + rel_target
-            else:
-                self.weapon[-1].disengage()
+            if not self.mouse_engaged:
+                if self.gamepad.axis[2] or self.gamepad.axis[3]:
+                    if not self.weapon[-1].engaged:
+                        self.weapon[-1].engage()
+                    rel_target = vector.Vec2d(self.gamepad.axis[2], -self.gamepad.axis[3]).normal * 200
+                    self.target = self.pos + rel_target
+                else:
+                    self.weapon[-1].disengage()
                         
         if self.keys[pyglet.window.key.A]:                        
             if self.keys[pyglet.window.key.W]:
-                self.vel_target.y += 0.7071
-                self.vel_target.x -= 0.7071
+                self.vel_target.y = 0.7071
+                self.vel_target.x = -0.7071
             elif self.keys[pyglet.window.key.S]:
-                self.vel_target.y -= 0.7071
-                self.vel_target.x -= 0.7071
+                self.vel_target.y = -0.7071
+                self.vel_target.x = -0.7071
             else:
-                self.vel_target.x -= 1.0          
+                self.vel_target.x = -1.0          
         elif self.keys[pyglet.window.key.D]:            
             if self.keys[pyglet.window.key.W]:
-                self.vel_target.y += 0.7071
-                self.vel_target.x += 0.7071
+                self.vel_target.y = 0.7071
+                self.vel_target.x = 0.7071
             elif self.keys[pyglet.window.key.S]:
-                self.vel_target.y -= 0.7071
-                self.vel_target.x += 0.7071
+                self.vel_target.y = -0.7071
+                self.vel_target.x = 0.7071
             else:
-                self.vel_target.x += 1.0
+                self.vel_target.x = 1.0
         else:                        
             if self.keys[pyglet.window.key.W]:
-                self.vel_target.y += 1.0
+                self.vel_target.y = 1.0
             elif self.keys[pyglet.window.key.S]:
-                self.vel_target.y -= 1.0
+                self.vel_target.y = -1.0
             else:
                 pass
         

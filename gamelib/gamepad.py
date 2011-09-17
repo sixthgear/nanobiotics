@@ -55,8 +55,8 @@ class GamepadHandler(pyglet.event.EventDispatcher):
             self.buttons[b] = self.j.get_button(b)
             
             if self.buttons[b] and not old_b_state:
-                self.dispatch_event('on_gamepad_button')
-                print 'button %d' % b
+                self.dispatch_event('on_gamepad_button', b)
+                # print 'button %d' % b
             
     @classmethod
     def connect(cls):
