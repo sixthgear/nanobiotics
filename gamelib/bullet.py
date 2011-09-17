@@ -39,7 +39,12 @@ class BulletPool(object):
         self.active = []
         self.bullets = []
         self.__init__()
-        
+
+    def kill_group(self, group=1):
+        for b in self.active:
+            if b.group == group:
+                b.die()
+
     def draw(self):
         # BulletPool.batch.draw()
         pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
@@ -56,6 +61,7 @@ class Bullet(obj.GameObject):
     def __init__(self, x, y, vx, vy, group=0):
         super(Bullet,self).__init__(data.bullet, x, y, vx, vy)
         self.alive = False
+        self.group = group
             
     def activate(self, x, y, vx, vy, group=0):
         if group == 0:

@@ -17,7 +17,7 @@ class BaseEnemy(obj.GameObject):
     life = 1
     target = None
     cooldown = 100
-    bullet_velocity = 500
+    bullet_velocity = 250
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(BaseEnemy, self).__init__(self.sprite_image, x, y)

@@ -373,7 +373,10 @@ class Game(object):
         for r in self.robots:
             if r.alive:
                 r.die()
-                p += r.points 
+                p += r.points
+        for t in bullet.pool.bullets:
+            print t.group
+        bullet.pool.kill_group(1) # kill off enemy bullets 
 
         self.add_score(p)
 
