@@ -113,6 +113,7 @@ class Game(object):
             boss = self.world.world_boss
             if boss:
                 self.spawn_boss(boss)
+                self.player.invuln = 3
             else:
                 print "no boss"
                     
