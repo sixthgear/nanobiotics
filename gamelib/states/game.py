@@ -300,14 +300,14 @@ class Game(object):
     def collide(self):
         """
         Heres where we detect us some collisions.
-        """        
+        """
                 
-        # bullets vs screen
+        # bullets vs world
         for b in (b for b in bullet.pool.active if b.alive):
             if not collision.circle_to_circle(b.pos, 16, self.world.center, self.world.radius):
                 b.die()                
     
-        # player vs screen                    
+        # player vs world                    
         if not collision.circle_to_circle(self.player.pos, 16, self.world.center, self.world.radius):
             
             p_distance = (self.player.pos - self.world.center).magnitude - (16 + self.world.radius)
@@ -392,7 +392,6 @@ class Game(object):
             return
         
         pyglet.clock.schedule_once(self.player.respawn, 3.0, self.world.center)
-             
         
     def on_respawn(self):
         """
