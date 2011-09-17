@@ -313,9 +313,12 @@ class Game(object):
 
         for r in self.robots:
             if r.alive: r.die()
-                        
-        pyglet.clock.schedule_once(lambda dt: self.next_world(), 3.0)
         
+        if not self.worlds:
+            pyglet.clock.schedule_once(lambda dt: self.win(), 3.0)
+        else:    
+            pyglet.clock.schedule_once(lambda dt: self.next_world(), 3.0)
+                    
     def spawn_pickup(self,x=None,y=None,type=None):
         """
         Create a helpful thing.
@@ -462,9 +465,13 @@ class Game(object):
     def on_respawn(self):
         """
         Player just respawned.
-        """                
+        """                        
         pass
         
+    def win(self):
+        self.announce("YOU WIN!", 10)
+        pyglet.clock.schedule_once(self.shutdown, 10.0)
+                
     def game_over(self):
         """
         Game over man! Game over! -- Sgt. Hicks
