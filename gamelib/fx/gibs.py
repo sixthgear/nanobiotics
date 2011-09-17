@@ -20,7 +20,7 @@ class Gibber(object):
         
         self.particles = lepton.ParticleGroup(
         	controllers=[
-                # lepton.controller.Gravity((0,-400,0)),
+                lepton.controller.Gravity((0,-50,0)),
                 # lepton.controller.Magnet(self.target, 15000.0),
                 lepton.controller.Lifetime(3),
                 lepton.controller.Movement(damping=0.94),
@@ -57,4 +57,10 @@ class Gibber(object):
         self.particles.update(dt)
         
     def draw(self):        
+        pyglet.gl.glPushAttrib(pyglet.gl.GL_ALL_ATTRIB_BITS)
+        pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
+        pyglet.gl.glBlendFunc(pyglet.gl.GL_SRC_ALPHA, pyglet.gl.GL_ONE)
         self.particles.draw()
+        pyglet.gl.glPopAttrib()
+        
+        
