@@ -82,6 +82,7 @@ class MutatingVirus(Virus):
                 self.life = 3
                 self.speed *= 1.5
                 self.current_animation = self.animation_large
+                self.current_frame = 0
                 self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
                 self.snap_in(0.67)
                 self.mutate_sound.play()
@@ -102,8 +103,7 @@ class RedVirus(MutatingVirus):
     sprite_image = spritesheet[3]
     color = (235,76,105)
     speed = 100
-    
-    
+        
 class BlueVirus(MutatingVirus):    
     spritesheet = data.load_virus('blue')
     sprite_image = spritesheet[3]
@@ -160,7 +160,7 @@ class CheezeVirus(MutatingVirus):
 class WormVirus(MutatingVirus):
     spritesheet = data.load_virus('worm')
     sprite_image = spritesheet[3]
-    animation_small = [3,2,1,2]
+    # animation_small = [3,2,1,2]
     color = (104.0,217.0,198.0)
     speed = 50.0
     
