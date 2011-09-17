@@ -62,4 +62,27 @@ class StomachBoss(Boss):
         if self.target and self.cooldown == 0:
             self.shoot(self.target.pos)
 
+
+class HeartBoss(Boss):
+    spritesheet = data.bosses["heart"]
+    animation = [0,1,2,3]
+    color = (0, 160, 0)
+    cooldown = 10
+    width = 400
+    height = 400
+
+    def __init__(self, x=None, y=None, vx=None, vy=None):
+        super(HeartBoss, self).__init__(800, 470, vx, vy)
+        
+    def ai(self, scene):
+        super(HeartBoss, self).ai(scene)
+
+    def update(self, dt):
+        super(HeartBoss, self).update(dt)
+     
+        if self.target and self.cooldown == 0:
+            self.shoot(self.target.pos)
+
+
+
 Boss.register_event_type('on_boss_death')

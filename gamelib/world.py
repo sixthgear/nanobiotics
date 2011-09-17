@@ -163,6 +163,7 @@ class Heart(BaseWorld):
     width = 1600
     height = 1600
     name = 'Heart'
+    world_boss = boss.HeartBoss
     virus_types = ( 
         virus.SixthVirus, 
         virus.CheezeVirus,
