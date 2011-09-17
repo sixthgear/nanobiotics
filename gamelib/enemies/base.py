@@ -26,6 +26,7 @@ class BaseEnemy(obj.GameObject):
         self.life = self.__class__.life
         self.bullet_velocity = self.__class__.bullet_velocity
         self.cooldown = 0
+        self.target = None
 
     def set_target(self, target):
         self.target = target
