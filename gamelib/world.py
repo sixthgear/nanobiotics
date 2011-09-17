@@ -15,6 +15,8 @@ Bound = collections.namedtuple('Bound', 'center radius')
 class BaseWorld(object):
     
     background = pyglet.resource.image('stage_1_background.png')
+    music = pyglet.resource.media('Stomach.mp3')
+    music_start = 0.0
     width = 1600
     height = 1600
     name = "Void"
@@ -107,6 +109,8 @@ class Stomach(BaseWorld):
     """
 
     background = pyglet.resource.image('stage_1_background.png')
+    music = pyglet.resource.media('Stomach.mp3')
+    music_start = 107.5
     width = 1600
     height = 1600
     name = 'Stomach'
@@ -125,6 +129,8 @@ class Heart(BaseWorld):
     """
 
     background = pyglet.resource.image('stage_2_background.png')
+    music = pyglet.resource.media('Circulation.mp3')
+    music_start = 64.8
     width = 1600
     height = 1600
     name = 'Heart'
@@ -146,6 +152,7 @@ class Brain(BaseWorld):
     """
 
     background = pyglet.resource.image('stage_3_background.png')
+    music = pyglet.resource.media('Brain.mp3')
     width = 1600
     height = 1600
     name = 'Brain'

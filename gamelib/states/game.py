@@ -69,8 +69,8 @@ class Game(object):
         self.music = pyglet.media.Player()
 
         if pyglet.media.have_avbin:
-            self.music.queue(pyglet.resource.media('Theme1_Spacelab.mp3'))
-            self.music.play()
+            # self.music.queue()
+            # self.music.play()
             self.music.eos_action = pyglet.media.Player.EOS_LOOP
         else:
             print "Avbin not found, you're going to be missing some awesome music :("
@@ -103,7 +103,8 @@ class Game(object):
 
         # lets do this!
         self.rebuild_render_list()
-        self.next_world()
+        # self.next_world()
+        self.switch_world(self.worlds[0])
         self.player.pos = self.world.center.copy()
         self.camera = camera.Camera(self.world, 0, 0)
         self.camera.update(self.player.pos)
@@ -114,14 +115,13 @@ class Game(object):
         """
         Perform oneoff key press actions.
         """
-
-        if symbol == pyglet.window.key.Z:
-            self.world = self.worlds[0](self)
+        if symbol == pyglet.window.key.Z:            
+            self.switch_world(self.worlds[0])
         elif symbol == pyglet.window.key.X:
-            self.world = self.worlds[1](self)
+            self.switch_world(self.worlds[1])
         elif symbol == pyglet.window.key.C:
-            self.world = self.worlds[2](self)
-        
+            self.switch_world(self.worlds[2])
+                    
     def collect_garbage(self, dt=0.0):
         """
         This function will remove all of the dead objects in the robots and 
@@ -260,18 +260,32 @@ class Game(object):
         for p in self.pickups:
             p.ai(self)
 
+
+    def switch_world(self, world):
+        
+
+        self.collect_garbage()
+        
+        self.world = world(self)
+        self.music.queue(self.world.music)
+        
+        if self.music.playing:
+            self.music.next()
+
+        self.music.seek(self.world.music_start)    
+        self.music.play()
+        
+        self.announce('The %s' % self.world.name, 3.0)
+        
     def next_world(self):
         """
         Being the next world!
         """
-
         self.add_score(0)
-        self.collect_garbage()
-
+                
         if self.worlds:
-            # self.world = self.worlds.pop(0)(self)
-            self.world = self.worlds[0](self)
-            self.announce('The %s' % self.world.name, 3.0)
+            self.switch_world(self.worlds.pop(0))
+
         else:
             pass # player wins
 

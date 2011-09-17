@@ -87,9 +87,13 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             self.weapon[-1] = w
             
     def render(self):
-        pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
-        pyglet.gl.glBlendFunc(pyglet.gl.GL_SRC_ALPHA, pyglet.gl.GL_ONE)        
+        # pyglet.gl.glPushAttrib(pyglet.gl.GL_ALL_ATTRIB_BITS)
+        # pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
+        # pyglet.gl.glBlendFunc(pyglet.gl.GL_SRC_ALPHA, pyglet.gl.GL_ONE)
         rabbyt.render_unsorted(self.trail)
+        # pyglet.gl.glPopAttrib()
+        
+        
         
         super(Player, self).render()
             

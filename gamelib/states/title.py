@@ -12,7 +12,7 @@ class Title(object):
         self.music = pyglet.media.Player()
 
         if pyglet.media.have_avbin:
-            self.music.queue(pyglet.resource.media('Theme1_Spacelab.mp3'))
+            self.music.queue(pyglet.resource.media('ThemeA.mp3'))
             self.music.play()
             self.music.eos_action = pyglet.media.Player.EOS_LOOP
         else:
