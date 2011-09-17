@@ -7,7 +7,7 @@ from gamelib import data
 from gamelib import fx
 
 
-class Boss(base.BaseEnemy):
+class Boss(base.BaseEnemy, pyglet.event.EventDispatcher):
     spritesheet = data.bosses["stomach"]
     sprite_image = spritesheet[0]
     animation = [0,1]
@@ -40,6 +40,7 @@ class Boss(base.BaseEnemy):
         fx.gibber.explode(self.pos.x, self.pos.y, n=2000, size=3.0, color=[c/255 for c in self.color])
         self.snap_out()
         self.alive = False
+        self.dispatch_event('on_boss_death')
 
 class StomachBoss(Boss):
     spritesheet = data.bosses["stomach"]
@@ -60,3 +61,5 @@ class StomachBoss(Boss):
      
         if self.target and self.cooldown == 0:
             self.shoot(self.target.pos)
+
+Boss.register_event_type('on_boss_death')

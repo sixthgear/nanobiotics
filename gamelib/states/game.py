@@ -93,8 +93,8 @@ class Game(object):
 
         # lets do this!
         self.rebuild_render_list()
-        # self.next_world()
-        self.switch_world(self.worlds[0])
+        self.next_world()
+        # self.switch_world(self.worlds[0])
         self.player.pos = self.world.center.copy()
         self.camera = camera.Camera(self.world, 0, 0)
         self.camera.update(self.player.pos)
@@ -106,11 +106,7 @@ class Game(object):
         Perform oneoff key press actions.
         """
         if symbol == pyglet.window.key.Z:            
-            self.switch_world(self.worlds[0])
-        elif symbol == pyglet.window.key.X:
-            self.switch_world(self.worlds[1])
-        elif symbol == pyglet.window.key.C:
-            self.switch_world(self.worlds[2])
+            self.next_world()
         elif symbol == pyglet.window.key.B:
             boss = self.world.world_boss
             if boss:
@@ -307,7 +303,15 @@ class Game(object):
         self.boss = boss()
         self.robots.append(self.boss)
         self.render_list.append(self.boss)        
-                                             
+        self.boss.push_handlers(self)
+                                            
+    def on_boss_death(self):
+
+        for r in self.robots:
+            if r.alive: r.die()
+                        
+        pyglet.clock.schedule_once(lambda dt: self.next_world(), 3.0)
+        
     def spawn_pickup(self,x=None,y=None,type=None):
         """
         Create a helpful thing.

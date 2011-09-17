@@ -33,6 +33,7 @@ class BaseWorld(object):
         self.bounds = []
         self.center = vector.Vec2d(self.width/2, self.height/2)
         
+        self.boss_mode = False
         self.build_up = True
         self.crescendos = [4, 8, 16, 32]
         
@@ -105,7 +106,7 @@ class BaseWorld(object):
             self.build_up = False
             return
             
-        if self.crescendos and not self.build_up and num < 1:             
+        if not self.boss_mode and not self.build_up and num < 1:             
             # self.game.next_world()            
             self.crescendos.pop(0)
             if self.crescendos:
@@ -113,7 +114,7 @@ class BaseWorld(object):
             else:
                 self.game.announce("RAWR!!", 1.0)
                 self.game.spawn_boss(self.world_boss)
-        
+                        
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
         if self.build_up and random.random() < 0.5:
             for i in range(random.randrange(self.crescendos[0]/2)+1):                
