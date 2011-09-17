@@ -65,8 +65,8 @@ class BaseWorld(object):
             self.build_up = True
         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
-        if self.build_up and random.random() < 0.2:        
-            for i in range(random.choice([3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,10,10,10,30])):                
+        if self.build_up and random.random() < 0.2:
+            for i in range(random.choice([1,1,1,1,1,1,3,5])):                
                 x, y = self.valid_location()
                 v = random.choice((
                     virus.GreenVirus, 
