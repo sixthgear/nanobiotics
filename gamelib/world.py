@@ -118,7 +118,8 @@ class BaseWorld(object):
 
     def spawn_boss(self):
         if self.boss:
-            return self.boss(0,0,0,0)
+            x, y = self.valid_location()
+            return self.boss(800,470)
         
         
     
