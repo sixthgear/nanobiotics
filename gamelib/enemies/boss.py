@@ -74,7 +74,7 @@ class HeartBoss(Boss):
     height = 400
 
     def __init__(self, x=None, y=None, vx=None, vy=None):
-        super(HeartBoss, self).__init__(800, 470, vx, vy)
+        super(HeartBoss, self).__init__(800, 800, vx, vy)
         
     def ai(self, scene):
         super(HeartBoss, self).ai(scene)
@@ -85,6 +85,26 @@ class HeartBoss(Boss):
         if self.target and self.cooldown == 0:
             self.shoot(self.target.pos)
 
+class BrainBoss(Boss):
+    spritesheet = data.bosses["brain"]
+    sprite_image = spritesheet[0]
+    animation = [0]
+    color = (0, 160, 0)
+    cooldown = 10
+    width = 400
+    height = 400
+
+    def __init__(self, x=None, y=None, vx=None, vy=None):
+        super(BrainBoss, self).__init__(800, 800, vx, vy)
+        
+    def ai(self, scene):
+        super(BrainBoss, self).ai(scene)
+
+    def update(self, dt):
+        super(BrainBoss, self).update(dt)
+     
+        if self.target and self.cooldown == 0:
+            self.shoot(self.target.pos)
 
 
 Boss.register_event_type('on_boss_death')

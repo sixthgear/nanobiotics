@@ -193,6 +193,7 @@ class Brain(BaseWorld):
     width = 1600
     height = 1600
     name = 'Brain'
+    world_boss = boss.BrainBoss
     virus_types = (
         virus.BlueVirus, 
         virus.PurpleVirus, 
