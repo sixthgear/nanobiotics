@@ -112,11 +112,9 @@ class Game(object):
         elif symbol == pyglet.window.key.C:
             self.switch_world(self.worlds[2])
         elif symbol == pyglet.window.key.B:
-            boss = self.world.spawn_boss()
+            boss = self.world.world_boss
             if boss:
-                self.robots.append(boss)
-                self.render_list.append(boss)
-                self.boss = boss
+                self.spawn_boss(boss)
             else:
                 print "no boss"
                     
@@ -304,6 +302,11 @@ class Game(object):
 
         self.robots += r
         self.render_list += r
+        
+    def spawn_boss(self, boss):
+        self.boss = boss()
+        self.robots.append(self.boss)
+        self.render_list.append(self.boss)        
                                              
     def spawn_pickup(self,x=None,y=None,type=None):
         """
@@ -463,7 +466,7 @@ class Game(object):
         self.render_list = []
         self.window.remove_handlers(self.player.keys)
         self.window.remove_handlers(self.player)
-        self.music.pause()
+        self.world.music.pause()
         pyglet.clock.unschedule(self.update)
         pyglet.clock.unschedule(self.ai)
         pyglet.clock.unschedule(self.collect_garbage)

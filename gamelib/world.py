@@ -32,8 +32,10 @@ class BaseWorld(object):
 
         self.bounds = []
         self.center = vector.Vec2d(self.width/2, self.height/2)
+        
         self.build_up = True
-        self.max_build_up = 15
+        self.crescendos = [4, 8, 16, 32]
+        
         self.pickup_rate = 30
         self.pickup_accumulator = 0
         self.effects = []
@@ -85,7 +87,6 @@ class BaseWorld(object):
         self.background.blit(0,0)
         for e in self.effects:
             e.draw()
-
         
     def ai(self):
         
@@ -100,25 +101,25 @@ class BaseWorld(object):
             
         num = len(filter(lambda r: r.alive, self.game.robots))
         
-        if num >= self.max_build_up: 
+        if self.build_up and num >= self.crescendos[0]: 
             self.build_up = False
             return
             
-        if not self.build_up and num < 2: 
-            # self.game.next_world()
-            self.build_up = True
+        if self.crescendos and not self.build_up and num < 1:             
+            # self.game.next_world()            
+            self.crescendos.pop(0)
+            if self.crescendos:
+                self.build_up = True
+            else:
+                self.game.announce("RAWR!!", 1.0)
+                self.game.spawn_boss(self.world_boss)
         
         # self.current_wave = wave.Wave.generate(self.wave, self.diffculty)
-        if self.build_up and random.random() < 0.2:
-            for i in range(random.choice([1,1,1,1,1,1,3,5])):                
+        if self.build_up and random.random() < 0.5:
+            for i in range(random.randrange(self.crescendos[0]/2)+1):                
                 x, y = self.valid_location()
                 v = random.choice(self.virus_types)
                 self.game.spawn_robot(v, 1, x, y)
-
-    def spawn_boss(self):
-        if self.boss:
-            x, y = self.valid_location()
-            return self.boss(800,470)
         
         
     

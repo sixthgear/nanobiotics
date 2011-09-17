@@ -49,6 +49,9 @@ class StomachBoss(Boss):
     width = 400
     height = 400
 
+    def __init__(self, x=None, y=None, vx=None, vy=None):
+        super(StomachBoss, self).__init__(800, 470, vx, vy)
+        
     def ai(self, scene):
         super(StomachBoss, self).ai(scene)
 
