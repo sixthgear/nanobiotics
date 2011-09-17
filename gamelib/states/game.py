@@ -398,8 +398,12 @@ class Game(object):
 
         for r in self.robots:
             if r.alive:
-                r.die()
-                p += r.points
+                if r.is_boss:
+                    r.life -= 15
+                else:
+                    r.die()
+                    p += r.points
+            
 
         bullet.pool.kill_group(1) # kill off enemy bullets 
 
