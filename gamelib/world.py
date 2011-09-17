@@ -34,14 +34,21 @@ class BaseWorld(object):
         self.max_build_up = 15
         self.pickup_rate = 30
         self.pickup_accumulator = 0
-        
         self.effects = []
   
-    def spawn_boss(self):
-        if self.boss:
-            return self.boss(0,0,0,0)
- 
-      
+        self.music_player = pyglet.media.Player()
+        self.music_player.queue(self.music)
+        self.music_player.seek(self.music_start)    
+        self.music_player.play()
+
+        if pyglet.media.have_avbin:
+            # self.music.queue()
+            # self.music.play()
+            self.music_player.eos_action = pyglet.media.Player.EOS_LOOP
+        else:
+            print "Avbin not found, you're going to be missing some awesome music :("
+            
+       
     def within_bounds(self, pos, radius):
         for b in self.bounds:
             if not collision.inv_circle_to_circle(pos, radius, b.center, b.radius):
@@ -107,6 +114,10 @@ class BaseWorld(object):
                     virus.RedVirus
                 ))
                 self.game.spawn_robot(v, 1, x, y)
+
+    def spawn_boss(self):
+        if self.boss:
+            return self.boss(0,0,0,0)
         
         
     
@@ -138,8 +149,8 @@ class Heart(BaseWorld):
     """
 
     background = pyglet.resource.image('stage_2_background.png')
-    music = pyglet.resource.media('Circulation.mp3')
-    music_start = 64.8
+    music = pyglet.resource.media('ThemeA.mp3')
+    music_start = 0.0
     width = 1600
     height = 1600
     name = 'Heart'
