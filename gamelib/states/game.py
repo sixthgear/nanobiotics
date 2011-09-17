@@ -414,7 +414,10 @@ class Game(object):
     def on_kill(self, robot):
         """
         Player killed something.
-        """        
+        """
+        if robot.is_boss:
+            self.boss = None
+      
         self.add_score(robot.points)
             
     def on_death(self):
