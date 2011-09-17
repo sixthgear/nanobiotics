@@ -319,26 +319,8 @@ class Game(object):
                 
         # bullets vs world
         for b in (b for b in bullet.pool.active if b.alive):
-            if not self.world.within_bounds(b.pos, 8):
+            if not self.world.within_bounds(b.pos, 12):
                 b.die()                
-    
-        # player vs world                    
-        if not self.world.within_bounds(self.player.pos, 16): 
-               
-            nb = None
-            npd = 10000
-            
-            for b in self.world.bounds:
-                p_distance = (self.player.pos - b.center).magnitude - (16 + b.radius)
-                if p_distance < npd:
-                    npd = p_distance
-                    nb = b
-                    
-            p_distance = npd
-            p_normal = (self.player.pos - nb.center).normal
-            p_vector = p_distance * p_normal
-            self.player.pos -= p_vector
-            self.player.sprites[0].xy = self.player.pos.x, self.player.pos.y
 
         # robots vs player bullets
         for r, b in rabbyt.collisions.collide_groups(self.robots, bullet.pool.active):
@@ -349,6 +331,25 @@ class Game(object):
             if not r.alive: self.on_kill(r)
                 
         if not self.player.alive: return
+        
+        # player vs world                    
+        if not self.world.within_bounds(self.player.pos, 18): 
+               
+            nb = None
+            npd = 10000
+            
+            for b in self.world.bounds:
+                p_distance = (self.player.pos - b.center).magnitude - abs(b.radius - 18)
+                if p_distance < npd:
+                    npd = p_distance
+                    nb = b
+                    
+            p_distance = npd
+            p_normal = (self.player.pos - nb.center).normal
+            p_vector = p_distance * p_normal
+            self.player.pos -= p_vector
+            self.player.sprites[0].xy = self.player.pos.x, self.player.pos.y
+                    
          
         # player vs robots
         for r in rabbyt.collisions.collide_single(self.player, self.robots):

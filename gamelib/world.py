@@ -34,7 +34,7 @@ class BaseWorld(object):
         
     def within_bounds(self, pos, radius):
         for b in self.bounds:
-            if collision.circle_to_circle(pos, radius, b.center, b.radius):
+            if not collision.inv_circle_to_circle(pos, radius, b.center, b.radius):
                 return True
         return False
         
@@ -116,7 +116,7 @@ class Stomach(BaseWorld):
         self.effects.append(fx.bubbles.Bubbler())
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
         self.bounds = [
-            Bound(vector.Vec2d(800,800), 600)
+            Bound(vector.Vec2d(800,800), 632)
         ]
                   
 class Heart(BaseWorld):
@@ -132,9 +132,9 @@ class Heart(BaseWorld):
     def __init__(self, game):
         super(Heart, self).__init__(game)
         self.bounds = [
-            Bound(vector.Vec2d(744,796), 532-32),
-            Bound(vector.Vec2d(864,664), 532-32),
-            Bound(vector.Vec2d(1106,426), 356-32),            
+            Bound(vector.Vec2d(744,796), 532),
+            Bound(vector.Vec2d(864,664), 532),
+            Bound(vector.Vec2d(1106,426), 356),            
         ]
         # fx.effects.insert(0, fx.bubbles.Bubbler())            
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
