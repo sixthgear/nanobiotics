@@ -12,12 +12,14 @@ class Boss(base.BaseEnemy):
     sprite_image = spritesheet[0]
     animation = [0,1]
     color = (116,193,109)
-    health = 100
+    life = 100
+    width = 512
+    height = 512
+    boss = True
     death_sound = pyglet.resource.media('pop.wav', streaming=False)
 
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(Boss, self).__init__(x, y, vx, vy)
-        self.life = self.__class__.health
         self.death_sound = self.__class__.death_sound
         self.animation = self.__class__.animation
         self.sprite.texture = self.__class__.sprite_image
@@ -44,6 +46,8 @@ class StomachBoss(Boss):
     animation = [0,1,2,3]
     color = (0, 160, 0)
     cooldown = 10
+    width = 400
+    height = 400
 
     def ai(self, scene):
         super(StomachBoss, self).ai(scene)

@@ -187,8 +187,8 @@ class Game(object):
         
         if self.boss:
             hw = WIDTH // 2
-            bh = min(500, int(500.0 * (self.boss.health /
-                                       float(self.boss.__class__.health))))
+            bh = min(500, int(500.0 * (self.boss.life /
+                                       float(self.boss.__class__.life))))
             hp = hw - data.boss_hud[1].width // 2
             data.boss_hud[0].blit(hw, HEIGHT - 60)
             data.boss_hud[1].get_region(0,0,bh,10).blit(hp, HEIGHT - 65)
@@ -395,12 +395,12 @@ class Game(object):
         Player killed all the things
         """
         p = 0
+
         for r in self.robots:
             if r.alive:
                 r.die()
                 p += r.points
-        for t in bullet.pool.bullets:
-            print t.group
+
         bullet.pool.kill_group(1) # kill off enemy bullets 
 
         self.add_score(p)
@@ -424,7 +424,7 @@ class Game(object):
         # update lives text
         # self.lives_label.text = "%d" % self.player.lives
         for r in self.robots:
-            if r.alive: r.die()
+            if r.alive and not r.is_boss: r.die()
 
         self.add_score(0) # update hud
                                 

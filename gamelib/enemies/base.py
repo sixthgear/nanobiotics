@@ -18,11 +18,13 @@ class BaseEnemy(obj.GameObject):
     life = 1
     cooldown = 100
     bullet_velocity = 250
+    boss = False
 
     
     def __init__(self, x=None, y=None, vx=None, vy=None):
         super(BaseEnemy, self).__init__(self.sprite_image, x, y)
-        self.alive = True        
+        self.alive = True
+        self.is_boss = self.__class__.boss     
         self.life = self.__class__.life
         self.bullet_velocity = self.__class__.bullet_velocity
         self.cooldown = 0
