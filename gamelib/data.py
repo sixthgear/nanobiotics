@@ -3,7 +3,7 @@ Please forgive me.
 """
 
 import pyglet
-from libs.squirtle import svg
+# from libs.squirtle import svg
 
 pyglet.resource.path = ['data']
 pyglet.resource.reindex()
@@ -63,5 +63,5 @@ bosses = {
             "brain":   load_boss("worm",2, 2)
 }
 
-worlds = {"stomach": svg.SVG("data/stomach.svg")}
+# worlds = {"stomach": svg.SVG("data/stomach.svg")}
 
