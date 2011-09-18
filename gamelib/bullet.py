@@ -23,7 +23,7 @@ class BulletPool(object):
         self.active.append(b)
                 
     def recycle(self):
-        print 'bullets recycled!'
+        # print 'bullets recycled!'
         self.active = [b for b in self.active if b.alive]
         self.n = self.__class__.initial_size
         self.bullets = [Bullet(0,0,0,0) for b in range(self.n)]

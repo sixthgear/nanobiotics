@@ -21,7 +21,7 @@ class Controller(pyglet.window.Window):
         self.set_exclusive_mouse(True)
         self.set_mouse_visible(False)
         self.state = None
-        self.fps_display = pyglet.clock.ClockDisplay()
+        # self.fps_display = pyglet.clock.ClockDisplay()
 
                 
     def switch(self, state):
@@ -56,7 +56,8 @@ class Controller(pyglet.window.Window):
         gl.glMatrixMode(gl.GL_MODELVIEW)        
     
     def on_draw(self):
-        self.fps_display.draw()
+        pass
+        # self.fps_display.draw()
         
     def setup_gl(self):
         """

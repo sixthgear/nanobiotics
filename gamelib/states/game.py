@@ -115,7 +115,8 @@ class Game(object):
                 self.spawn_boss(boss)
                 self.player.invuln = 3
             else:
-                print "no boss"
+                pass
+                # print "no boss"
                     
     def collect_garbage(self, dt=0.0):
         """
@@ -127,7 +128,7 @@ class Game(object):
         """
         self.robots = [r for r in self.robots if r.alive]
         self.pickups = [p for p in self.pickups if p.alive]
-        print "garbage collected, %d renderings" % len(self.render_list)
+        # print "garbage collected, %d renderings" % len(self.render_list)
         self.rebuild_render_list()
         
     def rebuild_render_list(self):
