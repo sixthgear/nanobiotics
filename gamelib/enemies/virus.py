@@ -94,7 +94,7 @@ class GreenVirus(MutatingVirus):
         if not self.alive: return
         self.current_frame = (self.current_frame + 1) % len(self.current_animation)
         self.sprite.texture = self.spritesheet[self.current_animation[self.current_frame]]
-
+        
         if self.target and self.target.alive:
             self.vel_target = (self.target.pos - self.pos).normal * self.speed
             if self.current_frame == 1: 
@@ -112,8 +112,21 @@ class BlueVirus(MutatingVirus):
     spritesheet = data.load_virus('blue')
     sprite_image = spritesheet[3]
     color = (35,35,224)
-    speed = 100
+    speed = 500
     
+    def ai(self, scene):
+        if not self.alive: return
+
+        d = self.target.pos - self.pos 
+        dot = (self.target.vel.x*d.x + self.target.vel.y*d.y)
+        print dot
+        
+        if self.target and self.target.alive:
+            if dot > 0:
+                self.vel_target = (self.target.pos - self.pos).normal * self.speed
+            else:
+                self.vel_target = (self.target.pos - self.pos).normal * -self.speed
+            
 
     
 class SixthVirus(MutatingVirus):
