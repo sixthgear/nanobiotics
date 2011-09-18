@@ -2,10 +2,11 @@ from __future__ import division
 
 import pyglet
 import base
+import math
 
 from gamelib import data
 from gamelib import fx
-
+from gamelib import bullet
 
 class Boss(base.BaseEnemy, pyglet.event.EventDispatcher):
     spritesheet = data.bosses["stomach"]
@@ -24,6 +25,7 @@ class Boss(base.BaseEnemy, pyglet.event.EventDispatcher):
         self.animation = self.__class__.animation
         self.sprite.texture = self.__class__.sprite_image
         self.current_frame = 0
+        self.bomb = 200
 
     def ai(self, scene):
         if not self.alive: return
@@ -33,6 +35,16 @@ class Boss(base.BaseEnemy, pyglet.event.EventDispatcher):
     def update(self, dt):
         if self.cooldown > 0:
             self.cooldown -= 1
+
+        if self.bomb > 0:
+            self.bomb -= 1
+
+        if self.bomb == 0:
+            b = 90
+            for a in range(0, 360, 360//10): 
+                bullet.pool.fire(self.x, self.y, math.cos(math.radians(a)) * b, math.sin(math.radians(a)) * b, 1)
+            self.bomb = 200
+
         super(Boss, self).update(dt)
 
     def die(self):
