@@ -4,36 +4,55 @@ NANOBIOTICS
 Entry in PyWeek #4  <http://www.pyweek.org/4/>
 Team: Spacelab Six
 Members: meenuh, mjard, sixthgear, spacelab
-
+Source: https://github.com/spacelabsix/pyweek13/tree/v1.0
 
 DEPENDENCIES:
 
-You might need to install some of these before running the game:
+If you decide to run from the source, you'll need the following depdencies:
 
-  Python:     http://www.python.org/  
-  Pyglet:     
-  Rabbyt:     
-  Lepton:     
-  PyGame:     http://www.pygame.org/ (optional for gamepad support)
+  Python:     http://www.python.org/ (developed using 2.7.2, 32bit) 
+  Pyglet:     http://www.pyglet.org/ (1.1.4)
+  Rabbyt:     http://arcticpaint.com/projects/rabbyt/ (0.8.3)
+  Lepton:     http://code.google.com/p/py-lepton/ (1.0b2)
+  PyGame:     http://www.pygame.org/ (1.9.1) (optional for gamepad support)
+  AVBIN:      http://code.google.com/ (optional, but strongly recommended (lots
+              of effort put into our music))
 
+We've had the best luck with 32bit versions of everything, even on 64bit
+machines.
 
 RUNNING THE GAME:
 
-On Windows or Mac OS X, locate the "run_game.pyw" file and double-click it.
+On Windows:
+    Locate and launch Nanobiotics.exe.
+
+On Mac OS X:
+    Locate and run the standalone launcher Nanobiotics.app
+
+Linux:
+    This hits a grey area, best bet is to use a 32bit version of python and
+    download prepackaged versions of the libraries and not install them
+    globaly. I'll package this up once I can feel my fingers again :)
 
 Othewise open a terminal / console and "cd" to the game directory and run:
 
   python run_game.py
 
 
-
 HOW TO PLAY THE GAME:
 
-Move the cursor around the screen with the mouse.
+Move the crosshair around the screen with the mouse: Button 1 will shoot, while
+button 2 will save you if you have bombs in your inventory. Use WASD to control 
+the ship's movement.  Enemies have two states, mostly harmless and a super
+charged  mutated form where they are faster, more aggressive, and able to take
+more punches. Dispatch them before they destroy your ship.
 
-Press the left mouse button to fire the ducks.
 
+NOTES:
 
+We hope you enjoy the game, we had a blast creating it. Also: we're not done!
+So many cool features had to be dropped to get this out the door on time. Keep
+an eye on our source respository, because we will continue working on it!
 
 LICENSE:
 
