@@ -10,15 +10,16 @@ class Title(object):
         self.window = window
         self.timer = pyglet.clock.schedule_interval(self.update, 1.0/60)
         
-        self.music = pyglet.media.Player()
+        
         self.gamepad = gamepad.GamepadHandler.connect()
         if self.gamepad:
             self.gamepad.push_handlers(self)
         
         if pyglet.media.have_avbin:
-            self.music.queue(pyglet.resource.media('Theme1_Spacelab.mp3'))
-            self.music.play()
-            self.music.eos_action = pyglet.media.Player.EOS_LOOP
+            self.music_player = pyglet.media.Player()
+            self.music_player.queue(pyglet.resource.media('Theme1_Spacelab.mp3'))
+            self.music_player.play()
+            self.music_player.eos_action = pyglet.media.Player.EOS_LOOP
         else:
             print "Avbin not found, you're going to be missing some awesome music :("
                     

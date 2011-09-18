@@ -490,6 +490,7 @@ class Game(object):
         self.window.remove_handlers(self.player.keys)
         self.window.remove_handlers(self.player)
         self.world.music_player.pause()
+        del self.world.music_player
         pyglet.clock.unschedule(self.update)
         pyglet.clock.unschedule(self.ai)
         pyglet.clock.unschedule(self.collect_garbage)

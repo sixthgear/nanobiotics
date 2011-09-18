@@ -24,7 +24,7 @@ class BaseWorld(object):
     world_boss = None
     virus_types = None
     
-    def __init__(self, game):        
+    def __init__(self, game, music=None):        
         
         self.game = game
         self.boss = self.__class__.world_boss
@@ -41,10 +41,10 @@ class BaseWorld(object):
         self.pickup_accumulator = 0
         self.effects = []
   
-        if pyglet.media.have_avbin:
+        if music and pyglet.media.have_avbin:
             self.music_player = pyglet.media.Player()
             self.music_player.eos_action = pyglet.media.Player.EOS_LOOP
-            self.music_player.queue(self.music)
+            self.music_player.queue(music)
             self.music_player.seek(self.music_start)    
             self.music_player.play()
         else:
@@ -131,7 +131,6 @@ class Stomach(BaseWorld):
     """
 
     background = pyglet.resource.image('stage_1_background.png')
-    music = pyglet.resource.media('Stomach.mp3')
     music_start = 107.5
     width = 1600
     height = 1600
@@ -145,7 +144,7 @@ class Stomach(BaseWorld):
     )
     
     def __init__(self, game):
-        super(Stomach, self).__init__(game)
+        super(Stomach, self).__init__(game, music=pyglet.resource.media('Stomach.mp3'))
         self.effects.append(fx.bubbles.Bubbler())
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
         self.bounds = [
@@ -158,7 +157,6 @@ class Heart(BaseWorld):
     """
 
     background = pyglet.resource.image('stage_2_background.png')
-    music = pyglet.resource.media('ThemeA.mp3')
     music_start = 0.0
     width = 1600
     height = 1600
@@ -173,7 +171,7 @@ class Heart(BaseWorld):
     
         
     def __init__(self, game):
-        super(Heart, self).__init__(game)
+        super(Heart, self).__init__(game, music=pyglet.resource.media('ThemeA.mp3'))
         self.bounds = [
             Bound(vector.Vec2d(744,796), 532),
             Bound(vector.Vec2d(864,664), 532),
@@ -188,8 +186,7 @@ class Brain(BaseWorld):
     BRAAAAIIIIIN
     """
 
-    background = pyglet.resource.image('stage_3_background.png')
-    music = pyglet.resource.media('Brain.mp3')
+    background = pyglet.resource.image('stage_3_background.png')    
     width = 1600
     height = 1600
     name = 'Brain'
@@ -203,7 +200,7 @@ class Brain(BaseWorld):
     
     
     def __init__(self, game):
-        super(Brain, self).__init__(game)
+        super(Brain, self).__init__(game, music=pyglet.resource.media('Brain.mp3'))
         # fx.effects.insert(0, fx.bubbles.Bubbler())            
         # pyglet.clock.schedule_once(lambda dt: game.next_wave(), 0.0)
         self.bounds = [
