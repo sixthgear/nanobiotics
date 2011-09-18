@@ -43,10 +43,10 @@ class BaseWorld(object):
   
         if pyglet.media.have_avbin:
             self.music_player = pyglet.media.Player()
+            self.music_player.eos_action = pyglet.media.Player.EOS_LOOP
             self.music_player.queue(self.music)
             self.music_player.seek(self.music_start)    
             self.music_player.play()
-            self.music_player.eos_action = pyglet.media.Player.EOS_LOOP
         else:
             print "Avbin not found, you're going to be missing some awesome music :("
             

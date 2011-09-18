@@ -2,3 +2,7 @@
 *.pyc
 *.swp
 .DS_Store
+dist/
+build/
+*.egg
+Nanobiotics.py

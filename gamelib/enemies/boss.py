@@ -33,6 +33,7 @@ class Boss(base.BaseEnemy, pyglet.event.EventDispatcher):
         self.sprite.texture = self.spritesheet[self.current_frame]
 
     def update(self, dt):
+        if not self.alive: return
         if self.cooldown > 0:
             self.cooldown -= 1
 
