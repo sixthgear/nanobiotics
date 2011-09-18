@@ -1,4 +1,4 @@
-APP_NAME = 'Metamortimer'
+APP_NAME = 'Nanobiotics'
 
 cfg = {
     'name':APP_NAME,
