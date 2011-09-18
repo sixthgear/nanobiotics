@@ -119,7 +119,6 @@ class BlueVirus(MutatingVirus):
 
         d = self.target.pos - self.pos 
         dot = (self.target.vel.x*d.x + self.target.vel.y*d.y)
-        print dot
         
         if self.target and self.target.alive:
             if dot > 0:
