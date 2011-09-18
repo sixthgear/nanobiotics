@@ -105,7 +105,7 @@ class RedVirus(GreenVirus):
     spritesheet = data.load_virus('red')
     sprite_image = spritesheet[3]
     color = (235,76,105)
-    speed = 300
+    speed = 100
     animation_small = [2,3]
         
 class BlueVirus(MutatingVirus):    
