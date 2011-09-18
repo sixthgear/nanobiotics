@@ -107,16 +107,17 @@ class Game(object):
         """
         Perform oneoff key press actions.
         """
-        if symbol == pyglet.window.key.Z:            
-            self.next_world()
-        elif symbol == pyglet.window.key.B:
-            boss = self.world.world_boss
-            if boss:
-                self.spawn_boss(boss)
-                self.player.invuln = 3
-            else:
-                pass
-                # print "no boss"
+        pass
+        # if symbol == pyglet.window.key.Z:            
+        #     self.next_world()
+        # if symbol == pyglet.window.key.B:
+        #     boss = self.world.world_boss
+        #     if boss:
+        #         self.spawn_boss(boss)
+        #         self.player.invuln = 3
+        #     else:
+        #         pass
+        #         # print "no boss"
                     
     def collect_garbage(self, dt=0.0):
         """

@@ -105,7 +105,7 @@ class RedVirus(GreenVirus):
     spritesheet = data.load_virus('red')
     sprite_image = spritesheet[3]
     color = (235,76,105)
-    speed = 100
+    speed = 200
     animation_small = [2,3]
         
 class BlueVirus(MutatingVirus):    
@@ -124,7 +124,8 @@ class BlueVirus(MutatingVirus):
             if dot > 0:
                 self.vel_target = (self.target.pos - self.pos).normal * self.speed
             else:
-                self.vel_target = (self.target.pos - self.pos).normal * -self.speed
+                self.vel_target.zero()
+                # self.vel_target = (self.target.pos - self.pos).normal * -self.speed
             
 
     

@@ -79,14 +79,14 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
             else:
                 pass # CLICK CLICK, EMPTY!
                 
-        elif symbol == pyglet.window.key._1:
-            self.swap_weapon(0)
-        elif symbol == pyglet.window.key._2:
-            self.swap_weapon(1)
-        elif symbol == pyglet.window.key._3:
-            self.swap_weapon(2)
-        elif symbol == pyglet.window.key._4:
-            self.swap_weapon(3)
+        # elif symbol == pyglet.window.key._1:
+        #     self.swap_weapon(0)
+        # elif symbol == pyglet.window.key._2:
+        #     self.swap_weapon(1)
+        # elif symbol == pyglet.window.key._3:
+        #     self.swap_weapon(2)
+        # elif symbol == pyglet.window.key._4:
+        #     self.swap_weapon(3)
     
     def swap_weapon(self, n):
         if n == 0:
