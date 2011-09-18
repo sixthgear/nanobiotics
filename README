@@ -1,7 +1,8 @@
 NANOBIOTICS
 ===========
 
-Entry in PyWeek #4  <http://www.pyweek.org/4/>
+Entry in PyWeek #13  <http://www.pyweek.org/13/>
+                     <http://www.pyweek.org/e/6S/>
 Team: Spacelab Six
 Members: meenuh, mjard, sixthgear, spacelab
 Source: https://github.com/spacelabsix/pyweek13/tree/v1.0
@@ -53,6 +54,8 @@ NOTES:
 We hope you enjoy the game, we had a blast creating it. Also: we're not done!
 So many cool features had to be dropped to get this out the door on time. Keep
 an eye on our source respository, because we will continue working on it!
+
+- https://github.com/spacelabsix/pyweek13
 
 LICENSE:
 
