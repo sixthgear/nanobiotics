@@ -29,11 +29,12 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
 
     def __init__(self, x, y):
         player_sprites = [
-            (data.spritesheet[0],(0,0)), 
+            (data.spritesheet[0],(0,0)),
+            (data.spritesheet[3],(-8,-8)) 
         ] 
                 
         obj.CompoundGameObject.__init__(self, player_sprites, x, y)
-        
+        self.sprites.reverse() 
         self.alive = True        
         self.vel_target = vector.Vec2d(0, 0)
         self.target = vector.Vec2d(x,y)
@@ -256,7 +257,17 @@ class Player(pyglet.event.EventDispatcher, obj.CompoundGameObject):
         self.invuln = 3
         self.alive = True
 
-        self.dispatch_event("on_respawn")    
+        self.dispatch_event("on_respawn")
+
+    @property
+    def rot(self):
+        return self.sprites[0].rot
+
+    @rot.setter
+    def rot(self, r):
+        self.sprites[0].rot = r
+        self.sprites[1].rot = r
+        
                 
 Player.register_event_type('on_bomb')
 Player.register_event_type('on_hit')
